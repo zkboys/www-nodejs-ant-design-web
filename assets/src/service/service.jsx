@@ -1,7 +1,7 @@
 import '../common/lib.jsx';
-import './service.less';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import './service.less';
 import MyButton from '../common/MyButton';
 import App from '../common/App';
 ReactDOM.render(

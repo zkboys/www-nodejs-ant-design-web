@@ -8,7 +8,7 @@ var authenticate = require('../app/controllers/authenticate_controller')
     , example = require('../app/controllers/example_controller');
 var authenticated = authenticate.authenticate;
 router.get('/login', function (req, res, next) {
-    res.render('session/login.html');
+    res.render('session/session-login.html');
 });
 router.get('/', function (req, res, next) {
     res.render('home/home.html', {title: 'home', csrf: req.csrfToken()});
