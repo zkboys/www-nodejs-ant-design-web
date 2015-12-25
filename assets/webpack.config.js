@@ -1,4 +1,5 @@
 var path = require("path")
+    , webpack = require('webpack')
     , fs = require('fs');
 module.exports = function (webpackConfig) {
     webpackConfig.module.loaders.forEach(function (loader) {
@@ -16,6 +17,20 @@ module.exports = function (webpackConfig) {
     //webpackConfig.entry = scanEntry();//entry 从package.json中移入这里可以通过约定＋代码，自动完成．放到这里 通用东西无法提取到common.js
     webpackConfig.output.path = path.join(__dirname, '../public');
     webpackConfig.output.publicPath = '/s/';//静态文件发布时的目录前缀,会自动拼接到jsx 或者less中.TODO 怎么根据开发模式进行区分?
+    //webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin(
+    //    {
+    //        name: "commons",
+    //        // (the commons chunk name)
+    //
+    //        filename: "commons.js",
+    //        // (the filename of the commons chunk)
+    //
+    //        minChunks: 1,
+    //        // (Modules must be shared between 3 entries)
+    //
+    //        // chunks: ["pageA", "pageB"],
+    //        // (Only use these entries)
+    //    }));
     return webpackConfig;
 };
 
