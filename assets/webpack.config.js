@@ -12,7 +12,8 @@ module.exports = function (webpackConfig) {
         }
         return loader;
     });
-    webpackConfig.entry = scanEntry();//entry 从package.json中移入这里可以通过约定＋代码，自动完成．
+    //webpackConfig.minChunks = 2;
+    //webpackConfig.entry = scanEntry();//entry 从package.json中移入这里可以通过约定＋代码，自动完成．放到这里 通用东西无法提取到common.js
     webpackConfig.output.path = path.join(__dirname, '../public');
     webpackConfig.output.publicPath = '/s/';//静态文件发布时的目录前缀,会自动拼接到jsx 或者less中.TODO 怎么根据开发模式进行区分?
     return webpackConfig;
