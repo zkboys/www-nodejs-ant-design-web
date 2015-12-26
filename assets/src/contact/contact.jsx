@@ -7,7 +7,7 @@ import App from '../common/App';
 import MyModal from '../common/MyModal.jsx';
 import contactImg from './img/contact.jpg';
 ReactDOM.render(
-    <div className="contact">
+    <div className="contact" style={{background:'red',fontSize:'20px'}}>
         <img src={contactImg} width="100px"/>
         <App/>
         <MyButton/>

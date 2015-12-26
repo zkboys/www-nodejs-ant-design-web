@@ -18,6 +18,7 @@ console.log(data);
 function onChange(e) {
     console.log('checked = ' + e.target.checked);
 }
+
 const menu = <Menu>
     <Menu.Item>
         <a target="_blank" href="http://www.alipay.com/">第一个菜单项</a>
@@ -37,7 +38,6 @@ function modalCancelCB() {
 }
 ReactDOM.render(
     <div className="home">
-        <img src={data.img} width="100px"/>
         <Datepicker defaultValue="2015-12-12" />
         <MyModal btnText={'我的对话框'} title={'提示'} content={'这里时内容,通过参数方式传递的.'} okCb={modalOKCB} cancelCb={modalCancelCB}/>
         <Dropdown overlay={menu}>
