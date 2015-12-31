@@ -1,0 +1,36 @@
+.admin-page {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  .admin-page-header {
+    position: absolute;
+    top:0;
+    left:5px;
+    right:20px;
+    padding:10px 5px 5px 10px;
+    border-bottom: 1px solid #eee;
+    background:#fff;
+    z-index: 99;
+    & > .ant-breadcrumb {
+      float: right;
+      margin-top: -23px;
+      margin-right: 10px;
+    }
+
+  }
+
+  .admin-page-content {
+    z-index: 88;
+    height: 100%;
+    width: 100%;
+    padding-top: 47px;
+    overflow: auto;
+    .admin-page-content-inner{
+      min-width:768px;
+      padding:10px;
+    }
+  }
+}
+

@@ -1,0 +1,51 @@
+.admin-framework {
+    width:100%;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* override antd styles */
+.admin-framework .ant-btn,
+.admin-framework .ant-input,
+.admin-framework .ant-input-number,
+.admin-framework .ant-select-selection,
+.admin-framework .ant-alert,
+.admin-framework .ant-tag,
+.admin-framework .ant-table table,
+.admin-framework .ant-pagination-item,
+.admin-framework .ant-pagination-prev,
+.admin-framework .ant-pagination-next,
+.admin-framework .ant-pagination-options-quick-jumper input,
+body .ant-calendar,
+body .ant-timepicker-panel-inner,
+body .ant-select-dropdown,
+body .ant-message-notice-content,
+body .ant-modal-content,
+body .ant-btn-lg,
+body .ant-btn-sm,
+body .ant-notification-notice,
+body .ant-popover-inner,
+body .ant-tooltip-inner
+{
+    border-radius: 3px;
+}
+
+.admin-framework .ant-table th:first-child {
+    border-top-left-radius: 2px;
+}
+
+.admin-framework .ant-table th:last-child {
+    border-top-right-radius: 2px;
+}
+
+.admin-framework .ant-btn,
+.admin-framework .ant-calendar-picker,
+.admin-framework .ant-timepicker
+{
+    vertical-align: middle;
+}
+
+.admin-framework .ant-table th,
+.admin-framework .ant-table td {
+    padding: 8px;
+}

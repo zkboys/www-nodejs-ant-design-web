@@ -1,0 +1,83 @@
+.admin-header {
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 50px;
+    background-color: #f39c12;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.admin-logo {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    background-color: #e08e0b;
+    text-align: center;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+.admin-logo > a,
+.admin-logo > a:visited,
+.admin-logo > a:active,
+.admin-logo > a:hover {
+    display: block;
+    color: #fff;
+}
+
+.admin-sidebar-toggle {
+    display: inline-block;
+    padding: 0 15px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    color: #fff;
+    vertical-align: middle;
+}
+
+.admin-sidebar-toggle:hover,
+.admin-sidebar-toggle:visited,
+.admin-sidebar-toggle:active {
+    color: #fff;
+}
+
+.admin-sidebar-toggle:hover {
+    background-color: #e08e0b;
+}
+
+.admin-header-menu {
+    float: right;
+    display: inline-block;
+}
+
+.admin-header-menu-item {
+    display: inline-block;
+}
+
+.admin-header-menu-item a {
+    display: inline-block;
+    padding: 15px;
+    height: 50px;
+    line-height: 20px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.admin-header-menu-item a:hover {
+    background-color: #e08e0b;
+    color: #fff;
+}
+
+.admin-header-menu-item .fa {
+    font-weight: bold;
+}
+
+.admin-user-avatar {
+    margin-right: 5px;
+    margin-top: -2px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
