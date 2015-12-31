@@ -18,5 +18,56 @@
     </script>
     <script src="{{static_url('common.js')}}"></script>
     <script src="{{static_url('index.js')}}"></script>
+    <script>
+        // TODO 结合 webpack-dev-server 的webSocket URL,编写一个Chrome插件,用来自动刷新页面
+        //下面是webpack-dev-server 的webSocket 使用的URL,
+//        var webSocket = new WebSocket('ws://localhost:8086/sockjs-node/546/rcnk5imb/websocket');
+        /*
+        var connectWebSocketTimes = 1;//连接次数
+        function connectWebSocket() {
+            connectWebSocketTimes++;
+            var webSocket = new WebSocket('ws://localhost:8086/sockjs-node/546/rcnk5imb/websocket');
+            webSocket.onmessage = function (event) {
+                connectWebSocketTimes = 0;
+                webSocketHandle(event);
+            };
+            webSocket.onclose = function (evt) {
+                var code = evt.code;
+                webSocket = null;
+                if (code == 403) {//未登录，不可访问
+                } else {
+                    webSocket = null;
+                    if (connectWebSocketTimes <= 3) {//重连3次，三秒钟一次
+                        setTimeout(function () {
+                            connectWebSocket();
+                        }, 3000);
+                    } else {//三次都连接失败之后 3分钟后重新连接
+                        setTimeout(function () {
+                            connectWebSocketTimes = 0;
+                            connectWebSocket();
+                        }, 1000 * 60 * 3);
+                    }
+                }
+            };
+            webSocket.onopen = function () {
+                console.log("websocket onopen");
+            };
+            webSocket.onerror = function (evt) {
+                var code = evt.code;
+                console.log("websocket onerror");
+            };
+        }
+        connectWebSocket();
+        function webSocketHandle(event) {
+            console.log(event);
+            if(event.data.indexOf('ok')>0){
+                console.log('刷新');
+                //刷新死循环了....
+//                location.reload();
+            }
+        }
+
+        */
+    </script>
 </body>
 </html>

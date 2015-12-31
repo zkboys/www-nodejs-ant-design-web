@@ -24,7 +24,12 @@ var oriMenus = [//左侧菜单与路由公用的数据
     {key: '3', text: '用户列表', icon: 'fa-th-list'},
     {key: '31', parentKey: '3', text: '仪表盘', icon: 'fa-arrow-right', path: 'dashboard3', component: Dashboard},
     {key: '32', parentKey: '3', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm3', component: MyForm},
-    {key: '33', parentKey: '3', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime3', component: MyTime}
+    {key: '33', parentKey: '3', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime3', component: MyTime},
+
+    {key: '4', text: '我的', icon: 'fa-user'},
+    {key: '41', parentKey: '4', text: '我的邮件', icon: 'fa-arrow-right', path: 'dashboard4', component: Dashboard},
+    {key: '42', parentKey: '4', text: '我的提醒', icon: 'fa-arrow-right', path: 'myForm4', component: MyForm},
+    {key: '43', parentKey: '4', text: '个人设置', icon: 'fa-arrow-right', path: 'myTime4', component: MyTime}
 
 ];
 

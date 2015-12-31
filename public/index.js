@@ -20398,7 +20398,7 @@ webpackJsonp([1,0],[
 
 	var openAll = false;
 	var oriMenus = [//左侧菜单与路由公用的数据
-	{ key: '1', text: '主面板', icon: 'fa-tachometer' /*, open: true*/ }, { key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/path: 'dashboard1', component: _Dashboard2.default }, { key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list' }, { key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm1', component: _MyForm2.default }, { key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime1', component: _MyTime2.default }, { key: '2', text: '商务查询', icon: 'fa-binoculars' }, { key: '21', parentKey: '2', text: '仪表盘222', icon: 'fa-arrow-right', path: 'dashboard2', component: _Dashboard2.default }, { key: '22', parentKey: '2', text: '三级导航222', icon: 'fa-th-list' }, { key: '221', parentKey: '22', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm2', component: _MyForm2.default }, { key: '222', parentKey: '22', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime2', component: _MyTime2.default }, { key: '3', text: '用户列表', icon: 'fa-th-list' }, { key: '31', parentKey: '3', text: '仪表盘', icon: 'fa-arrow-right', path: 'dashboard3', component: _Dashboard2.default }, { key: '32', parentKey: '3', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm3', component: _MyForm2.default }, { key: '33', parentKey: '3', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime3', component: _MyTime2.default }];
+	{ key: '1', text: '主面板', icon: 'fa-tachometer' /*, open: true*/ }, { key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/path: 'dashboard1', component: _Dashboard2.default }, { key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list' }, { key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm1', component: _MyForm2.default }, { key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime1', component: _MyTime2.default }, { key: '2', text: '商务查询', icon: 'fa-binoculars' }, { key: '21', parentKey: '2', text: '仪表盘222', icon: 'fa-arrow-right', path: 'dashboard2', component: _Dashboard2.default }, { key: '22', parentKey: '2', text: '三级导航222', icon: 'fa-th-list' }, { key: '221', parentKey: '22', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm2', component: _MyForm2.default }, { key: '222', parentKey: '22', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime2', component: _MyTime2.default }, { key: '3', text: '用户列表', icon: 'fa-th-list' }, { key: '31', parentKey: '3', text: '仪表盘', icon: 'fa-arrow-right', path: 'dashboard3', component: _Dashboard2.default }, { key: '32', parentKey: '3', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm3', component: _MyForm2.default }, { key: '33', parentKey: '3', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime3', component: _MyTime2.default }, { key: '4', text: '我的', icon: 'fa-user' }, { key: '41', parentKey: '4', text: '我的邮件', icon: 'fa-arrow-right', path: 'dashboard4', component: _Dashboard2.default }, { key: '42', parentKey: '4', text: '我的提醒', icon: 'fa-arrow-right', path: 'myForm4', component: _MyForm2.default }, { key: '43', parentKey: '4', text: '个人设置', icon: 'fa-arrow-right', path: 'myTime4', component: _MyTime2.default }];
 
 	/*
 	 *根据sildebarMenus构造routes。
@@ -52468,7 +52468,7 @@ webpackJsonp([1,0],[
 	    value: true
 	});
 
-	__webpack_require__(436);
+	__webpack_require__(548);
 
 	var _react = __webpack_require__(1);
 
@@ -52486,12 +52486,28 @@ webpackJsonp([1,0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var hideLoading = null;
+
 	var Dashboard = _react2.default.createClass({
 	    displayName: 'Dashboard',
+	    getInitialState: function getInitialState() {
+	        return {
+	            loadingClass: ''
+	        };
+	    },
 	    handleClick: function handleClick() {
-	        _Request2.default.get('/dashboard.json').end(function (err, res) {
+	        var that = this;
+	        hideLoading = _antd.message.loading('正在加载...', 0);
+	        that.setState({
+	            loadingClass: 'loading'
+	        });
+	        _Request2.default.get('/dashboard.json').query({ query: 'Manny', range: '1..5', order: 'desc' }).end(function (err, res) {
 	            console.log(err, res);
 	            console.log(res.body);
+	            if (hideLoading) hideLoading();
+	            that.setState({
+	                loadingClass: ''
+	            });
 	        });
 	    },
 	    render: function render() {
@@ -52536,10 +52552,10 @@ webpackJsonp([1,0],[
 	                { className: 'admin-page-content' },
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'admin-page-content-inner' },
+	                    { className: "admin-page-content-inner " + this.state.loadingClass },
 	                    _react2.default.createElement(
 	                        'div',
-	                        null,
+	                        { className: 'dashboard' },
 	                        _react2.default.createElement(
 	                            _antd.Button,
 	                            { type: 'primary', onClick: this.handleClick },
@@ -52559,32 +52575,32 @@ webpackJsonp([1,0],[
 	                            _antd.Button,
 	                            { type: 'dashed' },
 	                            '虚线按钮'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            'npm run server 运行一个server 并且打开默认浏览器！'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            '开发过程中，修改文件，浏览器会自动刷新，特别适合双屏/大屏开发！'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            '随着项目复杂度的增加，不知道会不会慢。目前的相应速度还是可以接受的。'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            '希望不卡吧。哈哈。写起来真的就挺爽了。一保存浏览器就自动刷新了。想你的时候，你在哪里？'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            '如何优化构建速度？哈哈快一些'
 	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        'npm run server 运行一个server 并且打开默认浏览器！'
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '开发过程中，修改文件，浏览器会自动刷新，特别适合双屏/大屏开发！'
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '随着项目复杂度的增加，不知道会不会慢。目前的相应速度还是可以接受的。'
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '希望不卡吧。哈哈。写起来真的就挺爽了。一保存浏览器就自动刷新了。想你的时候，你在哪里？'
-	                    ),
-	                    _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '如何优化构建速度？哈哈快一些'
 	                    )
 	                )
 	            )
@@ -53210,12 +53226,7 @@ webpackJsonp([1,0],[
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 436 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
+/* 436 */,
 /* 437 */
 /***/ function(module, exports) {
 
@@ -66284,6 +66295,11 @@ webpackJsonp([1,0],[
 	                        '404'
 	                    ),
 	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        '您访问的页面不存在'
+	                    ),
+	                    _react2.default.createElement(
 	                        _antd.Button,
 	                        { onClick: this.goBack },
 	                        _react2.default.createElement(
@@ -66311,6 +66327,12 @@ webpackJsonp([1,0],[
 
 /***/ },
 /* 547 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 548 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

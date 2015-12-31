@@ -13334,6 +13334,10 @@ body .ant-tooltip-inner
   min-width: 768px;
   padding: 10px;
 }
+.admin-page .admin-page-content .admin-page-content-inner.loading {
+  -webkit-filter: blur(1px);
+          filter: blur(1px);
+}
 .admin-header {
     position: fixed;
     z-index: 100;

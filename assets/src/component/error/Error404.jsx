@@ -23,6 +23,7 @@ export default React.createClass({
                 <div className="admin-page-content">
                     <div className="admin-page-content-inner">
                         <h1>404</h1>
+                        <p>您访问的页面不存在</p>
                         <Button onClick={this.goBack}><Link to="javascript:;">返回上一级</Link></Button>
                         <Button> <Link to="home">返回首页</Link></Button>
 
