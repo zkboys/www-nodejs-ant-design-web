@@ -17,6 +17,17 @@ npm run start
 ```
 npm run build-dev  //build-test  build-pro
 ```
+##约定
+- 每个页面为一个单独组件,每个页面所用到的资源都放到一个文件夹下面,比如home
+    ```
+    home
+        -img
+            -home.jpg
+        -home.jsx    
+        -style.less    
+    ```
+- 所有的get请求最终没有被截获的都打到index.html
+    
 ##需要学习的内容
 - React基础语法
 - React Router插件

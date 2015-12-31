@@ -38,6 +38,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 //TODO cookie的加密算法？底层实现了？
 app.use(cookieParser(config.cookie_secret));
 app.use(session({
+    resave:false,
+    saveUninitialized: true,
     secret: config.cookie_secret
 }));
 // 对应的连接写成：/css/common.css
@@ -105,6 +107,4 @@ app.use(function (err, req, res, next) {
         stack: ''
     });
 });
-
-
 module.exports = app;

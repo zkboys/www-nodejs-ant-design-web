@@ -43,7 +43,7 @@
   },
   "scripts": {
     "open-browser": "xdg-open http://localhost:8086/webpack-dev-server/",
-    "watch":"webpack -w --progress --colors",
+    "watch": "webpack -w --progress --colors",
     "start": " npm run open-browser && webpack-dev-server --port 8086 --progress --profile --colors --cfg.clean=false",
     "build-dev": "webpack -d -p --profile --progress --colors --display-modules --cfg.runmod=development",
     "build-test": "webpack -d -p --cfg.runmod=test",
@@ -63,5 +63,8 @@
   "bugs": {
     "url": "https://github.com/zkboys/webpack-demo/issues"
   },
-  "homepage": "https://github.com/zkboys/webpack-demo#readme"
+  "homepage": "https://github.com/zkboys/webpack-demo#readme",
+  "dependencies": {
+    "superagent": "^1.6.1"
+  }
 }

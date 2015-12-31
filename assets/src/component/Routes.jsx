@@ -3,6 +3,7 @@ import { Router} from 'react-router'
 import MenusAndRouts from './sildebarMenus'
 import App from '../component/App'
 import Home from '../component/home/Home'
+import Error404 from '../component/error/Error404'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
 var menuRouts = MenusAndRouts.getRouts().routs;
@@ -31,12 +32,18 @@ browserHistory.listen(function (data) {
                     break;
                 }
             }
-            if (_sidebar) {
-                _sidebar.setState({
-                    current: current,
-                    openKeys: paths
-                });
-            }
+            /*
+            * 页面首次进入(F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.)
+            * */
+            var t = setInterval(function () {
+                if (_sidebar) {
+                    _sidebar.setState({
+                        current: current,
+                        openKeys: paths
+                    });
+                    clearInterval(t);
+                }
+            }, 100);
             break;// if find de menu break the loop
         }
     }
@@ -48,14 +55,10 @@ const routes = {
     childRoutes: menuRouts
 };
 /*其他路由在下面加入*/
-/*
-
  routes.childRoutes.push(
- {path: 'about', component: About},
- {path: 'inbox', component: Inbox}
+ {path: 'home', component: Home},
+ {path: '*', component: Error404}//所有未截获的请求,统一跳转到Error404组件
  );
- */
-
 
 export default React.createClass({
     render() {
