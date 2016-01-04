@@ -43,6 +43,12 @@ var clean = true;
  然后
  $ node app.js -o aaa
  { option: 'aaa' }
+ *
+ *
+ * 还可以这么做:
+ * JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
+ * JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
+ * BUILD_DEV=1 BUILD_PRERELEASE=1 webpack
  * */
 var arguments = process.argv.splice(2);
 if (arguments) {
