@@ -1825,7 +1825,7 @@ webpackJsonp([1,0],[
 	'use strict';
 
 	var CallbackQueue = __webpack_require__(84);
-	var PooledClass = __webpack_require__(27);
+	var PooledClass = __webpack_require__(26);
 	var ReactPerf = __webpack_require__(17);
 	var ReactReconciler = __webpack_require__(32);
 	var Transaction = __webpack_require__(61);
@@ -3563,76 +3563,6 @@ webpackJsonp([1,0],[
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var antd = {
-	  Affix: __webpack_require__(195),
-	  DatePicker: __webpack_require__(210),
-	  Tooltip: __webpack_require__(240),
-	  Carousel: __webpack_require__(205),
-	  Tabs: __webpack_require__(235),
-	  Modal: __webpack_require__(111),
-	  Dropdown: __webpack_require__(108),
-	  Progress: __webpack_require__(114),
-	  Popover: __webpack_require__(225),
-	  Select: __webpack_require__(68),
-	  Breadcrumb: __webpack_require__(199),
-	  Popconfirm: __webpack_require__(224),
-	  Pagination: __webpack_require__(113),
-	  Steps: __webpack_require__(231),
-	  InputNumber: __webpack_require__(216),
-	  Switch: __webpack_require__(232),
-	  Checkbox: __webpack_require__(39),
-	  Table: __webpack_require__(234),
-	  Tag: __webpack_require__(236),
-	  Collapse: __webpack_require__(208),
-	  message: __webpack_require__(220),
-	  Slider: __webpack_require__(230),
-	  QueueAnim: __webpack_require__(226),
-	  Radio: __webpack_require__(66),
-	  notification: __webpack_require__(222),
-	  Alert: __webpack_require__(196),
-	  Validation: __webpack_require__(248),
-	  Tree: __webpack_require__(244),
-	  Upload: __webpack_require__(246),
-	  Badge: __webpack_require__(198),
-	  Menu: __webpack_require__(219),
-	  Timeline: __webpack_require__(239),
-	  Button: __webpack_require__(34),
-	  Icon: __webpack_require__(11),
-	  Row: __webpack_require__(229),
-	  Col: __webpack_require__(207),
-	  Spin: __webpack_require__(115),
-	  Form: __webpack_require__(215),
-	  Input: __webpack_require__(109),
-	  Calendar: __webpack_require__(203),
-	  TimePicker: __webpack_require__(237),
-	  Transfer: __webpack_require__(241)
-	};
-
-	antd.version = __webpack_require__(112).version;
-
-	var ReactVersion = _react2.default.version;
-	if (process.env.NODE_ENV !== 'production') {
-	  var warning = __webpack_require__(78);
-	  var semver = __webpack_require__(422);
-	  var reactVersionInDeps = __webpack_require__(112).devDependencies.react;
-	  warning(semver.satisfies(ReactVersion, reactVersionInDeps) || semver.gtr(ReactVersion, reactVersionInDeps), 'antd@' + antd.version + ' need react@' + reactVersionInDeps + ' or higher, which is react@' + ReactVersion + ' now.');
-	}
-
-	module.exports = antd;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
@@ -3745,7 +3675,7 @@ webpackJsonp([1,0],[
 	}
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -3865,7 +3795,7 @@ webpackJsonp([1,0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -3923,7 +3853,7 @@ webpackJsonp([1,0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -4048,7 +3978,7 @@ webpackJsonp([1,0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports) {
 
 	/**
@@ -4086,6 +4016,76 @@ webpackJsonp([1,0],[
 	};
 
 	module.exports = keyOf;
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var antd = {
+	  Affix: __webpack_require__(195),
+	  DatePicker: __webpack_require__(210),
+	  Tooltip: __webpack_require__(240),
+	  Carousel: __webpack_require__(205),
+	  Tabs: __webpack_require__(235),
+	  Modal: __webpack_require__(111),
+	  Dropdown: __webpack_require__(108),
+	  Progress: __webpack_require__(114),
+	  Popover: __webpack_require__(225),
+	  Select: __webpack_require__(68),
+	  Breadcrumb: __webpack_require__(199),
+	  Popconfirm: __webpack_require__(224),
+	  Pagination: __webpack_require__(113),
+	  Steps: __webpack_require__(231),
+	  InputNumber: __webpack_require__(216),
+	  Switch: __webpack_require__(232),
+	  Checkbox: __webpack_require__(39),
+	  Table: __webpack_require__(234),
+	  Tag: __webpack_require__(236),
+	  Collapse: __webpack_require__(208),
+	  message: __webpack_require__(220),
+	  Slider: __webpack_require__(230),
+	  QueueAnim: __webpack_require__(226),
+	  Radio: __webpack_require__(66),
+	  notification: __webpack_require__(222),
+	  Alert: __webpack_require__(196),
+	  Validation: __webpack_require__(248),
+	  Tree: __webpack_require__(244),
+	  Upload: __webpack_require__(246),
+	  Badge: __webpack_require__(198),
+	  Menu: __webpack_require__(219),
+	  Timeline: __webpack_require__(239),
+	  Button: __webpack_require__(34),
+	  Icon: __webpack_require__(11),
+	  Row: __webpack_require__(229),
+	  Col: __webpack_require__(207),
+	  Spin: __webpack_require__(115),
+	  Form: __webpack_require__(215),
+	  Input: __webpack_require__(109),
+	  Calendar: __webpack_require__(203),
+	  TimePicker: __webpack_require__(237),
+	  Transfer: __webpack_require__(241)
+	};
+
+	antd.version = __webpack_require__(112).version;
+
+	var ReactVersion = _react2.default.version;
+	if (process.env.NODE_ENV !== 'production') {
+	  var warning = __webpack_require__(78);
+	  var semver = __webpack_require__(422);
+	  var reactVersionInDeps = __webpack_require__(112).devDependencies.react;
+	  warning(semver.satisfies(ReactVersion, reactVersionInDeps) || semver.gtr(ReactVersion, reactVersionInDeps), 'antd@' + antd.version + ' need react@' + reactVersionInDeps + ' or higher, which is react@' + ReactVersion + ' now.');
+	}
+
+	module.exports = antd;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 /* 29 */
@@ -4565,7 +4565,7 @@ webpackJsonp([1,0],[
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(27);
+	var PooledClass = __webpack_require__(26);
 
 	var assign = __webpack_require__(7);
 	var emptyFunction = __webpack_require__(19);
@@ -6364,7 +6364,7 @@ webpackJsonp([1,0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _invariant = __webpack_require__(26);
+	var _invariant = __webpack_require__(25);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -7999,7 +7999,7 @@ webpackJsonp([1,0],[
 
 	var _localeEn_US2 = _interopRequireDefault(_localeEn_US);
 
-	var _utilIndex = __webpack_require__(24);
+	var _utilIndex = __webpack_require__(23);
 
 	function noop() {}
 
@@ -8209,7 +8209,7 @@ webpackJsonp([1,0],[
 
 	exports.useRoutes = _useRoutes3['default'];
 
-	var _RouteUtils = __webpack_require__(25);
+	var _RouteUtils = __webpack_require__(24);
 
 	exports.createRoutes = _RouteUtils.createRoutes;
 
@@ -9568,7 +9568,7 @@ webpackJsonp([1,0],[
 
 	var _gregorianCalendar2 = _interopRequireDefault(_gregorianCalendar);
 
-	var _utilIndex = __webpack_require__(24);
+	var _utilIndex = __webpack_require__(23);
 
 	function noop() {}
 
@@ -14326,7 +14326,7 @@ webpackJsonp([1,0],[
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(27);
+	var PooledClass = __webpack_require__(26);
 
 	var assign = __webpack_require__(7);
 	var invariant = __webpack_require__(4);
@@ -17836,7 +17836,7 @@ webpackJsonp([1,0],[
 
 	var _calendarOkButton2 = _interopRequireDefault(_calendarOkButton);
 
-	var _utilIndex = __webpack_require__(24);
+	var _utilIndex = __webpack_require__(23);
 
 	var toFragment = _rcUtil2['default'].Children.mapSelf;
 
@@ -17931,7 +17931,7 @@ webpackJsonp([1,0],[
 
 	var _monthMonthPanel2 = _interopRequireDefault(_monthMonthPanel);
 
-	var _utilIndex = __webpack_require__(24);
+	var _utilIndex = __webpack_require__(23);
 
 	var _yearYearPanel = __webpack_require__(132);
 
@@ -18174,7 +18174,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _util = __webpack_require__(24);
+	var _util = __webpack_require__(23);
 
 	function TodayButton(_ref) {
 	  var prefixCls = _ref.prefixCls;
@@ -18246,7 +18246,7 @@ webpackJsonp([1,0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _utilIndex = __webpack_require__(24);
+	var _utilIndex = __webpack_require__(23);
 
 	function copyTime(target, source) {
 	  if (source) {
@@ -20328,7 +20328,8 @@ webpackJsonp([1,0],[
 	module.exports = json2mq;
 
 /***/ },
-/* 151 */
+/* 151 */,
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20356,172 +20357,6 @@ webpackJsonp([1,0],[
 	});
 
 	exports.default = FAIcon;
-	module.exports = exports['default'];
-
-/***/ },
-/* 152 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _antd = __webpack_require__(23);
-
-	var _FAIcon = __webpack_require__(151);
-
-	var _FAIcon2 = _interopRequireDefault(_FAIcon);
-
-	var _reactRouter = __webpack_require__(56);
-
-	var _MyForm = __webpack_require__(431);
-
-	var _MyForm2 = _interopRequireDefault(_MyForm);
-
-	var _Dashboard = __webpack_require__(427);
-
-	var _Dashboard2 = _interopRequireDefault(_Dashboard);
-
-	var _MyTime = __webpack_require__(432);
-
-	var _MyTime2 = _interopRequireDefault(_MyTime);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var SubMenu = _antd.Menu.SubMenu;
-
-	var openAll = false;
-	var oriMenus = [//左侧菜单与路由公用的数据
-	{ key: '1', text: '主面板', icon: 'fa-tachometer' /*, open: true*/ }, { key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/path: 'dashboard1', component: _Dashboard2.default }, { key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list' }, { key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm1', component: _MyForm2.default }, { key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime1', component: _MyTime2.default }, { key: '2', text: '商务查询', icon: 'fa-binoculars' }, { key: '21', parentKey: '2', text: '仪表盘222', icon: 'fa-arrow-right', path: 'dashboard2', component: _Dashboard2.default }, { key: '22', parentKey: '2', text: '三级导航222', icon: 'fa-th-list' }, { key: '221', parentKey: '22', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm2', component: _MyForm2.default }, { key: '222', parentKey: '22', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime2', component: _MyTime2.default }, { key: '3', text: '用户列表', icon: 'fa-th-list' }, { key: '31', parentKey: '3', text: '仪表盘', icon: 'fa-arrow-right', path: 'dashboard3', component: _Dashboard2.default }, { key: '32', parentKey: '3', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm3', component: _MyForm2.default }, { key: '33', parentKey: '3', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime3', component: _MyTime2.default }, { key: '4', text: '我的', icon: 'fa-user' }, { key: '41', parentKey: '4', text: '我的邮件', icon: 'fa-arrow-right', path: 'dashboard4', component: _Dashboard2.default }, { key: '42', parentKey: '4', text: '我的提醒', icon: 'fa-arrow-right', path: 'myForm4', component: _MyForm2.default }, { key: '43', parentKey: '4', text: '个人设置', icon: 'fa-arrow-right', path: 'myTime4', component: _MyTime2.default }];
-
-	/*
-	 *根据sildebarMenus构造routes。
-	 *rows:菜单数据。
-	 */
-	function convert(rows, collapse) {
-	    function exists(rows, parentKey) {
-	        for (var i = 0; i < rows.length; i++) {
-	            if (rows[i].key == parentKey) return true;
-	        }
-	        return false;
-	    }
-
-	    var menus = [];
-	    var nodes = [];
-	    var openKeys = [];
-	    var current = '';
-	    var oriMenus = {};
-	    // 获得所有顶级菜单 处理菜单初始化状态
-	    for (var i = 0; i < rows.length; i++) {
-	        var row = rows[i];
-	        row.subMenus = []; //存放当前菜单的子菜单
-	        oriMenus[row.key] = row;
-	        if (openAll) {
-	            if (!row.path) {
-	                openKeys.push(row.key);
-	            }
-	        } else if (row.open) {
-	            openKeys.push(row.key);
-	        }
-	        if (row.current) {
-	            current = row.key;
-	        }
-	        if (!exists(rows, row.parentKey)) {
-	            nodes.push(row);
-	            menus.push(_react2.default.createElement(
-	                SubMenu,
-	                { key: row.key, title: _react2.default.createElement(
-	                        'span',
-	                        null,
-	                        _react2.default.createElement(_FAIcon2.default, { type: row.icon }),
-	                        collapse ? '' : row.text
-	                    ) },
-	                row.subMenus
-	            ));
-	        }
-	    }
-	    var toDo = [];
-	    for (var i = 0; i < nodes.length; i++) {
-	        toDo.push(nodes[i]);
-	    }
-	    while (toDo.length) {
-	        var node = toDo.shift(); // 父菜单
-	        var subMenus = node.subMenus;
-	        // 处理子菜单
-	        for (var i = 0; i < rows.length; i++) {
-	            var row = rows[i];
-	            if (row.parentKey == node.key) {
-	                var child = row;
-	                if (child.path) {
-	                    //含有path,就说明没有子菜单了.
-	                    subMenus.push(_react2.default.createElement(
-	                        _antd.Menu.Item,
-	                        { key: child.key },
-	                        _react2.default.createElement(_FAIcon2.default, { type: child.icon }),
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: child.path, activeClassName: 'active' },
-	                            child.text
-	                        )
-	                    ));
-	                } else {
-	                    // 含有子菜单
-	                    subMenus.push(_react2.default.createElement(
-	                        SubMenu,
-	                        { key: child.key, title: _react2.default.createElement(
-	                                'span',
-	                                null,
-	                                _react2.default.createElement(_FAIcon2.default, { type: child.icon }),
-	                                child.text
-	                            ) },
-	                        child.subMenus
-	                    ));
-	                }
-	                if (node.childRoutes) {
-	                    node.childRoutes.push(child);
-	                } else {
-	                    node.childRoutes = [child];
-	                }
-	                toDo.push(child);
-	            }
-	        }
-	    }
-	    return {
-	        routs: nodes, //具有层级关系的路由
-	        menus: menus,
-	        oriMenus: oriMenus,
-	        openKeys: openKeys,
-	        current: current
-	    };
-	} // end or  convert(rows)
-	var collapseData = convert(oriMenus, true);
-	var noCollapseData = convert(oriMenus, false);
-	function getMenus(collapse) {
-	    var data = collapse ? collapseData : noCollapseData;
-	    return {
-	        routs: data.routs,
-	        menus: data.menus,
-	        oriMenus: data.oriMenus,
-	        openKeys: data.openKeys,
-	        current: data.current
-	    };
-	}
-	function getRouts() {
-	    return {
-	        routs: noCollapseData.routs,
-	        oriMenus: oriMenus
-	    };
-	}
-	exports.default = {
-	    getMenus: getMenus,
-	    getRouts: getRouts
-	};
 	module.exports = exports['default'];
 
 /***/ },
@@ -21324,7 +21159,7 @@ webpackJsonp([1,0],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _invariant = __webpack_require__(26);
+	var _invariant = __webpack_require__(25);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -21332,7 +21167,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RouteUtils = __webpack_require__(25);
+	var _RouteUtils = __webpack_require__(24);
 
 	var _PatternUtils = __webpack_require__(45);
 
@@ -21439,7 +21274,7 @@ webpackJsonp([1,0],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _invariant = __webpack_require__(26);
+	var _invariant = __webpack_require__(25);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -21447,7 +21282,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RouteUtils = __webpack_require__(25);
+	var _RouteUtils = __webpack_require__(24);
 
 	var _getRouteParams = __webpack_require__(468);
 
@@ -22091,7 +21926,7 @@ webpackJsonp([1,0],[
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(27);
+	var PooledClass = __webpack_require__(26);
 	var ReactElement = __webpack_require__(15);
 
 	var emptyFunction = __webpack_require__(19);
@@ -22288,7 +22123,7 @@ webpackJsonp([1,0],[
 	var emptyObject = __webpack_require__(50);
 	var invariant = __webpack_require__(4);
 	var keyMirror = __webpack_require__(65);
-	var keyOf = __webpack_require__(28);
+	var keyOf = __webpack_require__(27);
 	var warning = __webpack_require__(8);
 
 	var MIXINS_KEY = keyOf({ mixins: null });
@@ -33302,7 +33137,7 @@ webpackJsonp([1,0],[
 
 	var _rangeCalendarCalendarPart2 = _interopRequireDefault(_rangeCalendarCalendarPart);
 
-	var _util = __webpack_require__(24);
+	var _util = __webpack_require__(23);
 
 	var _calendarTodayButton = __webpack_require__(126);
 
@@ -33592,7 +33427,7 @@ webpackJsonp([1,0],[
 
 	var _DateConstants2 = _interopRequireDefault(_DateConstants);
 
-	var _util = __webpack_require__(24);
+	var _util = __webpack_require__(23);
 
 	function isSameDay(one, two) {
 	  return one && two && one.compareToDay(two) === 0;
@@ -52525,9 +52360,7 @@ webpackJsonp([1,0],[
 
 	var _reactRouter = __webpack_require__(56);
 
-	var _sildebarMenus = __webpack_require__(152);
-
-	var _sildebarMenus2 = _interopRequireDefault(_sildebarMenus);
+	var _MenusAndRouts = __webpack_require__(549);
 
 	var _App = __webpack_require__(424);
 
@@ -52548,8 +52381,8 @@ webpackJsonp([1,0],[
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var browserHistory = (0, _createBrowserHistory2.default)();
-	var menuRouts = _sildebarMenus2.default.getRouts().routs;
-	var oriMenus = _sildebarMenus2.default.getRouts().oriMenus;
+	var menuRouts = _MenusAndRouts.MenuRouts.routs;
+	var oriMenus = _MenusAndRouts.MenuRouts.oriMenus;
 	/*
 	 * 监听地址栏改变
 	 * 可以用来处理左侧菜单状态 怎么作?
@@ -52575,8 +52408,8 @@ webpackJsonp([1,0],[
 	                }
 	            }
 	            /*
-	            * 页面首次进入(F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.)
-	            * */
+	             * 页面首次进入(F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.)
+	             * */
 	            var t = setInterval(function () {
 	                if (_sidebar) {
 	                    _sidebar.setState({
@@ -52658,7 +52491,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _antd = __webpack_require__(23);
+	var _antd = __webpack_require__(28);
 
 	var _Page = __webpack_require__(44);
 
@@ -52811,7 +52644,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _antd = __webpack_require__(23);
+	var _antd = __webpack_require__(28);
 
 	var _reactRouter = __webpack_require__(56);
 
@@ -52920,9 +52753,9 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _antd = __webpack_require__(23);
+	var _antd = __webpack_require__(28);
 
-	var _FAIcon = __webpack_require__(151);
+	var _FAIcon = __webpack_require__(152);
 
 	var _FAIcon2 = _interopRequireDefault(_FAIcon);
 
@@ -53048,7 +52881,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _antd = __webpack_require__(23);
+	var _antd = __webpack_require__(28);
 
 	var _Page = __webpack_require__(44);
 
@@ -53133,7 +52966,7 @@ webpackJsonp([1,0],[
 
 	var _Page2 = _interopRequireDefault(_Page);
 
-	var _antd = __webpack_require__(23);
+	var _antd = __webpack_require__(28);
 
 	var _reactRouter = __webpack_require__(56);
 
@@ -53357,7 +53190,7 @@ webpackJsonp([1,0],[
 
 	var _Page2 = _interopRequireDefault(_Page);
 
-	var _antd = __webpack_require__(23);
+	var _antd = __webpack_require__(28);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53460,11 +53293,9 @@ webpackJsonp([1,0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _antd = __webpack_require__(23);
+	var _antd = __webpack_require__(28);
 
-	var _sildebarMenus = __webpack_require__(152);
-
-	var _sildebarMenus2 = _interopRequireDefault(_sildebarMenus);
+	var _MenusAndRouts = __webpack_require__(549);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53472,7 +53303,7 @@ webpackJsonp([1,0],[
 	    displayName: 'Sidebar',
 	    getInitialState: function getInitialState() {
 	        _sidebar = this;
-	        var menus = _sildebarMenus2.default.getMenus(this.props.collapse);
+	        var menus = (0, _MenusAndRouts.getMenus)(this.props.collapse);
 	        return {
 	            current: menus.current,
 	            openKeys: menus.openKeys
@@ -53505,7 +53336,7 @@ webpackJsonp([1,0],[
 	                    onClose: this.onToggle,
 	                    style: { marginLeft: -8 },
 	                    mode: this.props.collapse ? 'vertical' : 'inline' },
-	                _sildebarMenus2.default.getMenus(this.props.collapse).menus
+	                (0, _MenusAndRouts.getMenus)(this.props.collapse).menus
 	            )
 	        );
 	    }
@@ -54725,7 +54556,7 @@ webpackJsonp([1,0],[
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(26);
+	var _invariant = __webpack_require__(25);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -54804,7 +54635,7 @@ webpackJsonp([1,0],[
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _invariant = __webpack_require__(26);
+	var _invariant = __webpack_require__(25);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -54812,7 +54643,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RouteUtils = __webpack_require__(25);
+	var _RouteUtils = __webpack_require__(24);
 
 	var _PropTypes = __webpack_require__(30);
 
@@ -54876,7 +54707,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _invariant = __webpack_require__(26);
+	var _invariant = __webpack_require__(25);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -54946,7 +54777,7 @@ webpackJsonp([1,0],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _invariant = __webpack_require__(26);
+	var _invariant = __webpack_require__(25);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -54954,7 +54785,7 @@ webpackJsonp([1,0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RouteUtils = __webpack_require__(25);
+	var _RouteUtils = __webpack_require__(24);
 
 	var _PropTypes = __webpack_require__(30);
 
@@ -55078,7 +54909,7 @@ webpackJsonp([1,0],[
 
 	var _historyLibCreateHashHistory2 = _interopRequireDefault(_historyLibCreateHashHistory);
 
-	var _RouteUtils = __webpack_require__(25);
+	var _RouteUtils = __webpack_require__(24);
 
 	var _RoutingContext = __webpack_require__(160);
 
@@ -55564,7 +55395,7 @@ webpackJsonp([1,0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _invariant = __webpack_require__(26);
+	var _invariant = __webpack_require__(25);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -55576,7 +55407,7 @@ webpackJsonp([1,0],[
 
 	var _historyLibUseBasename2 = _interopRequireDefault(_historyLibUseBasename);
 
-	var _RouteUtils = __webpack_require__(25);
+	var _RouteUtils = __webpack_require__(24);
 
 	var _useRoutes = __webpack_require__(83);
 
@@ -55639,7 +55470,7 @@ webpackJsonp([1,0],[
 
 	var _PatternUtils = __webpack_require__(45);
 
-	var _RouteUtils = __webpack_require__(25);
+	var _RouteUtils = __webpack_require__(24);
 
 	function getChildRoutes(route, location, callback) {
 	  if (route.childRoutes) {
@@ -55881,7 +55712,7 @@ webpackJsonp([1,0],[
 	var SyntheticCompositionEvent = __webpack_require__(514);
 	var SyntheticInputEvent = __webpack_require__(517);
 
-	var keyOf = __webpack_require__(28);
+	var keyOf = __webpack_require__(27);
 
 	var END_KEYCODES = [9, 13, 27, 32]; // Tab, Return, Esc, Space
 	var START_KEYCODE = 229;
@@ -56474,7 +56305,7 @@ webpackJsonp([1,0],[
 	var getEventTarget = __webpack_require__(95);
 	var isEventSupported = __webpack_require__(98);
 	var isTextInputElement = __webpack_require__(188);
-	var keyOf = __webpack_require__(28);
+	var keyOf = __webpack_require__(27);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -56969,7 +56800,7 @@ webpackJsonp([1,0],[
 
 	'use strict';
 
-	var keyOf = __webpack_require__(28);
+	var keyOf = __webpack_require__(27);
 
 	/**
 	 * Module that is injectable into `EventPluginHub`, that specifies a
@@ -57007,7 +56838,7 @@ webpackJsonp([1,0],[
 	var SyntheticMouseEvent = __webpack_require__(60);
 
 	var ReactMount = __webpack_require__(12);
-	var keyOf = __webpack_require__(28);
+	var keyOf = __webpack_require__(27);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 	var getFirstReactDOM = ReactMount.getFirstReactDOM;
@@ -57339,7 +57170,7 @@ webpackJsonp([1,0],[
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(27);
+	var PooledClass = __webpack_require__(26);
 
 	var assign = __webpack_require__(7);
 	var getTextContentAccessor = __webpack_require__(187);
@@ -58668,7 +58499,7 @@ webpackJsonp([1,0],[
 	var escapeTextContentForBrowser = __webpack_require__(63);
 	var invariant = __webpack_require__(4);
 	var isEventSupported = __webpack_require__(98);
-	var keyOf = __webpack_require__(28);
+	var keyOf = __webpack_require__(27);
 	var setInnerHTML = __webpack_require__(64);
 	var setTextContent = __webpack_require__(99);
 	var shallowEqual = __webpack_require__(194);
@@ -60906,7 +60737,7 @@ webpackJsonp([1,0],[
 
 	var EventListener = __webpack_require__(189);
 	var ExecutionEnvironment = __webpack_require__(10);
-	var PooledClass = __webpack_require__(27);
+	var PooledClass = __webpack_require__(26);
 	var ReactInstanceHandles = __webpack_require__(38);
 	var ReactMount = __webpack_require__(12);
 	var ReactUpdates = __webpack_require__(18);
@@ -61843,7 +61674,7 @@ webpackJsonp([1,0],[
 	'use strict';
 
 	var CallbackQueue = __webpack_require__(84);
-	var PooledClass = __webpack_require__(27);
+	var PooledClass = __webpack_require__(26);
 	var ReactBrowserEventEmitter = __webpack_require__(57);
 	var ReactDOMFeatureFlags = __webpack_require__(168);
 	var ReactInputSelection = __webpack_require__(177);
@@ -62198,7 +62029,7 @@ webpackJsonp([1,0],[
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(27);
+	var PooledClass = __webpack_require__(26);
 	var CallbackQueue = __webpack_require__(84);
 	var Transaction = __webpack_require__(61);
 
@@ -62543,7 +62374,7 @@ webpackJsonp([1,0],[
 
 	var getActiveElement = __webpack_require__(192);
 	var isTextInputElement = __webpack_require__(188);
-	var keyOf = __webpack_require__(28);
+	var keyOf = __webpack_require__(27);
 	var shallowEqual = __webpack_require__(194);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
@@ -62792,7 +62623,7 @@ webpackJsonp([1,0],[
 	var emptyFunction = __webpack_require__(19);
 	var getEventCharCode = __webpack_require__(93);
 	var invariant = __webpack_require__(4);
-	var keyOf = __webpack_require__(28);
+	var keyOf = __webpack_require__(27);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -66335,6 +66166,163 @@ webpackJsonp([1,0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "9dc563561e8bb3351418ca30c3338fe9.jpg";
+
+/***/ },
+/* 548 */,
+/* 549 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.MenuRouts = undefined;
+	exports.getMenus = getMenus;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _antd = __webpack_require__(28);
+
+	var _FAIcon = __webpack_require__(152);
+
+	var _FAIcon2 = _interopRequireDefault(_FAIcon);
+
+	var _reactRouter = __webpack_require__(56);
+
+	var _MyForm = __webpack_require__(431);
+
+	var _MyForm2 = _interopRequireDefault(_MyForm);
+
+	var _Dashboard = __webpack_require__(427);
+
+	var _Dashboard2 = _interopRequireDefault(_Dashboard);
+
+	var _MyTime = __webpack_require__(432);
+
+	var _MyTime2 = _interopRequireDefault(_MyTime);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SubMenu = _antd.Menu.SubMenu;
+
+	var openAll = false;
+	var oriMenus = [//左侧菜单与路由公用的数据
+	{ key: '1', text: '主面板', icon: 'fa-tachometer' /*, open: true*/ }, { key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/path: 'dashboard1', component: _Dashboard2.default }, { key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list' }, { key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm1', component: _MyForm2.default }, { key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime1', component: _MyTime2.default }, { key: '2', text: '商务查询', icon: 'fa-binoculars' }, { key: '21', parentKey: '2', text: '仪表盘222', icon: 'fa-arrow-right', path: 'dashboard2', component: _Dashboard2.default }, { key: '22', parentKey: '2', text: '三级导航222', icon: 'fa-th-list' }, { key: '221', parentKey: '22', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm2', component: _MyForm2.default }, { key: '222', parentKey: '22', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime2', component: _MyTime2.default }, { key: '3', text: '用户列表', icon: 'fa-th-list' }, { key: '31', parentKey: '3', text: '仪表盘', icon: 'fa-arrow-right', path: 'dashboard3', component: _Dashboard2.default }, { key: '32', parentKey: '3', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm3', component: _MyForm2.default }, { key: '33', parentKey: '3', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime3', component: _MyTime2.default }, { key: '4', text: '我的', icon: 'fa-user' }, { key: '41', parentKey: '4', text: '我的邮件', icon: 'fa-arrow-right', path: 'dashboard4', component: _Dashboard2.default }, { key: '42', parentKey: '4', text: '我的提醒', icon: 'fa-arrow-right', path: 'myForm4', component: _MyForm2.default }, { key: '43', parentKey: '4', text: '个人设置', icon: 'fa-arrow-right', path: 'myTime4', component: _MyTime2.default }];
+
+	/*
+	 *根据sildebarMenus构造routes。
+	 *rows:菜单数据。
+	 */
+	function convert(rows, collapse) {
+	    function exists(rows, parentKey) {
+	        for (var i = 0; i < rows.length; i++) {
+	            if (rows[i].key == parentKey) return true;
+	        }
+	        return false;
+	    }
+
+	    var menus = [];
+	    var nodes = [];
+	    var openKeys = [];
+	    var current = '';
+	    var oriMenus = {};
+	    // 获得所有顶级菜单 处理菜单初始化状态
+	    for (var i = 0; i < rows.length; i++) {
+	        var row = rows[i];
+	        row.subMenus = []; //存放当前菜单的子菜单
+	        oriMenus[row.key] = row;
+	        if (openAll) {
+	            if (!row.path) {
+	                openKeys.push(row.key);
+	            }
+	        } else if (row.open) {
+	            openKeys.push(row.key);
+	        }
+	        if (row.current) {
+	            current = row.key;
+	        }
+	        if (!exists(rows, row.parentKey)) {
+	            nodes.push(row);
+	            menus.push(_react2.default.createElement(
+	                SubMenu,
+	                { key: row.key, title: _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        _react2.default.createElement(_FAIcon2.default, { type: row.icon }),
+	                        collapse ? '' : row.text
+	                    ) },
+	                row.subMenus
+	            ));
+	        }
+	    }
+	    var toDo = [];
+	    for (var i = 0; i < nodes.length; i++) {
+	        toDo.push(nodes[i]);
+	    }
+	    while (toDo.length) {
+	        var node = toDo.shift(); // 父菜单
+	        var subMenus = node.subMenus;
+	        // 处理子菜单
+	        for (var i = 0; i < rows.length; i++) {
+	            var row = rows[i];
+	            if (row.parentKey == node.key) {
+	                var child = row;
+	                if (child.path) {
+	                    //含有path,就说明没有子菜单了.
+	                    subMenus.push(_react2.default.createElement(
+	                        _antd.Menu.Item,
+	                        { key: child.key },
+	                        _react2.default.createElement(_FAIcon2.default, { type: child.icon }),
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: child.path, activeClassName: 'active' },
+	                            child.text
+	                        )
+	                    ));
+	                } else {
+	                    // 含有子菜单
+	                    subMenus.push(_react2.default.createElement(
+	                        SubMenu,
+	                        { key: child.key, title: _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                _react2.default.createElement(_FAIcon2.default, { type: child.icon }),
+	                                child.text
+	                            ) },
+	                        child.subMenus
+	                    ));
+	                }
+	                if (node.childRoutes) {
+	                    node.childRoutes.push(child);
+	                } else {
+	                    node.childRoutes = [child];
+	                }
+	                toDo.push(child);
+	            }
+	        }
+	    }
+	    return {
+	        routs: nodes, //具有层级关系的路由
+	        menus: menus,
+	        oriMenus: oriMenus,
+	        openKeys: openKeys,
+	        current: current
+	    };
+	} // end or  convert(rows)
+
+	var collapseData = convert(oriMenus, true);
+	var noCollapseData = convert(oriMenus, false);
+
+	function getMenus(collapse) {
+	    return collapse ? collapseData : noCollapseData;
+	}
+	var MenuRouts = exports.MenuRouts = {
+	    routs: noCollapseData.routs,
+	    oriMenus: oriMenus
+	};
 
 /***/ }
 ]);

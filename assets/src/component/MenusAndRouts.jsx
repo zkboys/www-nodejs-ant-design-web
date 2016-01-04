@@ -10,7 +10,7 @@ import MyTime from '../component/mytime/MyTime'
 const openAll = false;
 var oriMenus = [//左侧菜单与路由公用的数据
     {key: '1', text: '主面板', icon: 'fa-tachometer'/*, open: true*/},
-    {key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right',/* current: true,*/ path: 'dashboard1', component: Dashboard},
+    {key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/ path: 'dashboard1', component: Dashboard},
     {key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list'},
     {key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm1', component: MyForm},
     {key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime1', component: MyTime},
@@ -118,25 +118,14 @@ function convert(rows, collapse) {
         current: current
     };
 }// end or  convert(rows)
+
 var collapseData = convert(oriMenus, true);
 var noCollapseData = convert(oriMenus, false);
-function getMenus(collapse) {
-    var data = collapse ? collapseData : noCollapseData;
-    return {
-        routs: data.routs,
-        menus: data.menus,
-        oriMenus: data.oriMenus,
-        openKeys: data.openKeys,
-        current: data.current
-    }
+
+export function getMenus(collapse) {
+    return collapse ? collapseData : noCollapseData;
 }
-function getRouts() {
-    return {
-        routs: noCollapseData.routs,
-        oriMenus: oriMenus
-    };
-}
-export default {
-    getMenus: getMenus,
-    getRouts: getRouts
+export var MenuRouts = {
+    routs: noCollapseData.routs,
+    oriMenus: oriMenus
 };

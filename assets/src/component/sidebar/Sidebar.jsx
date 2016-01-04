@@ -2,11 +2,11 @@ import './style.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Menu} from 'antd';
-import MenusAndRouts from '../sildebarMenus'
+import {getMenus} from '../MenusAndRouts'
 const Sidebar = React.createClass({
     getInitialState() {
         _sidebar = this;
-        var menus = MenusAndRouts.getMenus(this.props.collapse);
+        var menus = getMenus(this.props.collapse);
         return {
             current: menus.current,
             openKeys: menus.openKeys
@@ -36,7 +36,7 @@ const Sidebar = React.createClass({
                       onClose={this.onToggle}
                       style={{marginLeft:-8}}
                       mode={this.props.collapse?'vertical':'inline'}>
-                    {MenusAndRouts.getMenus(this.props.collapse).menus}
+                    {getMenus(this.props.collapse).menus}
                 </Menu>
             </div>
         );
