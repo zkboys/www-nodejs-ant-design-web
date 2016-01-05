@@ -3,7 +3,6 @@ import { Menu, Icon } from 'antd';
 import FAIcon from './faicon/FAIcon';
 import {Link} from 'react-router'
 const SubMenu = Menu.SubMenu;
-
 import MyForm from '../component/myform/MyForm'
 import Dashboard from '../component/dashboard/Dashboard'
 import MyTime from '../component/mytime/MyTime'
@@ -39,7 +38,7 @@ var oriMenus = [//左侧菜单与路由公用的数据
  */
 function convert(rows, collapse) {
     function exists(rows, parentKey) {
-        for (var i = 0; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
             if (rows[i].key == parentKey) return true;
         }
         return false;
@@ -51,8 +50,8 @@ function convert(rows, collapse) {
     var current = '';
     var oriMenus = {};
     // 获得所有顶级菜单 处理菜单初始化状态
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
+    for (let i = 0; i < rows.length; i++) {
+        let row = rows[i];
         row.subMenus = [];//存放当前菜单的子菜单
         oriMenus[row.key] = row;
         if (openAll) {
@@ -75,15 +74,15 @@ function convert(rows, collapse) {
         }
     }
     var toDo = [];
-    for (var i = 0; i < nodes.length; i++) {
+    for (let i = 0; i < nodes.length; i++) {
         toDo.push(nodes[i]);
     }
     while (toDo.length) {
         var node = toDo.shift();// 父菜单
         var subMenus = node.subMenus;
         // 处理子菜单
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
+        for (let i = 0; i < rows.length; i++) {
+            let row = rows[i];
             if (row.parentKey == node.key) {
                 var child = row;
                 if (child.path) {//含有path,就说明没有子菜单了.

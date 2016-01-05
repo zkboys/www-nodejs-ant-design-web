@@ -26,11 +26,12 @@ var hideLoading = null;
  *
  *
  * */
+
 /*
  * 组件是 React 里复用代码最佳方式，但是有时一些复杂的组件间也需要共用一些功能。
  * 有时会被称为 跨切面关注点。React 使用 mixins 来解决这类问题。
  * */
-var SetIntervalMixin = {
+let SetIntervalMixin = {
     getInitialState(){
         return {
             loadingClass: ''
@@ -53,17 +54,18 @@ var SetIntervalMixin = {
             this.hideLoading = null;
         }
     },
-    get(options){
+    get(url, {data={},end=function () {
+    }}){//带有默认值的函数,写的好难看...
         let that = this;
         that.hideLoading = message.loading('正在加载...', 0);
         that.setState({
             loadingClass: 'loading'
         });
         that.req = Request
-            .get(options.url)
-            .query(options.data)
+            .get(url)
+            .query(data)
             .end(function (err, res) {
-                options.end(err, res);
+                end(err, res);
                 if (that.hideLoading) {
                     that.hideLoading();
                     that.hideLoading = null;
@@ -135,10 +137,9 @@ const Dashboard = React.createClass({
         console.log('componentDidMount');
         //console.log(this.getDOMNode());// 过时了
         //console.log(ReactDOM.findDOMNode(this));
-        this.setInterval(this.tick, 1000); // 调用 mixin 的方法
+        this.setInterval(this.tick, 5000); // 调用 mixin 的方法
         let that = this;
-        that.get({
-            url: '/dashboard.json',
+        that.get('/dashboard.json', {
             data: {query: 'Manny', range: '1..5', order: 'desc'},
             end(err, res) {
                 console.log(err, res);
@@ -194,9 +195,7 @@ const Dashboard = React.createClass({
     },
     handleClick(){
         let that = this;
-        that.get({
-            url: '/dashboard.json',
-            data: {query: 'Manny', range: '1..5', order: 'desc'},
+        that.get('/dashboard.json', {
             end(err, res) {
                 console.log(err, res);
                 console.log(res.body);
