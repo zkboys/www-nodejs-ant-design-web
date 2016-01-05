@@ -5,6 +5,10 @@ var webpack = require('webpack');
  * 基于不同模式，区分配置
  * */
 var configs = {
+    "devserver": {
+        "path": '../public',
+        "publicPath": 'http://localhost:8086/s/'
+    },
     "development": {
         "path": '../public',
         "publicPath": '/s/'

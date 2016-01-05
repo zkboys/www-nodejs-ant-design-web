@@ -10,7 +10,7 @@ sudo npm install webpack -g
 sudo npm install webpack-dev-server -g
 
 npm install
-npm run start
+npm run dev-server
 ```
 
 ##build
@@ -55,3 +55,33 @@ webpack.config.js中使用argv报错：
 Option '-d' not supported. Trigger 'webpack -h' for more details.
 目前自己写了个循环处理传入的参数
 ```
+
+##dev-server
+结合webpack-dev-server 可以做到代码改动,浏览器自动刷新.
+nodejs为例:
+
+- 后台正式服务器添加一个启动模式:
+```
+exports.devserver = {
+    static_url_prefix: 'http://localhost:8086/s/' //这个指向webpack-dev-server服务器
+};
+```
+- 前端webpack添加一个启动模式:
+```
+"devserver": {
+    "path": '../public',
+    "publicPath": 'http://localhost:8086/s/' //这个指向webpack-dev-server服务器
+},
+```
+- webpack-dev-server 启动方式:(以devserver方式启动)
+```
+webpack-dev-server --port 8086  --cfg.clean=false --cfg.runmod=devserver --progress --inline
+```
+- 后端启动方式:(以devserver方式启动)
+```
+PORT=3001 NODE_ENV=devserver npm start
+```
+- 浏览器输入下面连接访问,就可以达到热刷新,尤其适合刷屏 调整页面细节情况.
+```
+http://localhost:3001/    
+```    
