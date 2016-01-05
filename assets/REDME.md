@@ -58,6 +58,7 @@ Option '-d' not supported. Trigger 'webpack -h' for more details.
 
 ##dev-server
 结合webpack-dev-server 可以做到代码改动,浏览器自动刷新.
+*使用webpack-dev-server 作为静态服务器,以--inline方式启动,js中会添加热刷新相关的代码.前后端各添加一个开发服务器的配置,对项目基本无侵入.*
 nodejs为例:
 
 - 后台正式服务器添加一个启动模式:
