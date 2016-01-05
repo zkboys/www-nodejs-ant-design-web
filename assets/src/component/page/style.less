@@ -4,14 +4,30 @@
   right: 0;
   top: 0;
   bottom: 0;
+  &.loading {
+    filter: blur(1px);
+    .admin-page-loading {
+      display: block;
+    }
+  }
+  .admin-page-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 200;
+  }
   .admin-page-header {
     position: absolute;
-    top:0;
-    left:5px;
-    right:20px;
-    padding:10px 5px 5px 10px;
+    top: 0;
+    left: 5px;
+    right: 20px;
+    padding: 10px 5px 5px 10px;
     border-bottom: 1px solid #eee;
-    background:#fff;
+    background: #fff;
     z-index: 99;
     & > .ant-breadcrumb {
       float: right;
@@ -27,12 +43,9 @@
     width: 100%;
     padding-top: 47px;
     overflow: auto;
-    .admin-page-content-inner{
-      min-width:768px;
-      padding:10px;
-      &.loading{
-        filter:blur(1px);
-      }
+    .admin-page-content-inner {
+      min-width: 768px;
+      padding: 10px;
     }
   }
 }
