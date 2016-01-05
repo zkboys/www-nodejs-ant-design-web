@@ -42,7 +42,7 @@
     "webpack": "~1.12.2"
   },
   "scripts": {
-    "open-browser": "xdg-open http://localhost:8086/webpack-dev-server/",
+    "open-browser": "xdg-open http://localhost:3001/",
     "watch": "webpack -w --progress --colors",
     "dev-server": " npm run open-browser && webpack-dev-server --port 8086  --cfg.clean=false --cfg.runmod=devserver --progress --inline",
     "build-dev": "webpack -d -p --profile --progress --colors --display-modules --cfg.runmod=development",
