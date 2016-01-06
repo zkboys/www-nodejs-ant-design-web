@@ -3,6 +3,7 @@ import { Router} from 'react-router'
 import {MenuRouts} from './MenusAndRouts'
 import App from '../component/App'
 import Home from '../component/home/Home'
+import Sidebar from '../component/sidebar/Sidebar'
 import Error404 from '../component/error/Error404'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
@@ -40,16 +41,14 @@ browserHistory.listen(function (data) {
      * 页面首次进入(F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.)
      * */
     var t = setInterval(function () {
-        if (_sidebar) {
-            _sidebar.setState({
+        if (Sidebar) {
+            Sidebar.setSidebarState({
                 current: current,
                 openKeys: openKeys
             });
             clearInterval(t);
         }
     }, 100);
-    console.log(data.pathname);
-    console.log(openKeys);
 });
 const routes = {
     path: '/',
