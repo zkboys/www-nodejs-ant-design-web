@@ -36,20 +36,7 @@ browserHistory.listen(function (data) {
         if (oriMenus[i].path == data.pathname) {
             var menu = oriMenus[i];
             current = menu.key;
-            while (true) {
-                var isContinueFind = false;
-                for (let j = 0; j < oriMenus.length; j++) {
-                    if (oriMenus[j].key == menu.parentKey) {
-                        openKeys.push(oriMenus[j].key);
-                        menu = oriMenus[j];
-                        isContinueFind = true;
-                        break;
-                    }
-                }
-                if (!isContinueFind) {
-                    break;
-                }
-            }
+            openKeys = menu.parentKeys;
             break;// if find de menu break the loop
         }
     }

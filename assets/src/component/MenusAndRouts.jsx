@@ -20,6 +20,9 @@ var menusAndRouts = [
     {key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list'},
     {key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: '/myForm1', component: MyForm},
     {key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: '/myTime1', component: MyTime},
+    {key: '123', parentKey: '12', text: '四级导航', icon: 'fa-th-list'},
+    {key: '1231', parentKey: '123', text: '我的表单444', icon: 'fa-arrow-right', path: '/myForm14', component: MyForm},
+    {key: '1232', parentKey: '123', text: '我的时间444', icon: 'fa-arrow-right', path: '/myTime14', component: MyTime},
 
     {key: '2', text: '商务查询', icon: 'fa-binoculars'},
     {key: '21', parentKey: '2', text: '仪表盘222', icon: 'fa-arrow-right', path: '/dashboard2', component: Dashboard},
@@ -43,8 +46,8 @@ var menusAndRouts = [
  * 根据menusAndRouts数据构造出菜单数据和路由数据。
  * rows：菜单数据。
  * collapse：菜单状态
- *           true：收起（小菜单）状态
- *           false：展开（大菜单）状态
+ *           true ：收起（小菜单，顶级菜单无text）状态
+ *           false：展开（大菜单，顶级菜单有text）状态
  */
 function convert(rows, collapse) {
     function exists(rows, parentKey) {
@@ -58,12 +61,11 @@ function convert(rows, collapse) {
     var routs = [];
     var openKeys = [];
     var current = '';
-    var oriMenus = {};
     // 获得所有顶级菜单 处理菜单初始化状态
     for (let i = 0; i < rows.length; i++) {
         let row = rows[i];
         row.subMenus = [];//存放当前菜单的子菜单
-        oriMenus[row.key] = row;
+        row.parentKeys = []; //存放当前菜单的所有父级菜单
         if (openAll) {
             if (!row.path) {
                 openKeys.push(row.key);
@@ -95,6 +97,7 @@ function convert(rows, collapse) {
             let row = rows[i];
             if (row.parentKey == node.key) {
                 var child = row;
+                child.parentKeys.push(...node.parentKeys, node.key);
                 if (child.path) {//含有path,就说明没有子菜单了.
                     subMenus.push(
                         <Menu.Item key={child.key}>
@@ -122,7 +125,6 @@ function convert(rows, collapse) {
     return {
         menus,//等同于"menus":menus 或者 menus:menus ES6对象属性的简写方式。
         routs,//具有层级关系的路由
-        oriMenus,
         openKeys,
         current
     };
