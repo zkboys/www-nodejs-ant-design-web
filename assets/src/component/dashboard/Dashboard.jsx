@@ -137,7 +137,7 @@ const Dashboard = React.createClass({
         console.log('componentDidMount');
         //console.log(this.getDOMNode());// 过时了
         //console.log(ReactDOM.findDOMNode(this));
-        //this.setInterval(this.tick, 5000); // 调用 mixin 的方法
+        this.setInterval(this.tick, 1000); // 调用 mixin 的方法
         let that = this;
         that.get('/dashboard.json', {
             data: {query: 'Manny', range: '1..5', order: 'desc'},
@@ -225,11 +225,9 @@ const Dashboard = React.createClass({
                             <Button>次按钮</Button>
                             <Button type="ghost">幽灵按钮</Button>
                             <Button type="dashed">虚线按钮</Button>
-                            <p>npm run server 运行一个server 并且打开默认浏览器！</p>
+                            <p>npm run dev-server 运行一个静态文件服务器 并且打开默认浏览器！</p>
                             <p>开发过程中，修改文件，浏览器会自动刷新，特别适合双屏/大屏开发！</p>
                             <p>随着项目复杂度的增加，不知道会不会慢。目前的相应速度还是可以接受的。</p>
-                            <p>希望不卡吧。哈哈。写起来真的就挺爽了。一保存浏览器就自动刷新了。想你的时候，你在哪里？</p>
-                            <p>如何优化构建速度？哈哈快一些</p>
                             <p>{this.props.test}</p>
                             <p>
                                 React has been running for {this.state.seconds} seconds.
