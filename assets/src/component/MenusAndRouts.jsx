@@ -55,7 +55,7 @@ function convert(rows, collapse) {
     }
 
     var menus = [];
-    var nodes = [];
+    var routs = [];
     var openKeys = [];
     var current = '';
     var oriMenus = {};
@@ -75,7 +75,7 @@ function convert(rows, collapse) {
             current = row.key;
         }
         if (!exists(rows, row.parentKey)) {
-            nodes.push(row);
+            routs.push(row);
             menus.push(
                 <SubMenu key={row.key} title={<span><FAIcon type={row.icon} />{collapse?'':row.text}</span>}>
                     {row.subMenus}
@@ -84,8 +84,8 @@ function convert(rows, collapse) {
         }
     }
     var toDo = [];
-    for (let i = 0; i < nodes.length; i++) {
-        toDo.push(nodes[i]);
+    for (let i = 0; i < routs.length; i++) {
+        toDo.push(routs[i]);
     }
     while (toDo.length) {
         var node = toDo.shift();// 父菜单
@@ -120,11 +120,11 @@ function convert(rows, collapse) {
 
     }
     return {
-        routs: nodes,//具有层级关系的路由
-        menus: menus,
-        oriMenus: oriMenus,
-        openKeys: openKeys,
-        current: current
+        menus,//等同于"menus":menus 或者 menus:menus ES6对象属性的简写方式。
+        routs,//具有层级关系的路由
+        oriMenus,
+        openKeys,
+        current
     };
 }// end of convert(rows, collapse)
 
