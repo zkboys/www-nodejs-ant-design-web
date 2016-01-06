@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import {message, Breadcrumb, Button } from 'antd'
 import Page from '../page/Page';
 import Request from '../request/Request';
-var hideLoading = null;
 /*
  * 更新state之后触发的方法:
  * shouldComponentUpdate
