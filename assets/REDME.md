@@ -1,22 +1,23 @@
 #webpack示例项目
-*基于ant.design*
-##evn
+*基于node.js 和 ant.design*
+##需要node.js版本
 ```
 node 4.x
 ```
-##dev
+##前端环境安装启动
 ```
 sudo npm install webpack -g
 sudo npm install webpack-dev-server -g
 
+cd assets
 npm install
-npm run dev-server
+npm run watch #启动webpack的watch模式
+npm run build-dev #构建development（开发）环境前端代码
+npm run build-test #构建test（测试）环境前端代码
+npm run build-pro #构建production（生产）环境前端代码
+npm run dev-server #开启前端静态服务器，结合后端服务器可以做到浏览器自动刷新，方便开发。详见下面说明
 ```
 
-##build
-```
-npm run build-dev  //build-test  build-pro
-```
 ##约定
 - 每个页面为一个单独组件,每个页面所用到的资源都放到一个文件夹下面,比如home
     ```
@@ -26,18 +27,13 @@ npm run build-dev  //build-test  build-pro
         -home.jsx    
         -style.less    
     ```
-- 所有的get请求最终没有被截获的都打到index.html
-    
-##需要学习的内容
-- React基础语法
-- React Router插件
-- React Flux应用架构
+- 所有的get请求最终没有被截获的，都打到index.html
 
 ##待解决问题
 - 执行构建有些慢
-- 根据地址定位左侧菜单 目前使用全局持有菜单句柄的方法，有点恶心，有没有好一点的方法？
+- 根据地址定位左侧菜单 目前使用全局持有菜单句柄的方法，有点恶心，有没有好一点的方法？ done
 - 根据左侧菜单修改右上角对应的面包屑
-- 由于这个是一个单页面应用,从新发送ajax请求的时候,一些ajax请求需要被打断,否则用户网络情况不好,点击了多个按钮,最终不能确定哪个ajax会被执行,会导致页面错乱问题.
+- 由于这个是一个单页面应用,从新发送ajax请求的时候,一些ajax请求需要被打断,否则用户网络情况不好,点击了多个按钮,最终不能确定哪个ajax会被执行,会导致页面错乱问题. done
 - 组件之间的通信
     - 父级->子级 props
     - 子级->父级 props传递事件?
@@ -59,6 +55,7 @@ Option '-d' not supported. Trigger 'webpack -h' for more details.
 ##dev-server
 结合webpack-dev-server 可以做到代码改动,浏览器自动刷新.
 *使用webpack-dev-server 作为静态服务器,以--inline方式启动,js中会添加热刷新相关的代码.前后端各添加一个开发服务器的配置,对项目基本无侵入.*
+*注意前端静态服务器的端口，硬编码方式，多处有对应。*
 nodejs为例:
 
 - 后台正式服务器添加一个启动模式:
@@ -75,10 +72,12 @@ exports.devserver = {
 },
 ```
 - webpack-dev-server 启动方式:(以devserver方式启动)
+*可以在assets目录中直接执行`npm run dev-server`*    
 ```
 webpack-dev-server --port 8086  --cfg.clean=false --cfg.runmod=devserver --progress --inline
 ```
 - 后端启动方式:(以devserver方式启动)
+*可以在根目录中直接执行`npm run dev-server`*
 ```
 PORT=3001 NODE_ENV=devserver npm start
 ```
