@@ -9,26 +9,26 @@ import MyTime from '../component/mytime/MyTime'
 const openAll = false;
 var oriMenus = [//左侧菜单与路由公用的数据
     {key: '1', text: '主面板', icon: 'fa-tachometer'/*, open: true*/},
-    {key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/ path: 'dashboard1', component: Dashboard},
+    {key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/ path: '/dashboard1', component: Dashboard},
     {key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list'},
-    {key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm1', component: MyForm},
-    {key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime1', component: MyTime},
+    {key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: '/myForm1', component: MyForm},
+    {key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: '/myTime1', component: MyTime},
 
     {key: '2', text: '商务查询', icon: 'fa-binoculars'},
-    {key: '21', parentKey: '2', text: '仪表盘222', icon: 'fa-arrow-right', path: 'dashboard2', component: Dashboard},
+    {key: '21', parentKey: '2', text: '仪表盘222', icon: 'fa-arrow-right', path: '/dashboard2', component: Dashboard},
     {key: '22', parentKey: '2', text: '三级导航222', icon: 'fa-th-list'},
-    {key: '221', parentKey: '22', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm2', component: MyForm},
-    {key: '222', parentKey: '22', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime2', component: MyTime},
+    {key: '221', parentKey: '22', text: '我的表单', icon: 'fa-arrow-right', path: '/myForm2', component: MyForm},
+    {key: '222', parentKey: '22', text: '我的时间', icon: 'fa-arrow-right', path: '/myTime2', component: MyTime},
 
     {key: '3', text: '用户列表', icon: 'fa-th-list'},
-    {key: '31', parentKey: '3', text: '仪表盘', icon: 'fa-arrow-right', path: 'dashboard3', component: Dashboard},
-    {key: '32', parentKey: '3', text: '我的表单', icon: 'fa-arrow-right', path: 'myForm3', component: MyForm},
-    {key: '33', parentKey: '3', text: '我的时间', icon: 'fa-arrow-right', path: 'myTime3', component: MyTime},
+    {key: '31', parentKey: '3', text: '仪表盘', icon: 'fa-arrow-right', path: '/dashboard3', component: Dashboard},
+    {key: '32', parentKey: '3', text: '我的表单', icon: 'fa-arrow-right', path: '/myForm3', component: MyForm},
+    {key: '33', parentKey: '3', text: '我的时间', icon: 'fa-arrow-right', path: '/myTime3', component: MyTime},
 
     {key: '4', text: '我的', icon: 'fa-user'},
-    {key: '41', parentKey: '4', text: '我的邮件', icon: 'fa-arrow-right', path: 'dashboard4', component: Dashboard},
-    {key: '42', parentKey: '4', text: '我的提醒', icon: 'fa-arrow-right', path: 'myForm4', component: MyForm},
-    {key: '43', parentKey: '4', text: '个人设置', icon: 'fa-arrow-right', path: 'myTime4', component: MyTime}
+    {key: '41', parentKey: '4', text: '我的邮件', icon: 'fa-arrow-right', path: '/dashboard4', component: Dashboard},
+    {key: '42', parentKey: '4', text: '我的提醒', icon: 'fa-arrow-right', path: '/myForm4', component: MyForm},
+    {key: '43', parentKey: '4', text: '个人设置', icon: 'fa-arrow-right', path: '/myTime4', component: MyTime}
 
 ];
 

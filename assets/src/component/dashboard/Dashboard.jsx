@@ -137,7 +137,7 @@ const Dashboard = React.createClass({
         console.log('componentDidMount');
         //console.log(this.getDOMNode());// 过时了
         //console.log(ReactDOM.findDOMNode(this));
-        this.setInterval(this.tick, 5000); // 调用 mixin 的方法
+        //this.setInterval(this.tick, 5000); // 调用 mixin 的方法
         let that = this;
         that.get('/dashboard.json', {
             data: {query: 'Manny', range: '1..5', order: 'desc'},

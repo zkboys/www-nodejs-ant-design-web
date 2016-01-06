@@ -13,40 +13,43 @@ var oriMenus = MenuRouts.oriMenus;
  * 可以用来处理左侧菜单状态 怎么作?
  * */
 browserHistory.listen(function (data) {
-    for (var i = 0; i < oriMenus.length; i++) {
-        if ('/' + oriMenus[i].path == data.pathname) {
+    var openKeys = [];
+    var current = '';
+    for (let i = 0; i < oriMenus.length; i++) {
+        if (oriMenus[i].path == data.pathname) {
             var menu = oriMenus[i];
-            var paths = [];
-            var current = menu.key;
+            current = menu.key;
             while (true) {
-                var isFind = false;
-                for (var i = 0; i < oriMenus.length; i++) {
-                    if (oriMenus[i].key == menu.parentKey) {
-                        paths.push(oriMenus[i].key);
-                        menu = oriMenus[i];
-                        isFind = true;
+                var isContinueFind = false;
+                for (let j = 0; j < oriMenus.length; j++) {
+                    if (oriMenus[j].key == menu.parentKey) {
+                        openKeys.push(oriMenus[j].key);
+                        menu = oriMenus[j];
+                        isContinueFind = true;
                         break;
                     }
                 }
-                if (!isFind) {
+                if (!isContinueFind) {
                     break;
                 }
             }
-            /*
-             * 页面首次进入(F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.)
-             * */
-            var t = setInterval(function () {
-                if (_sidebar) {
-                    _sidebar.setState({
-                        current: current,
-                        openKeys: paths
-                    });
-                    clearInterval(t);
-                }
-            }, 100);
             break;// if find de menu break the loop
         }
     }
+    /*
+     * 页面首次进入(F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.)
+     * */
+    var t = setInterval(function () {
+        if (_sidebar) {
+            _sidebar.setState({
+                current: current,
+                openKeys: openKeys
+            });
+            clearInterval(t);
+        }
+    }, 100);
+    console.log(data.pathname);
+    console.log(openKeys);
 });
 const routes = {
     path: '/',
