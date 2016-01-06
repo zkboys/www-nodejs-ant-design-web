@@ -7,7 +7,14 @@ import MyForm from '../component/myform/MyForm'
 import Dashboard from '../component/dashboard/Dashboard'
 import MyTime from '../component/mytime/MyTime'
 const openAll = false;
-var oriMenus = [//左侧菜单与路由公用的数据
+/*
+ * 左侧菜单与路由公用的数据
+ * open：是否展开
+ * current：是否是当前菜单
+ * path：对应地址
+ * component：对应渲染的组件
+ * */
+var menusAndRouts = [
     {key: '1', text: '主面板', icon: 'fa-tachometer'/*, open: true*/},
     {key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/ path: '/dashboard1', component: Dashboard},
     {key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list'},
@@ -33,8 +40,11 @@ var oriMenus = [//左侧菜单与路由公用的数据
 ];
 
 /*
- *根据sildebarMenus构造routes。
- *rows:菜单数据。
+ * 根据menusAndRouts数据构造出菜单数据和路由数据。
+ * rows：菜单数据。
+ * collapse：菜单状态
+ *           true：收起（小菜单）状态
+ *           false：展开（大菜单）状态
  */
 function convert(rows, collapse) {
     function exists(rows, parentKey) {
@@ -116,15 +126,12 @@ function convert(rows, collapse) {
         openKeys: openKeys,
         current: current
     };
-}// end or  convert(rows)
+}// end of convert(rows, collapse)
 
-var collapseData = convert(oriMenus, true);
-var noCollapseData = convert(oriMenus, false);
-
+var collapseData = convert(menusAndRouts, true);
+var noCollapseData = convert(menusAndRouts, false);
+export var menuRouts = noCollapseData.routs;
+export var oriMenus = menusAndRouts;
 export function getMenus(collapse) {
     return collapse ? collapseData : noCollapseData;
 }
-export var MenuRouts = {
-    routs: noCollapseData.routs,
-    oriMenus: oriMenus
-};
