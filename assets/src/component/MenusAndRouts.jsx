@@ -6,7 +6,9 @@ const SubMenu = Menu.SubMenu;
 import MyForm from '../component/myform/MyForm'
 import Dashboard from '../component/dashboard/Dashboard'
 import MyTime from '../component/mytime/MyTime'
-const openAll = false;
+import ValidationDemo from '../component/validation-demo/ValidationDemo'
+const _openAll = false;
+
 /*
  * 左侧菜单与路由公用的数据
  * open：是否展开
@@ -15,14 +17,18 @@ const openAll = false;
  * component：对应渲染的组件
  * */
 var menusAndRouts = [
-    {key: '1', text: '主面板', icon: 'fa-tachometer'/*, open: true*/},
-    {key: '11', parentKey: '1', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/ path: '/dashboard1', component: Dashboard},
-    {key: '12', parentKey: '1', text: '三级导航', icon: 'fa-th-list'},
-    {key: '121', parentKey: '12', text: '我的表单', icon: 'fa-arrow-right', path: '/myForm1', component: MyForm},
-    {key: '122', parentKey: '12', text: '我的时间', icon: 'fa-arrow-right', path: '/myTime1', component: MyTime},
-    {key: '123', parentKey: '12', text: '四级导航', icon: 'fa-th-list'},
-    {key: '1231', parentKey: '123', text: '我的表单444', icon: 'fa-arrow-right', path: '/myForm14', component: MyForm},
-    {key: '1232', parentKey: '123', text: '我的时间444', icon: 'fa-arrow-right', path: '/myTime14', component: MyTime},
+    {key: 'hha', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/ path: '/dashboard1', component: Dashboard},
+    {key: 'main', text: '主面板', icon: 'fa-tachometer'/*, open: true*/},
+    {key: 'dashboard', parentKey: 'main', text: '仪表盘', icon: 'fa-arrow-right', /* current: true,*/ path: '/dashboard1', component: Dashboard},
+    {key: 'form-validate', parentKey: 'main', text: '表单校验', icon: 'fa-arrow-right', path: '/validation', component: ValidationDemo},
+
+    {key: 'second', parentKey: 'main', text: '二级级导航', icon: 'fa-th-list'},
+    {key: 'form', parentKey: 'second', text: '我的表单', icon: 'fa-arrow-right', path: '/myForm1', component: MyForm},
+    {key: 'time', parentKey: 'second', text: '我的时间', icon: 'fa-arrow-right', path: '/myTime1', component: MyTime},
+
+    {key: 'third', parentKey: 'second', text: '三级导航', icon: 'fa-th-list'},
+    {key: 'form3', parentKey: 'third', text: '我的表单444', icon: 'fa-arrow-right', path: '/myForm14', component: MyForm},
+    {key: 'time3', parentKey: 'third', text: '我的时间444', icon: 'fa-arrow-right', path: '/myTime14', component: MyTime},
 
     {key: '2', text: '商务查询', icon: 'fa-binoculars'},
     {key: '21', parentKey: '2', text: '仪表盘222', icon: 'fa-arrow-right', path: '/dashboard2', component: Dashboard},
@@ -50,7 +56,7 @@ var menusAndRouts = [
  *           false：展开（大菜单，顶级菜单有text）状态
  */
 function convert(rows, collapse) {
-    function exists(rows, parentKey) {
+    function existsParent(rows, parentKey) {
         for (let i = 0; i < rows.length; i++) {
             if (rows[i].key == parentKey) return true;
         }
@@ -66,7 +72,7 @@ function convert(rows, collapse) {
         let row = rows[i];
         row.subMenus = [];//存放当前菜单的子菜单
         row.parentKeys = []; //存放当前菜单的所有父级菜单
-        if (openAll) {
+        if (_openAll) {
             if (!row.path) {
                 openKeys.push(row.key);
             }
@@ -76,13 +82,24 @@ function convert(rows, collapse) {
         if (row.current) {
             current = row.key;
         }
-        if (!exists(rows, row.parentKey)) {
-            routs.push(row);
-            menus.push(
-                <SubMenu key={row.key} title={<span><FAIcon type={row.icon} />{collapse?'':row.text}</span>}>
-                    {row.subMenus}
-                </SubMenu>
-            )
+        if (!existsParent(rows, row.parentKey)) {
+            if (row.path) {
+                routs.push(row);
+                menus.push(
+                    <Menu.Item key={row.key}>
+                        <FAIcon type={row.icon}/>
+                        <Link to={row.path} activeClassName="active">{collapse?'':row.text}</Link>
+                    </Menu.Item>
+                );
+            } else {
+                routs.push(row);
+                menus.push(
+                    <SubMenu key={row.key} title={<span><FAIcon type={row.icon} />{collapse?'':row.text}</span>}>
+                        {row.subMenus}
+                    </SubMenu>
+                )
+            }
+
         }
     }
     var toDo = [];
@@ -133,7 +150,7 @@ function convert(rows, collapse) {
 var collapseData = convert(menusAndRouts, true);
 var noCollapseData = convert(menusAndRouts, false);
 export var menuRouts = noCollapseData.routs;
-export var oriMenus = menusAndRouts;
+export var openAll = _openAll;
 export function getMenus(collapse) {
     return collapse ? collapseData : noCollapseData;
 }

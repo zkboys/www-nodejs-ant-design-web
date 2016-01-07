@@ -1,8 +1,8 @@
-import './style.css';
+import './style.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Menu} from 'antd';
-import {getMenus} from '../MenusAndRouts'
+import {getMenus} from '../MenusRouts'
 var _sidebar;
 const Sidebar = React.createClass({
     statics: {

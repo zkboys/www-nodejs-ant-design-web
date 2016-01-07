@@ -1,6 +1,6 @@
 import React from 'react';
 import {Router} from 'react-router'
-import {menuRouts, oriMenus} from './MenusAndRouts'
+import {menuRouts, openAll} from './MenusRouts'
 import App from '../component/App'
 import Home from '../component/home/Home'
 import Sidebar from '../component/sidebar/Sidebar'
@@ -32,12 +32,17 @@ browserHistory.listen(function (data) {
     /*
      * 根据地址栏确定左侧菜单状态
      * */
-    for (let i = 0; i < oriMenus.length; i++) {
-        if (oriMenus[i].path == data.pathname) {
-            var menu = oriMenus[i];
-            current = menu.key;
-            openKeys = menu.parentKeys;
-            break;// if find de menu break the loop
+    for (let i = 0; i < menuRouts.length; i++) {
+        let menu = menuRouts[i];
+        if (openAll&&menu.parentKeys) {
+            openKeys.push(...menu.parentKeys);
+        }
+        if (menu.path == data.pathname) {
+            let m = menuRouts[i];
+            current = m.key;
+            if (!openAll) {
+                openKeys = m.parentKeys;
+            }
         }
     }
     /*
@@ -48,7 +53,7 @@ browserHistory.listen(function (data) {
         if (Sidebar) {
             Sidebar.setSidebarState({
                 current: current,
-                openKeys: openKeys
+                openKeys: Array.from(new Set(openKeys))// 去重
             });
             clearInterval(t);
         }

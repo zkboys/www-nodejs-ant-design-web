@@ -1,3 +1,6 @@
+/*
+颜色有点多，但是就两个色调 TODO：设置一个基本色，其他颜色通过基本色计算。
+*/
 .admin-sidebar {
     position: fixed;
     z-index: 100;
@@ -37,16 +40,19 @@
   color: #f39c13;
 }
 
+
 .admin-sidebar .ant-menu-submenu-title:hover {
   background-color: #222d32;
   color: #fff;
 }
 
-.admin-sidebar > .ant-menu-inline .ant-menu-selected,
-.admin-sidebar > .ant-menu-inline .ant-menu-item-selected {
+.admin-sidebar > .ant-menu .ant-menu-selected,
+.admin-sidebar > .ant-menu .ant-menu-item-selected {
     border-right-color: #f39c13;
     background-color: #1e282c;
-    color: #f39c13;
+    a.active{
+        color: #f39c13;
+    }
 }
 
 .admin-sidebar .ant-menu-vertical > .ant-menu-submenu > .ant-menu-submenu-title,
