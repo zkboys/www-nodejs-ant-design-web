@@ -27,7 +27,13 @@ npm run dev-server #开启前端静态服务器，结合后端服务器可以做
         -home.jsx    
         -style.less    
     ```
-- 所有的get请求最终没有被截获的，都打到index.html
+- 后端所有的get请求最终没有被截获的，都打到index.html
+- 前端所有没有截获的path，都达到Error404组件。
+- 页面跳转要使用Link，否则会跳出单页面应用。
+    ```
+    import {Link} from 'react-router'
+    <Link to="/xxxxx">XXXXX</Link>
+    ```
 
 ##待解决问题
 - 表单校验
@@ -46,6 +52,7 @@ npm run dev-server #开启前端静态服务器，结合后端服务器可以做
     path: 'bbbbb', component: Dashboard
     这样一个路由,会导致Dashboard渲染页面特别慢
     ```
+    
 ##报错
 ```
 webpack.config.js中使用argv报错：

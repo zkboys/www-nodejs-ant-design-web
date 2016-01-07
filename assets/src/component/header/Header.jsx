@@ -1,6 +1,7 @@
 import './style.css';
 import React from 'react';
 import {Icon, Badge, Tooltip} from 'antd';
+import {Link} from 'react-router'
 import FAIcon from '../faicon/FAIcon';
 import avatar from './86.jpg';
 var logoMaxWidth = 240
@@ -12,7 +13,7 @@ const Header = React.createClass({
     render() {
         return (
             <header className="admin-header">
-                <div className="admin-logo" style={{width:this.props.collapse?logoMinWidth:logoMaxWidth}}><a href="/">{this.props.collapse?logoMin:logoMax}</a></div>
+                <div className="admin-logo" style={{width:this.props.collapse?logoMinWidth:logoMaxWidth}}><Link to="/">{this.props.collapse?logoMin:logoMax}</Link></div>
                 <Tooltip placement="right" title="切换菜单状态">
                     <a className="admin-sidebar-toggle" onClick={this.props.handelClick}><FAIcon type="fa-bars"/></a>
                 </Tooltip>

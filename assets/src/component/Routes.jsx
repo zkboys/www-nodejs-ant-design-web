@@ -20,7 +20,6 @@ const routes = {
  * 其他路由在下面加入
  * */
 routes.childRoutes.push(
-    {path: 'home', component: Home},
     {path: '*', component: Error404}//所有未截获的请求,统一跳转到Error404组件
 );
 /*
@@ -34,7 +33,7 @@ browserHistory.listen(function (data) {
      * */
     for (let i = 0; i < menuRouts.length; i++) {
         let menu = menuRouts[i];
-        if (openAll&&menu.parentKeys) {
+        if (openAll && menu.parentKeys) {
             openKeys.push(...menu.parentKeys);
         }
         if (menu.path == data.pathname) {
@@ -50,11 +49,19 @@ browserHistory.listen(function (data) {
      * 页面首次进入或F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.
      * */
     var t = setInterval(function () {
+        /*
+         *
+         * */
         if (Sidebar) {
-            Sidebar.setSidebarState({
-                current: current,
-                openKeys: Array.from(new Set(openKeys))// 去重
-            });
+            /*
+             * 匹配到左侧菜单，则改变菜单状态，没有匹配到，则保留菜单状态。首页除外
+             * */
+            if (current || data.pathname === '/') {
+                Sidebar.setSidebarState({
+                    current: current,
+                    openKeys: Array.from(new Set(openKeys))// 去重
+                });
+            }
             clearInterval(t);
         }
     }, 100);

@@ -3,6 +3,7 @@ import { Menu, Icon } from 'antd';
 import FAIcon from './faicon/FAIcon';
 import {Link} from 'react-router'
 const SubMenu = Menu.SubMenu;
+import Home from '../component/home/Home'
 import MyForm from '../component/myform/MyForm'
 import Dashboard from '../component/dashboard/Dashboard'
 import MyTime from '../component/mytime/MyTime'
@@ -12,7 +13,7 @@ import ValidationDemo from '../component/validation-demo/ValidationDemo'
  * */
 const _openAll = false;
 /*
- * 左侧菜单与路由公用的数据 树形结构
+ * 左侧菜单与路由公用的数据
  * current：true/false 是否是当前菜单
  * path：对应地址
  * component：对应渲染的组件
@@ -21,11 +22,11 @@ var menusRouts = [
     {text: '表单校验', icon: 'fa-arrow-right', path: '/validation0', component: ValidationDemo},
     {text: '仪表盘22222', icon: 'fa-arrow-right', path: '/dashboard0', component: Dashboard},
     {
-        text: '用户列表', icon: 'fa-th-list',
+        text: '用户管理', icon: 'fa-th-list',
         children: [
             {text: '仪表盘', icon: 'fa-arrow-right', path: '/dashboard3', component: Dashboard},
             {text: '我的表单', icon: 'fa-arrow-right', path: '/myForm3', component: MyForm},
-            {text: '我的时间', icon: 'fa-arrow-right', path: '/myTime3', component: MyTime}
+            {text: '用户查询', icon: 'fa-arrow-right', path: '/myTime3', component: MyTime}
         ]
     },
     {
@@ -71,21 +72,28 @@ var menusRouts = [
         ]
     }
 ];
-let routs = [];
-let current = '';
-let openKeys = [];
-let maxMenus = {
-    key: '0',
-    parentKeys: [],
-    subMenus: []
-};
-let minMenus = {
-    key: '0',
-    parentKeys: [],
-    subMenus: []
-};
 
-function convertMenus(_menusRouts, parent, min) {
+let [minMenus] = getMenusAndRouts(menusRouts, true);
+let [maxMenus, routs, current,openKeys] = getMenusAndRouts(menusRouts);
+export var menuRouts = routs;
+export var openAll = _openAll;
+export function getMenus(min) {
+    return {
+        current,
+        openKeys,
+        menus: min ? minMenus.subMenus : maxMenus.subMenus
+    };
+}
+
+function getMenusAndRouts(_menusRouts, min, parent, routs, openKeys) {
+    parent = parent || {
+            key: '0',
+            parentKeys: [],
+            subMenus: []
+        };
+    routs = routs || [];
+    let current = '';
+    openKeys = openKeys || [];
     for (let i = 0; i < _menusRouts.length; i++) {
         var menu = _menusRouts[i];
         menu.key = parent.key + '-' + i;
@@ -107,7 +115,7 @@ function convertMenus(_menusRouts, parent, min) {
                     {menu.subMenus}
                 </SubMenu>
             );
-            convertMenus(menu.children, menu, min);
+            getMenusAndRouts(menu.children, min, menu, routs, openKeys);
         } else {
             let text = min && parent.key === '0' ? menu.text[0] : menu.text;
             parent.subMenus.push(
@@ -118,16 +126,7 @@ function convertMenus(_menusRouts, parent, min) {
             routs.push(menu);
         }
     }
+    return [parent, routs, current, openKeys];
 }
-convertMenus(menusRouts, maxMenus);
-convertMenus(menusRouts, minMenus, true);
-export var menuRouts = routs;
-export var openAll = _openAll;
-export function getMenus(min) {
-    return {
-        current,
-        openKeys,
-        menus: min ? minMenus.subMenus : maxMenus.subMenus
-    };
-}
+
 
