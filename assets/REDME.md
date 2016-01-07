@@ -52,6 +52,7 @@ npm run dev-server #开启前端静态服务器，结合后端服务器可以做
     path: 'bbbbb', component: Dashboard
     这样一个路由,会导致Dashboard渲染页面特别慢
     ```
+- 前端代码生成工具，主要针对CRUD页面。    
     
 ##报错
 ```
