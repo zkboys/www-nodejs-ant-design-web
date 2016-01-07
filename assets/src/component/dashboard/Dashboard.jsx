@@ -217,24 +217,19 @@ const Dashboard = React.createClass({
                         <Breadcrumb.Item>某应用</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
-                <div className="admin-page-content">
-                    <div className={"admin-page-content-inner "}>
-                        <div className="dashboard">
-                            <Button type="primary" onClick={this.handleClick}>发起ajax请求</Button>
-                            <Button>次按钮</Button>
-                            <Button type="ghost">幽灵按钮</Button>
-                            <Button type="dashed">虚线按钮</Button>
-                            <p>npm run dev-server 运行一个静态文件服务器 并且打开默认浏览器！</p>
-                            <p>开发过程中，修改文件，浏览器会自动刷新，特别适合双屏/大屏开发！</p>
-                            <p>随着项目复杂度的增加，不知道会不会慢。目前的相应速度还是可以接受的。</p>
-                            <p>{this.props.test}</p>
-                            <p>
-                                React has been running for {this.state.seconds} seconds.
-                            </p>
-                            <p>ajax result: {this.state.testAjax}</p>
-                        </div>
-
-                    </div>
+                <div className="dashboard">
+                    <Button type="primary" onClick={this.handleClick}>发起ajax请求</Button>
+                    <Button>次按钮</Button>
+                    <Button type="ghost">幽灵按钮</Button>
+                    <Button type="dashed">虚线按钮</Button>
+                    <p>npm run dev-server 运行一个静态文件服务器 并且打开默认浏览器！</p>
+                    <p>开发过程中，修改文件，浏览器会自动刷新，特别适合双屏/大屏开发！</p>
+                    <p>随着项目复杂度的增加，不知道会不会慢。目前的相应速度还是可以接受的。</p>
+                    <p>{this.props.test}</p>
+                    <p>
+                        React has been running for {this.state.seconds} seconds.
+                    </p>
+                    <p>ajax result: {this.state.testAjax}</p>
                 </div>
             </Page>
         );

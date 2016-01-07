@@ -19,11 +19,7 @@ const MyTime = React.createClass({
                         <Breadcrumb.Item>某应用</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
-                <div className="admin-page-content">
-                    <div className="admin-page-content-inner">
-                        <TimePicker onChange={onChange}/>
-                    </div>
-                </div>
+                <TimePicker onChange={onChange}/>
             </Page>
         );
     }

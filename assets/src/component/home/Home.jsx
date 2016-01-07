@@ -16,11 +16,7 @@ const Dashboard = React.createClass({
                         <Breadcrumb.Item>某应用</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
-                <div className="admin-page-content">
-                    <div className="admin-page-content-inner">
-                        <h1>首页</h1>
-                    </div>
-                </div>
+                <h1>首页</h1>
             </Page>
         );
     }
