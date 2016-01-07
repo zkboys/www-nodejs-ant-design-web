@@ -12,16 +12,7 @@ function handleSelectChange(value) {
 const MyForm = React.createClass({
     render() {
         return (
-            <Page>
-                <div className="admin-page-header">
-                    <h1 className="admin-page-header-title">我的表单</h1>
-                    <Breadcrumb>
-                        <Breadcrumb.Item><Link to="dashboard">首页</Link></Breadcrumb.Item>
-                        <Breadcrumb.Item>导航一</Breadcrumb.Item>
-                        <Breadcrumb.Item>三级导航</Breadcrumb.Item>
-                        <Breadcrumb.Item>我的表单</Breadcrumb.Item>
-                    </Breadcrumb>
-                </div>
+            <Page header="auto">
                 <Form horizontal>
                     <FormItem
                         id="control-input"

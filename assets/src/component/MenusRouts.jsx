@@ -75,6 +75,7 @@ var menusRouts = [
 
 let [minMenus] = getMenusAndRouts(menusRouts, true);
 let [maxMenus, routs, current,openKeys] = getMenusAndRouts(menusRouts);
+console.log(routs);
 export var menuRouts = routs;
 export var openAll = _openAll;
 export function getMenus(min) {
@@ -88,7 +89,8 @@ export function getMenus(min) {
 function getMenusAndRouts(_menusRouts, min, parent, routs, openKeys) {
     parent = parent || {
             key: '0',
-            parentKeys: [],
+            parentKeys: [],//地址栏改变时，用于同步左侧菜单状态
+            parentText: [],//当page的header为auto时，用来设置头部的面包屑导航。
             subMenus: []
         };
     routs = routs || [];
@@ -98,6 +100,7 @@ function getMenusAndRouts(_menusRouts, min, parent, routs, openKeys) {
         var menu = _menusRouts[i];
         menu.key = parent.key + '-' + i;
         menu.parentKeys = [...parent.parentKeys, parent.key];
+        menu.parentText = parent.text ? [...parent.parentText, parent.text] : [...parent.parentText];
         if (menu.current) {
             current = menu.key;
             if (!_openAll) {

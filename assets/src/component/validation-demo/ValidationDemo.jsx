@@ -141,7 +141,7 @@ const ValidationDemo = React.createClass({
                 <div className="admin-page-header">
                     <h1 className="admin-page-header-title">表单校验</h1>
                     <Breadcrumb>
-                        <Breadcrumb.Item><Link to="dashboard">首页</Link></Breadcrumb.Item>
+                        <Breadcrumb.Item><Link to="/">首页</Link></Breadcrumb.Item>
                         <Breadcrumb.Item>表单校验</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>

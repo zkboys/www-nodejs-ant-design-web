@@ -204,6 +204,11 @@ const Dashboard = React.createClass({
             }
         });
     },
+    /*
+    * 调用this.setState函数会出发render函数，
+    * 不要在render函数内部调用this.setState会导致死循环！！！
+    *
+    * */
     render() {
         console.log('render');
         return (

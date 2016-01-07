@@ -8,6 +8,9 @@ const Sidebar = React.createClass({
     statics: {
         setSidebarState: function (state) {
             _sidebar.setState(state);
+        },
+        getCurrentMenuKey: function () {
+            return _sidebar.state.current;
         }
     },
     getInitialState() {

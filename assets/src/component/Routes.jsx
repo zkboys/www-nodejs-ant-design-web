@@ -64,7 +64,7 @@ browserHistory.listen(function (data) {
             }
             clearInterval(t);
         }
-    }, 100);
+    }, 1);
 });
 export default React.createClass({
     render() {
