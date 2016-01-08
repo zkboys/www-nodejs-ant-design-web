@@ -44,27 +44,28 @@ browserHistory.listen(function (data) {
             }
         }
     }
-    /*
-     * 更改左侧菜单状态。
-     * 页面首次进入或F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.
-     * */
-    var t = setInterval(function () {
+    if (Sidebar.getSidebarStatus() === 'ok') {
+        setSidebarState()
+    } else {
         /*
-         *
+         * 更改左侧菜单状态。
+         * 页面首次进入或F5刷新时,由于sidebar还没渲染,无法更改状态,这里使用一个定时任务.
          * */
-        if (Sidebar) {
-            /*
-             * 匹配到左侧菜单，则改变菜单状态，没有匹配到，则保留菜单状态。首页除外
-             * */
-            if (current || data.pathname === '/') {
-                Sidebar.setSidebarState({
-                    current: current,
-                    openKeys: Array.from(new Set(openKeys))// 去重
-                });
-            }
-            clearInterval(t);
+        setTimeout(function () {
+            setSidebarState()
+        }, 0);
+    }
+    function setSidebarState() {
+        /*
+         * 匹配到左侧菜单，则改变菜单状态，没有匹配到，则保留菜单状态。首页除外
+         * */
+        if (current || data.pathname === '/') {
+            Sidebar.setSidebarState({
+                current: current,
+                openKeys: Array.from(new Set(openKeys))// 去重
+            });
         }
-    }, 1);
+    }
 });
 export default React.createClass({
     render() {

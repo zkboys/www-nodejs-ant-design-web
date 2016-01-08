@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Tooltip } from 'antd';
 import FAIcon from './faicon/FAIcon';
 import {Link} from 'react-router'
 const SubMenu = Menu.SubMenu;
@@ -73,19 +73,6 @@ var menusRouts = [
     }
 ];
 
-let [minMenus] = getMenusAndRouts(menusRouts, true);
-let [maxMenus, routs, current,openKeys] = getMenusAndRouts(menusRouts);
-console.log(routs);
-export var menuRouts = routs;
-export var openAll = _openAll;
-export function getMenus(min) {
-    return {
-        current,
-        openKeys,
-        menus: min ? minMenus.subMenus : maxMenus.subMenus
-    };
-}
-
 function getMenusAndRouts(_menusRouts, min, parent, routs, openKeys) {
     parent = parent || {
             key: '0',
@@ -120,16 +107,36 @@ function getMenusAndRouts(_menusRouts, min, parent, routs, openKeys) {
             );
             getMenusAndRouts(menu.children, min, menu, routs, openKeys);
         } else {
-            let text = min && parent.key === '0' ? menu.text[0] : menu.text;
-            parent.subMenus.push(
-                <Menu.Item key={menu.key}>
-                    <Link to={menu.path} activeClassName="active"><FAIcon type={menu.icon}/>{text}</Link>
-                </Menu.Item>
-            );
+            if (min && parent.key === '0') {
+                parent.subMenus.push(
+                    <Menu.Item key={menu.key}>
+                        <Tooltip placement="right" title={<Link to={menu.path} activeClassName="active" style={{color:'#fff'}}>{menu.text}</Link>}>
+                            <Link to={menu.path} activeClassName="active"><FAIcon type={menu.icon}/>{menu.text[0]}</Link>
+                        </Tooltip>
+                    </Menu.Item>
+                );
+            } else {
+                parent.subMenus.push(
+                    <Menu.Item key={menu.key}>
+                        <Link to={menu.path} activeClassName="active"><FAIcon type={menu.icon}/>{menu.text}</Link>
+                    </Menu.Item>
+                );
+            }
             routs.push(menu);
         }
     }
     return [parent, routs, current, openKeys];
 }
 
-
+let [minMenus] = getMenusAndRouts(menusRouts, true);
+let [maxMenus, routs, current,openKeys] = getMenusAndRouts(menusRouts);
+console.log(routs);
+export var menuRouts = routs;
+export var openAll = _openAll;
+export function getMenus(min) {
+    return {
+        current,
+        openKeys,
+        menus: min ? minMenus.subMenus : maxMenus.subMenus
+    };
+}

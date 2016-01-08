@@ -11,6 +11,9 @@ const Sidebar = React.createClass({
         },
         getCurrentMenuKey: function () {
             return _sidebar.state.current;
+        },
+        getSidebarStatus: function () {
+            return _sidebar ? _sidebar.state.status : false;
         }
     },
     getInitialState() {
@@ -23,15 +26,24 @@ const Sidebar = React.createClass({
     },
     handleClick(e) {
         console.log('click menu', e);
-        this.setState({
-            current: e.key,
-            openKeys: e.keyPath.slice(1) // 点击是会关闭其他菜单,如果不需要改变其他菜单状态,注释掉这里即可.
-        });
+        /*
+        * 点击Link会改变地址栏，地址栏改变会同步菜单状态，这里就不用再改变菜单状态了，重复了。
+        * 这里改变状态会导致没有点击到Link，点击到菜单，菜单状态会改变，但是页面并没有跳转的bug。
+        * */
+        //this.setState({
+        //    current: e.key,
+        //    openKeys: e.keyPath.slice(1) // 点击是会关闭其他菜单,如果不需要改变其他菜单状态,注释掉这里即可.
+        //});
     },
     onToggle(info){
         if (this.props.collapse) return;//折叠状态时,不改变打开菜单状态,否则切回展开状态,无法恢复打开状态.
         this.setState({
             openKeys: info.openKeys
+        });
+    },
+    componentDidMount(){
+        this.setState({
+            status: 'ok'
         });
     },
     render() {

@@ -20,6 +20,7 @@ const Page = React.createClass({
                 let menu = menuRouts[i];
                 if (menu.key === currentMenuKey) {
                     currentMenu = menu;
+                    break;
                 }
             }
             let breadcrumbItems = [];
@@ -61,13 +62,18 @@ const Page = React.createClass({
     },
     componentDidMount(){
         let _this = this;
-        /*
-        * 由于Routs中使用了一个setInterval，处理页面首次进入时候的菜单状态，导致这里不能确保在菜单设置状态之后访问，所以加了个setTimeout
-        * TODO：Routs中的setInterval和这里的setTimeout都是不好的解决方案，需要替换。
-        * */
-        setTimeout(function(){
+        if (Sidebar.getSidebarStatus() === 'ok') {
             _this.setPageHeader();
-        },10);//这种方式，切换页面的时候，头部会闪动，设置成1ms也会有闪动。
+        } else {
+            /*
+             * 由于Routs中使用了一个setTimeout，处理页面首次进入时候的菜单状态，导致这里不能确保在菜单设置状态之后访问，所以加了个setTimeout
+             * TODO：Routs中的setTimeout和这里的setTimeout都是不好的解决方案，需要替换。
+             * */
+            setTimeout(function () {
+                _this.setPageHeader();
+            }, 10);//这种方式，切换页面的时候，头部会闪动，设置成1ms也会有闪动。
+        }
+
     },
     render() {
         return (
