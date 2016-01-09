@@ -4,6 +4,21 @@ import {message, Breadcrumb } from 'antd';
 import {Link} from 'react-router';
 import {menuRouts} from '../MenusRouts'
 import Sidebar from '../sidebar/Sidebar';
+/*
+* props:
+       header: object / 'auto' 用来显示头部标题和右侧面包屑导航
+       object demo:
+        {
+         title: '左侧标题啊',
+         breadcrumbItems: [
+             {text: '用户管理'},
+             {text: '用户查询', path: '/myTime3'},
+             {text: '修改用户'}
+            ]
+        }
+
+        loadingClass: 'loading' / '' 切换页面loading和非loading状态。
+* */
 const Page = React.createClass({
     getInitialState(){
         return {

@@ -132,8 +132,7 @@ const Dashboard = React.createClass({
         that.get('/dashboard.json', {
             data: {query: 'Manny', range: '1..5', order: 'desc'},
             end(err, res) {
-                console.log(err, res);
-                console.log(res.body);
+                console.log('use superagent', res.body);
                 that.setState({
                     testAjax: res.body.name
                 });

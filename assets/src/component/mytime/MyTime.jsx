@@ -30,7 +30,7 @@ const MyTime = React.createClass({
             _this.setState({
                 loadingClass: ''
             });
-            console.log('parsed json', json)
+            console.log('use fetch parsed json', json)
         }).catch(function (ex) {
             console.log('parsing failed', ex)
         });
