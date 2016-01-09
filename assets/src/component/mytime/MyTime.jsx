@@ -13,6 +13,9 @@ const MyTime = React.createClass({
      * */
     getInitialState(){
         return {
+            /*
+            * 修改loadingClass,并以props方式传给Page组件，页面即可切换loading非loading状态。
+            * */
             loadingClass: ''
         }
     },
