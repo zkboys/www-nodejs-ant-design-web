@@ -1,7 +1,6 @@
 import React from 'react';
 import Page from '../page/Page';
 import { TimePicker } from 'antd';
-console.log('fetch', fetch);
 function onChange(time) {
     if (time) {
         console.log(time.toLocaleTimeString('zh-CN', {hour12: false}));
