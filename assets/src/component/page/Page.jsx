@@ -119,9 +119,9 @@ const Page = React.createClass({
         return (
             <div className={"admin-page " + (this.props.loadingClass||'')}>
                 <div className="admin-page-loading"></div>
-                {this.state.pageHeader}
                 <div className="admin-page-content">
                     <div className="admin-page-content-inner">
+                        {this.state.pageHeader}
                         {this.props.children}
                     </div>
                 </div>
