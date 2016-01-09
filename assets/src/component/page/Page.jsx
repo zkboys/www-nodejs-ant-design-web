@@ -5,20 +5,20 @@ import {Link} from 'react-router';
 import {menuRouts} from '../MenusRouts'
 import Sidebar from '../sidebar/Sidebar';
 /*
-* props:
-       header: object / 'auto' 用来显示头部标题和右侧面包屑导航
-       object demo:
-        {
-         title: '左侧标题啊',
-         breadcrumbItems: [
-             {text: '用户管理'},
-             {text: '用户查询', path: '/myTime3'},
-             {text: '修改用户'}
-            ]
-        }
+ * props:
+ header: object / 'auto' 用来显示头部标题和右侧面包屑导航
+ object demo:
+ {
+ title: '左侧标题啊',
+ breadcrumbItems: [
+ {text: '用户管理'},
+ {text: '用户查询', path: '/myTime3'},
+ {text: '修改用户'}
+ ]
+ }
 
-        loadingClass: 'loading' / '' 切换页面loading和非loading状态。
-* */
+ loadingClass: 'loading' / '' 切换页面loading和非loading状态。
+ * */
 const Page = React.createClass({
     getInitialState(){
         return {
@@ -77,7 +77,7 @@ const Page = React.createClass({
     },
     switchLoading(){
         if (this.props.loadingClass === 'loading') {
-            if(!this.hideLoading){
+            if (!this.hideLoading) {
                 this.hideLoading = message.loading('正在加载...', 0);
             }
         } else {
@@ -87,11 +87,9 @@ const Page = React.createClass({
         }
     },
     componentWillUpdate(){
-        console.log('page', 'componentWillUpdate');
         this.switchLoading();
     },
     componentDidUpdate(){
-        console.log('page', 'componentDidUpdate');
         this.switchLoading();
     },
     componentWillMount(){
@@ -119,7 +117,7 @@ const Page = React.createClass({
     },
     render() {
         return (
-            <div className={"admin-page " + this.props.loadingClass}>
+            <div className={"admin-page " + (this.props.loadingClass||'')}>
                 <div className="admin-page-loading"></div>
                 {this.state.pageHeader}
                 <div className="admin-page-content">

@@ -4,6 +4,7 @@
   right: 0;
   top: 0;
   bottom: 0;
+  background-color: #222d32;
   &.loading {
     filter: blur(1px);
     .admin-page-loading {
@@ -27,7 +28,6 @@
     right: 20px;
     padding: 10px 5px 5px 10px;
     border-bottom: 1px solid #eee;
-    background: #fff;
     z-index: 99;
     & > .ant-breadcrumb {
       float: right;
@@ -43,10 +43,32 @@
     width: 100%;
     padding-top: 47px;
     overflow: auto;
+    background-color: #fff;
     .admin-page-content-inner {
       min-width: 768px;
       padding: 10px;
     }
+  }
+  .admin-page-header, .admin-page-content {
+    animation: page-switch 600ms;
+  }
+}
+@keyframes page-switch {
+  0% {
+    opacity: 0.5;
+    margin-left: 30px;
+  }
+  25% {
+    opacity: 0.75;
+    margin-left: 50px;
+  }
+  50% {
+    opacity: 0.8;
+    margin-left: 60px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 0;
   }
 }
 
