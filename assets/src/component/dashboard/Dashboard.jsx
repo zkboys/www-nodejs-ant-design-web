@@ -119,7 +119,7 @@ const Dashboard = React.createClass({
     },
     /*
      * 在初始化渲染执行之后立刻调用一次，仅客户端有效（服务器端不会调用）。
-     * 在生命周期中的这个时间点，组件拥有一个 DOM 展现，你可以通过 this.getDOMNode() 来获取相应 DOM 节点。
+     * 在生命周期中的这个时间点，组件拥有一个 DOM 展现，你可以通过 this.getDOMNode()(过时了,新语法使用：ReactDOM.findDOMNode(this) ) 来获取相应 DOM 节点。
      *
      * 如果想和其它 JavaScript 框架集成，使用 setTimeout 或者 setInterval 来设置定时器，或者发送 AJAX 请求，可以在该方法中执行这些操作。
      * */
