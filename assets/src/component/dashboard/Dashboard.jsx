@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {message, Breadcrumb, Button } from 'antd'
 import Page from '../page/Page';
-import Request from '../request/Request';
+import Request from 'superagent';
 /*
  * 更新state之后触发的方法:
  * shouldComponentUpdate
@@ -48,15 +48,10 @@ let SetIntervalMixin = {
          * 组件被移除DMO,清除未完成的ajax
          * */
         this.req.abort();
-        if (this.hideLoading) {
-            this.hideLoading();
-            this.hideLoading = null;
-        }
     },
     get(url, {data={},end=function () {
     }}){//带有默认值的函数,写的好难看...
         let that = this;
-        that.hideLoading = message.loading('正在加载...', 0);
         that.setState({
             loadingClass: 'loading'
         });
@@ -65,10 +60,6 @@ let SetIntervalMixin = {
             .query(data)
             .end(function (err, res) {
                 end(err, res);
-                if (that.hideLoading) {
-                    that.hideLoading();
-                    that.hideLoading = null;
-                }
                 that.setState({
                     loadingClass: ''
                 });
@@ -148,7 +139,6 @@ const Dashboard = React.createClass({
                 });
             }
         });
-
     },
     /*
      * 在接收到新的 props 或者 state，将要渲染之前调用。该方法在初始化渲染的时候不会调用，在使用 forceUpdate 方法的时候也不会。
@@ -212,7 +202,7 @@ const Dashboard = React.createClass({
     render() {
         console.log('render');
         return (
-            <Page className={this.state.loadingClass}>
+            <Page loadingClass={this.state.loadingClass}>
                 <div id="admin-page-header" className="admin-page-header">
                     <h1 className="admin-page-header-title">Dashboard</h1>
                     <Breadcrumb>

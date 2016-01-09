@@ -1,6 +1,6 @@
 import './style.less';
 import React from 'react';
-import { Breadcrumb } from 'antd';
+import {message, Breadcrumb } from 'antd';
 import {Link} from 'react-router';
 import {menuRouts} from '../MenusRouts'
 import Sidebar from '../sidebar/Sidebar';
@@ -60,6 +60,28 @@ const Page = React.createClass({
             pageHeader: pageHeaderJsx
         });
     },
+    switchLoading(){
+        if (this.props.loadingClass === 'loading') {
+            if(!this.hideLoading){
+                this.hideLoading = message.loading('正在加载...', 0);
+            }
+        } else {
+            if (this.hideLoading) {
+                this.hideLoading();
+            }
+        }
+    },
+    componentWillUpdate(){
+        console.log('page', 'componentWillUpdate');
+        this.switchLoading();
+    },
+    componentDidUpdate(){
+        console.log('page', 'componentDidUpdate');
+        this.switchLoading();
+    },
+    componentWillMount(){
+
+    },
     componentDidMount(){
         let _this = this;
         if (Sidebar.getSidebarStatus() === 'ok') {
@@ -75,9 +97,14 @@ const Page = React.createClass({
         }
 
     },
+    componentWillUnmount(){
+        if (this.hideLoading) {
+            this.hideLoading();
+        }
+    },
     render() {
         return (
-            <div className={"admin-page " + this.props.className}>
+            <div className={"admin-page " + this.props.loadingClass}>
                 <div className="admin-page-loading"></div>
                 {this.state.pageHeader}
                 <div className="admin-page-content">

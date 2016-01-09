@@ -187,6 +187,12 @@ module.exports = {
             disable: false,
             allChunks: true
         }),
-        new webpack.optimize.OccurenceOrderPlugin()
+        new webpack.optimize.OccurenceOrderPlugin(),
+        /*
+        * 这样写法 fetch就可以全局使用了，各个不用单独import
+        * */
+        new webpack.ProvidePlugin({
+            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+        })
     ]
 };
