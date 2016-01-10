@@ -1,6 +1,6 @@
 import './style.less';
 import React from 'react';
-import {message, Breadcrumb } from 'antd';
+import {message, Breadcrumb,Spin} from 'antd';
 import {Link} from 'react-router';
 import {menuRouts} from '../MenusRouts'
 import Sidebar from '../sidebar/Sidebar';
@@ -17,12 +17,17 @@ import Sidebar from '../sidebar/Sidebar';
  ]
  }
 
- loadingClass: 'loading' / '' 切换页面loading和非loading状态。
+ loading: true / false 切换页面loading和非loading状态。
  * */
 const Page = React.createClass({
     getInitialState(){
         return {
             pageHeader: ''
+        }
+    },
+    getDefaultProps(){
+        return {
+            loading: false
         }
     },
     setPageHeader(){
@@ -75,8 +80,8 @@ const Page = React.createClass({
             pageHeader: pageHeaderJsx
         });
     },
-    switchLoading(){
-        if (this.props.loadingClass === 'loading') {
+    switchLoadingMessage(){
+        if (this.props.loading) {
             if (!this.hideLoading) {
                 this.hideLoading = message.loading('正在加载...', 0);
             }
@@ -87,10 +92,10 @@ const Page = React.createClass({
         }
     },
     componentWillUpdate(){
-        this.switchLoading();
+        this.switchLoadingMessage();
     },
     componentDidUpdate(){
-        this.switchLoading();
+        this.switchLoadingMessage();
     },
     componentWillMount(){
 
@@ -117,12 +122,13 @@ const Page = React.createClass({
     },
     render() {
         return (
-            <div className={"admin-page " + (this.props.loadingClass||'')}>
-                <div className="admin-page-loading"></div>
+            <div className={"admin-page "}>
                 <div className="admin-page-content">
                     <div className="admin-page-content-inner">
                         {this.state.pageHeader}
-                        {this.props.children}
+                        <Spin spining={this.props.loading}>
+                            {this.props.children}
+                        </Spin>
                     </div>
                 </div>
             </div>

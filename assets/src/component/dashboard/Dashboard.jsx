@@ -33,7 +33,7 @@ import Request from 'superagent';
 let SetIntervalMixin = {
     getInitialState(){
         return {
-            loadingClass: ''
+            loading: false
         }
     },
     componentWillMount: function () {
@@ -53,7 +53,7 @@ let SetIntervalMixin = {
     }}){//带有默认值的函数,写的好难看...
         let that = this;
         that.setState({
-            loadingClass: 'loading'
+            loading: true
         });
         that.req = Request
             .get(url)
@@ -61,7 +61,7 @@ let SetIntervalMixin = {
             .end(function (err, res) {
                 end(err, res);
                 that.setState({
-                    loadingClass: ''
+                    loading: false
                 });
             });
     }
@@ -201,16 +201,7 @@ const Dashboard = React.createClass({
     render() {
         console.log('render');
         return (
-            <Page loadingClass={this.state.loadingClass}>
-                <div id="admin-page-header" className="admin-page-header">
-                    <h1 className="admin-page-header-title">Dashboard</h1>
-                    <Breadcrumb>
-                        <Breadcrumb.Item>首页</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">应用中心</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">应用列表</Breadcrumb.Item>
-                        <Breadcrumb.Item>某应用</Breadcrumb.Item>
-                    </Breadcrumb>
-                </div>
+            <Page header="auto" loading={this.state.loading}>
                 <div className="dashboard">
                     <Button type="primary" onClick={this.handleClick}>发起ajax请求</Button>
                     <Button>次按钮</Button>

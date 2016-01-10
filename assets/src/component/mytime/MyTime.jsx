@@ -13,21 +13,21 @@ const MyTime = React.createClass({
     getInitialState(){
         return {
             /*
-            * 修改loadingClass,并以props方式传给Page组件，页面即可切换loading非loading状态。
+            * 修改loading,并以props方式传给Page组件，页面即可切换loading非loading状态。
             * */
-            loadingClass: ''
+            loading: false
         }
     },
     componentDidMount: function () {
         let _this = this;
         _this.setState({
-            loadingClass: 'loading'
+            loading: true
         });
         fetch('/dashboard.json').then(function (response) {
             return response.json()
         }).then(function (json) {
             _this.setState({
-                loadingClass: ''
+                loading: false
             });
             console.log('use fetch parsed json', json)
         }).catch(function (ex) {
@@ -44,7 +44,7 @@ const MyTime = React.createClass({
             ]
         };
         return (
-            <Page header={pageHeader} loadingClass={this.state.loadingClass}>
+            <Page header={pageHeader} loading={this.state.loading}>
                 <TimePicker onChange={onChange}/>
             </Page>
         );
