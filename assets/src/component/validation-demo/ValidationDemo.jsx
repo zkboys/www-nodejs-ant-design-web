@@ -135,16 +135,16 @@ const ValidationDemo = React.createClass({
         function help(field) {
             return status[field].errors ? status[field].errors.join(',') : null;
         }
-
+        const pageHeader = {
+            title: '表单校验',
+            breadcrumbItems: [
+                {text: '某应用'},
+                {text: '我的时间', path: '/myTime3'},
+                {text: '表单校验'}
+            ]
+        };
         return (
-            <Page>
-                <div className="admin-page-header">
-                    <h1 className="admin-page-header-title">表单校验</h1>
-                    <Breadcrumb>
-                        <Breadcrumb.Item><Link to="/">首页</Link></Breadcrumb.Item>
-                        <Breadcrumb.Item>表单校验</Breadcrumb.Item>
-                    </Breadcrumb>
-                </div>
+            <Page header={pageHeader}>
                 <Form horizontal>
                     <Validation ref="validation" onValidate={this.handleValidate}>
                         <FormItem

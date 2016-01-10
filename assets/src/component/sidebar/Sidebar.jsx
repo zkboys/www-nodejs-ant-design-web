@@ -30,7 +30,7 @@ const Sidebar = React.createClass({
         console.log('click menu', e);
         /*
          * 点击Link会改变地址栏，地址栏改变会同步菜单状态，这里就不用再改变菜单状态了，重复了。
-         * 这里改变状态会导致没有点击到Link，点击到菜单，菜单状态会改变，但是页面并没有跳转的bug。
+         * 这里改变状态会导致没有点击到Link，但是点击到了菜单，菜单状态会改变，但是页面并没有跳转的bug。
          * */
         //this.setState({
         //    current: e.key,

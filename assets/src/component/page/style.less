@@ -10,11 +10,14 @@
     top: 0;
     left: 5px;
     right: 20px;
-    padding: 10px 5px 5px 10px;
-    border-bottom: 1px solid #eee;
+    padding: 10px 5px 0 10px;
     z-index: 99;
     background-color: #fff;
-    & > .ant-breadcrumb {
+    .admin-page-header-title{
+      padding-bottom:5px;
+      border-bottom: 1px solid #eee;
+    }
+    .ant-breadcrumb {
       float: right;
       margin-top: -23px;
       margin-right: 10px;
@@ -32,25 +35,10 @@
     .admin-page-content-inner {
       min-width: 768px;
       padding: 10px;
+      .ant-spin-nested-loading .ant-spin{
+        top:100px;
+      }
     }
-  }
-  .admin-page-header, .admin-page-content {
-    animation: page-switch 800ms;
-  }
-}
-
-@keyframes page-switch {
-  0% {
-    opacity: 0.5;
-    margin-left: 0;
-  }
-  15% {
-    opacity: 0.5;
-    margin-left: 100px;
-  }
-  100% {
-    opacity: 1;
-    margin-left: 0;
   }
 }
 

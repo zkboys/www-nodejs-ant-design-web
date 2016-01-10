@@ -53,6 +53,7 @@ var clean = true;
  * JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
  * JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
  * BUILD_DEV=1 BUILD_PRERELEASE=1 webpack
+ * TODO 有时间改一下参数的写法，正规一些。
  * */
 var arguments = process.argv.splice(2);
 if (arguments) {

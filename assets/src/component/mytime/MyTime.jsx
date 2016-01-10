@@ -13,8 +13,8 @@ const MyTime = React.createClass({
     getInitialState(){
         return {
             /*
-            * 修改loading,并以props方式传给Page组件，页面即可切换loading非loading状态。
-            * */
+             * 修改loading,并以props方式传给Page组件，页面即可切换loading非loading状态。
+             * */
             loading: false
         }
     },
@@ -43,8 +43,12 @@ const MyTime = React.createClass({
                 {text: '修改用户'}
             ]
         };
+        let animConfig = [
+            {opacity: [1, 0], translateX: [0, 50]},
+            {opacity: [1, 0], translateX: [0, -50]}
+        ];
         return (
-            <Page header={pageHeader} loading={this.state.loading}>
+            <Page header={pageHeader} loading={this.state.loading} animConfig={animConfig}>
                 <TimePicker onChange={onChange}/>
             </Page>
         );

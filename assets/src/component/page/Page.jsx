@@ -1,6 +1,6 @@
 import './style.less';
 import React from 'react';
-import {message, Breadcrumb,Spin} from 'antd';
+import {message, Breadcrumb,Spin, QueueAnim} from 'antd';
 import {Link} from 'react-router';
 import {menuRouts} from '../MenusRouts'
 import Sidebar from '../sidebar/Sidebar';
@@ -27,7 +27,11 @@ const Page = React.createClass({
     },
     getDefaultProps(){
         return {
-            loading: false
+            loading: false,
+            animConfig: [
+                {opacity: [1, 0], translateY: [0, 50]},
+                {opacity: [1, 0], translateY: [0, -50]}
+            ]
         }
     },
     setPageHeader(){
@@ -52,8 +56,20 @@ const Page = React.createClass({
                 title: currentMenu.text,
                 breadcrumbItems
             };
-        } else if (this.props.header) {
-            pageHeaderDate = this.props.header;
+        } else if (typeof this.props.header == 'object') {
+            if (this.props.header.title) {
+                pageHeaderDate = this.props.header;
+            } else {
+                pageHeaderJsx =
+                    <div className="admin-page-header">
+                        <QueueAnim animConfig={this.props.animConfig}>
+                            <div key='queue-anim-item1'>
+                                {this.props.header}
+                            </div>
+                        </QueueAnim>
+                    </div>
+            }
+
         }
         if (pageHeaderDate) {
             let breadcrumbItems = [
@@ -70,10 +86,14 @@ const Page = React.createClass({
             }
             pageHeaderJsx =
                 <div className="admin-page-header">
-                    <h1 className="admin-page-header-title">{pageHeaderDate.title}</h1>
-                    <Breadcrumb>
-                        {breadcrumbItems}
-                    </Breadcrumb>
+                    <QueueAnim animConfig={this.props.animConfig}>
+                        <div key='queue-anim-item1'>
+                            <h1 className="admin-page-header-title">{pageHeaderDate.title}</h1>
+                            <Breadcrumb>
+                                {breadcrumbItems}
+                            </Breadcrumb>
+                        </div>
+                    </QueueAnim>
                 </div>;
         }
         this.setState({
@@ -126,9 +146,13 @@ const Page = React.createClass({
                 <div className="admin-page-content">
                     <div className="admin-page-content-inner">
                         {this.state.pageHeader}
-                        <Spin spining={this.props.loading}>
-                            {this.props.children}
-                        </Spin>
+                        <QueueAnim animConfig={this.props.animConfig} delay={100}>
+                            <div key='queue-anim-item1'>
+                                <Spin spining={this.props.loading}>
+                                    {this.props.children}
+                                </Spin>
+                            </div>
+                        </QueueAnim>
                     </div>
                 </div>
             </div>

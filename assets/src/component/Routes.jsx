@@ -20,6 +20,7 @@ const routes = {
  * 其他路由在下面加入
  * */
 routes.childRoutes.push(
+    {path: '/home', component: Home},
     {path: '*', component: Error404}//所有未截获的请求,统一跳转到Error404组件
 );
 /*
