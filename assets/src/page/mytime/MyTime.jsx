@@ -1,5 +1,5 @@
 import React from 'react';
-import Page from '../page/Page';
+import Page from '../../framework/page/Page';
 import { TimePicker } from 'antd';
 function onChange(time) {
     if (time) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Page from '../page/Page';
+import Page from '../../framework/page/Page';
 import {Form, Input, Select, Checkbox, Radio, Breadcrumb} from 'antd';
 import {Link} from 'react-router'
 const FormItem = Form.Item;

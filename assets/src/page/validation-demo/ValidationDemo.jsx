@@ -1,7 +1,7 @@
 import React from 'react';
 import {Validation, Button, Form, Input, Breadcrumb} from 'antd';
 import {Link} from 'react-router'
-import Page from '../page/Page';
+import Page from '../../framework/page/Page';
 const Validator = Validation.Validator;
 const FormItem = Form.Item;
 

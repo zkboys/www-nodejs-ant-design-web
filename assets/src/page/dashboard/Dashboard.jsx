@@ -2,7 +2,7 @@ import './style.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {message, Breadcrumb, Button } from 'antd'
-import Page from '../page/Page';
+import Page from '../../framework/page/Page';
 import Request from 'superagent';
 /*
  * 更新state之后触发的方法:

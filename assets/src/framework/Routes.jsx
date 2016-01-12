@@ -1,11 +1,12 @@
 import React from 'react';
 import {Router} from 'react-router'
 import {menuRouts, openAll} from './MenusRouts'
-import App from '../component/App'
-import Home from '../component/home/Home'
-import Sidebar from '../component/sidebar/Sidebar'
-import Error404 from '../component/error/Error404'
+import App from './app/App'
+import Home from './home/Home'
+import Sidebar from './sidebar/Sidebar'
+import Error404 from './error/Error404'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
+import {otherRoutes} from '../page/MenusRouts'
 const browserHistory = createBrowserHistory();
 /*
  * 根据菜单数据，初始化路由
@@ -19,9 +20,12 @@ const routes = {
 /*
  * 其他路由在下面加入
  * */
+routes.childRoutes.concat(otherRoutes);
+/*
+* 所有未截获的请求,统一跳转到Error404组件
+* */
 routes.childRoutes.push(
-    {path: '/home', component: Home},
-    {path: '*', component: Error404}//所有未截获的请求,统一跳转到Error404组件
+    {path: '*', component: Error404}
 );
 /*
  * 监听地址栏改变，通过左侧菜单状态
