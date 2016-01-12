@@ -5,7 +5,7 @@ import App from './app/App'
 import Home from './home/Home'
 import Sidebar from './sidebar/Sidebar'
 import Error404 from './error/Error404'
-import Settings from './system/Settings'
+import SettingsPage from './system/SettingsPage'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import {otherRoutes} from '../page/MenusRouts'
 const browserHistory = createBrowserHistory();
@@ -26,7 +26,7 @@ routes.childRoutes.concat(otherRoutes);
 * 所有未截获的请求,统一跳转到Error404组件
 * */
 routes.childRoutes.push(
-    {path: '/system/settings', component: Settings},
+    {path: '/system/settings', component: SettingsPage},
     {path: '*', component: Error404}
 );
 /*

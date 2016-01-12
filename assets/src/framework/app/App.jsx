@@ -4,18 +4,18 @@ import Sidebar from '../sidebar/Sidebar';
 import Container from '../container/Container';
 import 'antd/lib/index.css';
 import './app.less';
-import storage from '../common/storage'
+import Settings from '../Settings'
 const App = React.createClass({
     getInitialState(){
         return {
-            collapse: storage.local.get('sidebar-collapse') == false
+            collapse: Settings.collapseSidebar()
         }
     },
     handelClick(){
         this.setState({
             collapse: !this.state.collapse
         });
-        storage.local.set('sidebar-collapse', this.state.collapse)
+        Settings.collapseSidebar(!this.state.collapse);
     },
     render() {
         return (

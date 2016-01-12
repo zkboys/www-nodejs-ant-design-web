@@ -1,21 +1,20 @@
 import React from 'react';
 import Page from '../page/Page';
 import { Form, Checkbox} from 'antd';
-import storage from '../common/storage'
+import Settings from '../Settings'
 const FormItem = Form.Item;
 
-const Settings = React.createClass({
+const SettingsPage = React.createClass({
     getInitialState(){
-        let localShowPageAnimate = storage.local.get('showPageAnimate');
         return {
-            showPageAnimate: localShowPageAnimate == null ? true : localShowPageAnimate
+            showPageAnimate: Settings.pageAnimate()
         }
     },
     handleShowPageAnimate(e) {
         this.setState({
             showPageAnimate: !this.state.showPageAnimate
         });
-        storage.local.set('showPageAnimate',!this.state.showPageAnimate);
+        Settings.pageAnimate(!this.state.showPageAnimate);
     },
     componentDidMount: function () {
 
@@ -41,4 +40,4 @@ const Settings = React.createClass({
     }
 });
 
-export default Settings;
+export default SettingsPage;

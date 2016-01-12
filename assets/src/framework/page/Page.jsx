@@ -4,7 +4,7 @@ import {message, Breadcrumb,Spin, QueueAnim} from 'antd';
 import {Link} from 'react-router';
 import {menuRouts} from '../MenusRouts'
 import Sidebar from '../sidebar/Sidebar';
-import storage from '../common/storage'
+import Settings from '../Settings'
 /*
  * props:
  header: object / 'auto' 用来显示头部标题和右侧面包屑导航
@@ -22,10 +22,9 @@ import storage from '../common/storage'
  * */
 const Page = React.createClass({
     getInitialState(){
-        let localShowPageAnimate = storage.local.get('showPageAnimate');
         return {
             pageHeader: '',
-            showPageAnimate: localShowPageAnimate == null ? true : localShowPageAnimate
+            showPageAnimate: Settings.pageAnimate()
         }
     },
     getDefaultProps(){
