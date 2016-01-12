@@ -2,7 +2,7 @@ import React from 'react';
 import {Router} from 'react-router'
 import {menuRouts, openAll} from './MenusRouts'
 import App from './app/App'
-import Home from './home/Home'
+import Home from '../page/home/Home'
 import Sidebar from './sidebar/Sidebar'
 import Error404 from './error/Error404'
 import SettingsPage from './system/SettingsPage'
