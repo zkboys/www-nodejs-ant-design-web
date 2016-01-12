@@ -7,9 +7,6 @@ function onChange(time) {
     }
 }
 const MyTime = React.createClass({
-    /*
-     * 引用 mixin
-     * */
     getInitialState(){
         return {
             /*

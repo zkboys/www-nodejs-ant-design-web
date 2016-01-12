@@ -5,6 +5,7 @@ import App from './app/App'
 import Home from './home/Home'
 import Sidebar from './sidebar/Sidebar'
 import Error404 from './error/Error404'
+import Settings from './system/Settings'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import {otherRoutes} from '../page/MenusRouts'
 const browserHistory = createBrowserHistory();
@@ -25,6 +26,7 @@ routes.childRoutes.concat(otherRoutes);
 * 所有未截获的请求,统一跳转到Error404组件
 * */
 routes.childRoutes.push(
+    {path: '/system/settings', component: Settings},
     {path: '*', component: Error404}
 );
 /*
@@ -63,6 +65,8 @@ browserHistory.listen(function (data) {
     function setSidebarState() {
         /*
          * 匹配到左侧菜单，则改变菜单状态，没有匹配到，则保留菜单状态。首页除外
+         * TODO: 匹配算法要优化一下，比如/system/userlist/update，这个要匹配到userlist菜单，并设置状态。
+         * TODO: 连父级菜单都没有匹配到的，直接将所有菜单收起
          * */
         if (current || data.pathname === '/') {
             Sidebar.setSidebarState({

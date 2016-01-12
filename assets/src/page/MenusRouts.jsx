@@ -7,6 +7,7 @@ import MyForm from '../page/myform/MyForm'
 import Dashboard from '../page/dashboard/Dashboard'
 import MyTime from '../page/mytime/MyTime'
 import ValidationDemo from '../page/validation-demo/ValidationDemo'
+import Settings from '../framework/system/Settings'
 
 /*
  * 左侧菜单与路由公用的数据
@@ -71,4 +72,4 @@ export let menusRouts = [
 
 export let otherRoutes = [
     {path: '/home', component: Home}
-]
+];

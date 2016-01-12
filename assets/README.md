@@ -71,9 +71,9 @@ http://localhost:3001/
 ```
 -assets
     -src
-        -commpent           业务通用组件
+        -commpent           业务通用组件，工具类/业务无关的相关组件，统一写到framework/common中。
         -entry              项目入口文件
-        -framework          框架，业务开发人员不允许修改这个文件夹下面的代码，如果有bug，或者需求，向有关同学提出。
+        -framework          框架，各位同学不要修改这个文件夹下面的代码，如果有bug，或者需求，向有关同学提出。
         -page               业务相关页面
             -MenusRouts.jsx 菜单及路由配置
     -package.json

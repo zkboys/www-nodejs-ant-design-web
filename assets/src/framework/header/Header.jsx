@@ -37,6 +37,11 @@ const Header = React.createClass({
                         </Tooltip>
                     </li>
                     <li className="admin-header-menu-item">
+                        <Tooltip placement="bottomRight" title="系统设置">
+                            <Link to="/system/settings"><FAIcon type="fa-cogs"/></Link>
+                        </Tooltip>
+                    </li>
+                    <li className="admin-header-menu-item">
                         <Tooltip placement="bottom" title="个人设置">
                             <a href="javascript:;">
                                 <img src={avatar} className="admin-user-avatar" alt="王树彬"/>

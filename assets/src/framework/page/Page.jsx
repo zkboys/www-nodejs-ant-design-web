@@ -4,6 +4,7 @@ import {message, Breadcrumb,Spin, QueueAnim} from 'antd';
 import {Link} from 'react-router';
 import {menuRouts} from '../MenusRouts'
 import Sidebar from '../sidebar/Sidebar';
+import storage from '../common/storage'
 /*
  * props:
  header: object / 'auto' 用来显示头部标题和右侧面包屑导航
@@ -21,8 +22,10 @@ import Sidebar from '../sidebar/Sidebar';
  * */
 const Page = React.createClass({
     getInitialState(){
+        let localShowPageAnimate = storage.local.get('showPageAnimate');
         return {
-            pageHeader: ''
+            pageHeader: '',
+            showPageAnimate: localShowPageAnimate == null ? true : localShowPageAnimate
         }
     },
     getDefaultProps(){
@@ -77,14 +80,22 @@ const Page = React.createClass({
                     pageHeaderDate.breadcrumbItems = ''
                 }
             } else {
-                pageHeaderJsx =
-                    <div className="admin-page-header">
-                        <QueueAnim animConfig={this.props.animConfig}>
-                            <div key='queue-anim-item1'>
-                                {this.props.header}
-                            </div>
-                        </QueueAnim>
-                    </div>
+                if (this.state.showPageAnimate) {
+                    pageHeaderJsx =
+                        <div className="admin-page-header">
+                            <QueueAnim animConfig={this.props.animConfig}>
+                                <div key='queue-anim-item1'>
+                                    {this.props.header}
+                                </div>
+                            </QueueAnim>
+                        </div>
+                } else {
+                    pageHeaderJsx =
+                        <div className="admin-page-header">
+                            {this.props.header}
+                        </div>
+                }
+
             }
 
         }
@@ -109,15 +120,24 @@ const Page = React.createClass({
                         {breadcrumbItems}
                     </Breadcrumb>;
             }
-            pageHeaderJsx =
-                <div className="admin-page-header">
-                    <QueueAnim animConfig={this.props.animConfig}>
-                        <div key='queue-anim-item1'>
-                            <h1 className="admin-page-header-title">{pageHeaderDate.title}</h1>
-                            {breadcrumb}
-                        </div>
-                    </QueueAnim>
-                </div>;
+            if (this.state.showPageAnimate) {
+                pageHeaderJsx =
+                    <div className="admin-page-header">
+                        <QueueAnim animConfig={this.props.animConfig}>
+                            <div key='queue-anim-item1'>
+                                <h1 className="admin-page-header-title">{pageHeaderDate.title}</h1>
+                                {breadcrumb}
+                            </div>
+                        </QueueAnim>
+                    </div>;
+            } else {
+                pageHeaderJsx =
+                    <div className="admin-page-header">
+                        <h1 className="admin-page-header-title">{pageHeaderDate.title}</h1>
+                        {breadcrumb}
+                    </div>;
+            }
+
         }
         this.setState({
             pageHeader: pageHeaderJsx
@@ -164,18 +184,24 @@ const Page = React.createClass({
         }
     },
     render() {
+        let pageChildren =
+            <Spin spining={this.props.loading}>
+                {this.props.children}
+            </Spin>;
+        if (this.state.showPageAnimate) {
+            pageChildren =
+                <QueueAnim animConfig={this.props.animConfig} delay={100}>
+                    <div key='queue-anim-item1'>
+                        {pageChildren}
+                    </div>
+                </QueueAnim>
+        }
         return (
             <div className={"admin-page "}>
                 <div className="admin-page-content">
                     <div className="admin-page-content-inner">
                         {this.state.pageHeader}
-                        <QueueAnim animConfig={this.props.animConfig} delay={100}>
-                            <div key='queue-anim-item1'>
-                                <Spin spining={this.props.loading}>
-                                    {this.props.children}
-                                </Spin>
-                            </div>
-                        </QueueAnim>
+                        {pageChildren}
                     </div>
                 </div>
             </div>
