@@ -67,8 +67,20 @@ http://localhost:3001/
 
 
 ##约定
-###文件结构
-> 每个页面为一个单独组件,每个页面所用到的资源都放到一个文件夹下面,比如home
+###目录结构
+```
+-assets
+    -src
+        -commpent           业务通用组件
+        -entry              项目入口文件
+        -framework          框架，业务开发人员不允许修改这个文件夹下面的代码，如果有bug，或者需求，向有关同学提出。
+        -page               业务相关页面
+            -MenusRouts.jsx 菜单及路由配置
+    -package.json
+    -READEME.md  
+    -webpack.config.js              
+```
+> 每个页面为一个单独组件，统一放在page目录下,每个页面所用到的资源都放到一个文件夹下面,比如home
 
 ```
 home
@@ -99,26 +111,14 @@ import {Link} from 'react-router'
 <Link to="/xxxxx">XXXXX</Link>
 ```
 
-> 左侧导航菜单的路由配置在MenusRouts.jsx中编辑
+> 左侧导航菜单及路由配置在assets/src/page/MenusRouts.jsx中编辑
 
 ```
 详见 左侧菜单写法
 ```
-
-> 其他路由在Routes.jsx中编辑
-
-```
-/*
- * 其他路由在下面加入
- * */
-routes.childRoutes.push(
-    {path: '/home', component: Home},
-    {path: '*', component: Error404}//所有未截获的请求,统一跳转到Error404组件
-);
-```
-
+ 
 ###左侧菜单写法：
-> 左侧菜单和路由公用一个数据结构，直接在MenusRouts.jsx编辑即可，通过相关方法直接可以转换生成菜单和相关路由。
+> 左侧菜单和路由公用一个数据结构，直接在assets/src/page/MenusRouts.jsx编辑即可，通过相关方法直接可以转换生成菜单和相关路由。
 
 ```
 /*
@@ -217,7 +217,7 @@ let animConfig = [
 
 ##待解决问题
 - react react-dom antd 做成全局，节省打包时间。
-- 框架级的东西，单独打包成一个组件，也通过npm方式安装，提高各个项目之间的通用性。方便统一维护。
+- 框架级的东西，单独打包成一个组件，也通过npm方式安装，提高各个项目之间的通用性。方便统一维护。 done 架构相关代码暂时先区分到了同一个目录下。
 - 表单校验 done 官网有提供
 - 执行构建有些慢 done 构建慢一般可以接受，watch速度还是可以的。
 - 根据地址定位左侧菜单 目前使用全局持有菜单句柄的方法，有点恶心，有没有好一点的方法？ done
