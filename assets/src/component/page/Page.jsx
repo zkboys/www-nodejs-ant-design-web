@@ -62,9 +62,20 @@ const Page = React.createClass({
         } else if (typeof this.props.header == 'object') {
             if (this.props.header.title || this.props.header.breadcrumbItems) {
                 pageHeaderDate = {};
-                pageHeaderDate.title = this.props.header.title === 'auto' || !this.props.header.title ? this.getPageHeaderDateByMenu().title : this.props.header.title;
-                pageHeaderDate.breadcrumbItems = this.props.header.breadcrumbItems === 'auto' || !this.props.header.breadcrumbItems ? this.getPageHeaderDateByMenu().breadcrumbItems : this.props.header.breadcrumbItems;
-
+                if (this.props.header.title === 'auto') {
+                    pageHeaderDate.title = this.getPageHeaderDateByMenu().title;
+                } else if (this.props.header.title) {
+                    pageHeaderDate.title = this.props.header.title;
+                } else {
+                    pageHeaderDate.title = ' ';
+                }
+                if (this.props.header.breadcrumbItems === 'auto') {
+                    pageHeaderDate.breadcrumbItems = this.getPageHeaderDateByMenu().breadcrumbItems
+                } else if (this.props.header.breadcrumbItems) {
+                    pageHeaderDate.breadcrumbItems = this.props.header.breadcrumbItems;
+                } else {
+                    pageHeaderDate.breadcrumbItems = ''
+                }
             } else {
                 pageHeaderJsx =
                     <div className="admin-page-header">
@@ -91,14 +102,19 @@ const Page = React.createClass({
                         : <Breadcrumb.Item key={key}>{item.text}</Breadcrumb.Item>
                 );
             }
+            let breadcrumb = '';
+            if (pageHeaderDate.breadcrumbItems) {
+                breadcrumb =
+                    <Breadcrumb>
+                        {breadcrumbItems}
+                    </Breadcrumb>;
+            }
             pageHeaderJsx =
                 <div className="admin-page-header">
                     <QueueAnim animConfig={this.props.animConfig}>
                         <div key='queue-anim-item1'>
                             <h1 className="admin-page-header-title">{pageHeaderDate.title}</h1>
-                            <Breadcrumb>
-                                {breadcrumbItems}
-                            </Breadcrumb>
+                            {breadcrumb}
                         </div>
                     </QueueAnim>
                 </div>;
