@@ -34,31 +34,37 @@ const Page = React.createClass({
             ]
         }
     },
+    getPageHeaderDateByMenu(){
+        let currentMenuKey = Sidebar.getCurrentMenuKey();
+        let currentMenu = null;
+        for (let i = 0; i < menuRouts.length; i++) {
+            let menu = menuRouts[i];
+            if (menu.key === currentMenuKey) {
+                currentMenu = menu;
+                break;
+            }
+        }
+        let breadcrumbItems = [];
+        for (let i = 0; i < currentMenu.parentText.length; i++) {
+            breadcrumbItems.push({text: currentMenu.parentText[i]});
+        }
+        breadcrumbItems.push({text: currentMenu.text});
+        return {
+            title: currentMenu.text,
+            breadcrumbItems
+        };
+    },
     setPageHeader(){
         let pageHeaderJsx = '';
         let pageHeaderDate = null;
         if (this.props.header === 'auto') {
-            let currentMenuKey = Sidebar.getCurrentMenuKey();
-            let currentMenu = null;
-            for (let i = 0; i < menuRouts.length; i++) {
-                let menu = menuRouts[i];
-                if (menu.key === currentMenuKey) {
-                    currentMenu = menu;
-                    break;
-                }
-            }
-            let breadcrumbItems = [];
-            for (let i = 0; i < currentMenu.parentText.length; i++) {
-                breadcrumbItems.push({text: currentMenu.parentText[i]});
-            }
-            breadcrumbItems.push({text: currentMenu.text});
-            pageHeaderDate = {
-                title: currentMenu.text,
-                breadcrumbItems
-            };
+            pageHeaderDate = this.getPageHeaderDateByMenu();
         } else if (typeof this.props.header == 'object') {
-            if (this.props.header.title) {
-                pageHeaderDate = this.props.header;
+            if (this.props.header.title || this.props.header.breadcrumbItems) {
+                pageHeaderDate = {};
+                pageHeaderDate.title = this.props.header.title === 'auto' || !this.props.header.title ? this.getPageHeaderDateByMenu().title : this.props.header.title;
+                pageHeaderDate.breadcrumbItems = this.props.header.breadcrumbItems === 'auto' || !this.props.header.breadcrumbItems ? this.getPageHeaderDateByMenu().breadcrumbItems : this.props.header.breadcrumbItems;
+
             } else {
                 pageHeaderJsx =
                     <div className="admin-page-header">
@@ -71,6 +77,7 @@ const Page = React.createClass({
             }
 
         }
+
         if (pageHeaderDate) {
             let breadcrumbItems = [
                 <Breadcrumb.Item key="page-breadcrumb-item-home"><Link to="/">首页</Link></Breadcrumb.Item>

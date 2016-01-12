@@ -174,8 +174,8 @@ let pageHeader = <div>
 
 ```
 let pageHeader = {
-    title: '表单校验',
-    breadcrumbItems: [
+    title: '表单校验', // 缺省或者 'auto' 将会根据左侧导航，自动获取当前菜单名作为标题
+    breadcrumbItems: [// 缺省或者 'auto' 将会根据左侧导航，自动获取当前菜单展开状态作为面包屑导航。
         {text: '某应用'},
         {text: '我的时间', path: '/myTime3'},
         {text: '表单校验'}
