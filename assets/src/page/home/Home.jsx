@@ -4,30 +4,29 @@ import { Breadcrumb } from 'antd'
 import Page from '../../framework/page/Page';
 import ajax from '../../framework/common/ajax'
 
-const Home = React.createClass({
+let initRequestMixin = {
     getInitialState(){
         return {
-            loading: false,
-            r: {}
+            loading: false
         }
     },
-    componentWillUnmount() {
+    componentWillUnmount: function () {
         /*
          * 组件被移除DMO,清除未完成的ajax
          * */
-        this.request.abort();
+        this.initReq.abort();
     },
     componentDidMount() {
         let _this = this;
-        _this.request = ajax.get({
-            url: '/dashboard.json',
+        _this.initReq = ajax.get({
+            url: _this.initRequestUrl,
             before(){
                 _this.setState({
                     loading: true
                 });
             },
             success (res) {
-                console.log(res);
+                _this.initRequestSuccess(res);
             },
             complete(error, res){
                 _this.setState({
@@ -35,6 +34,15 @@ const Home = React.createClass({
                 });
             }
         });
+    }
+
+};
+
+const Home = React.createClass({
+    mixins: [initRequestMixin],
+    initRequestUrl: '/dashboard.json',
+    initRequestSuccess(res){
+        console.log(res);
     },
     render() {
         let pageHeader =

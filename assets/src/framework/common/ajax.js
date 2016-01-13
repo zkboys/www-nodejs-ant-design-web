@@ -1,29 +1,49 @@
 /*
  * 后台请求封装，有可能是fetch 或者 super agent
+ * 由于promise无法打断，这里就没有封装成promise，使用了类似jQuery的封装。既然封装的类似jQuery，为何不直接定制一个jQuery ajax？
  * */
 import Request from 'superagent';
 import Cookie from './Cookie'
 export default {
-    get(options){
+    /*
+     * 外观模式
+     * */
+    ajax(options){
         let defaultOptions = {
+            url: '',
+            type: 'GET',
+            headers: {Accept: 'application/json'},
+            data: {},
             before(){
             },
             error(error){
-                throw error;
+                console.error(error);
             },
             success(res){
-                throw Error('success callback is required!');
+                console.log(res);
             },
             complete(error, res){
 
             }
         };
         options = Object.assign({}, defaultOptions, options);
-        if (options.before()===false) {
+        if (options.before() === false) {
             return false;
         }
-        return Request
-            .get(options.url)
+        let request = null;
+        switch (options.type.toUpperCase()) {
+            case 'GET':
+                request = Request.get(options.url);
+                break;
+            case 'POST':
+                options.data._xsrf = '';// from cookie or input element
+                request = Request.post(options.url);
+                break;
+            default:
+                throw Error('Unknow request type, the request type must be get or post ')
+        }
+
+        return request
             .send(options.data)
             .set('Accept', 'application/json')
             .end((error, res) => {
@@ -31,21 +51,17 @@ export default {
                 options.complete(error, res);
             });
     },
-    post(params){
-        //TODO:_csrf
-        //Cookie.getCookie();
-        return new Promise(function (resolve, reject) {
-            let r = Request
-                .post(params.url)
-                .send(params.data)
-                .set('Accept', 'application/json')
-                .end((error, res) => {
-                    error ? reject(error) : resolve(res);
-                });
-            this.abort = function () {
-                r.abort();
-            };
-        });
+    get(options){
+        options.type = 'GET';
+        return this.ajax(options);
+    },
+    post(options){
+        options.type = 'POST';
+        return this.ajax(options);
+    },
+    put(options){
+    },
+    delete(options){
     }
 
 }

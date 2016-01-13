@@ -145,7 +145,7 @@ const Page = React.createClass({
     switchLoadingMessage(){
         if (this.props.loading) {
             if (!this.hideLoading) {
-                this.hideLoading = message.loading('正在加载...', 0);
+                //this.hideLoading = message.loading('正在加载...', 0);
             }
         } else {
             if (this.hideLoading) {
