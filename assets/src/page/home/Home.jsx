@@ -3,7 +3,7 @@ import React from 'react';
 import { Breadcrumb } from 'antd'
 import Page from '../../framework/page/Page';
 import ajax from '../../framework/common/ajax'
-
+import jQuery from '../../framework/common/jquery.ajax'
 let initRequestMixin = {
     getInitialState(){
         return {
@@ -18,6 +18,23 @@ let initRequestMixin = {
     },
     componentDidMount() {
         let _this = this;
+        _this.initReq = jQuery.ajax({
+            url: _this.initRequestUrl,
+            beforeSend(){
+                _this.setState({
+                    loading: true
+                });
+            },
+            success(data){
+                console.log(data);
+            },
+            complete(){
+                _this.setState({
+                    loading: false
+                });
+            }
+        });
+        /*
         _this.initReq = ajax.get({
             url: _this.initRequestUrl,
             before(){
@@ -33,7 +50,7 @@ let initRequestMixin = {
                     loading: false
                 });
             }
-        });
+        });*/
     }
 
 };
