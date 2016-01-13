@@ -4,21 +4,32 @@
 import Request from 'superagent';
 import Cookie from './Cookie'
 export default {
-    get(params){
-        let r;
-        let p = new Promise(function (resolve, reject) {
-            r = Request
-                .get(params.url)
-                .send(params.data)
-                .set('Accept', 'application/json')
-                .end((error, res) => {
-                    error ? reject(error) : resolve(res);
-                });
-        });
-        p.abort = function () {
-            r.abort();
+    get(options){
+        let defaultOptions = {
+            before(){
+            },
+            error(error){
+                throw error;
+            },
+            success(res){
+                throw Error('success callback is required!');
+            },
+            complete(error, res){
+
+            }
         };
-        return p;
+        options = Object.assign({}, defaultOptions, options);
+        if (options.before()===false) {
+            return false;
+        }
+        return Request
+            .get(options.url)
+            .send(options.data)
+            .set('Accept', 'application/json')
+            .end((error, res) => {
+                error ? options.error(error) : options.success(res);
+                options.complete(error, res);
+            });
     },
     post(params){
         //TODO:_csrf

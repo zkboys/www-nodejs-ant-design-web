@@ -7,35 +7,34 @@ import ajax from '../../framework/common/ajax'
 const Home = React.createClass({
     getInitialState(){
         return {
-            loading: false
+            loading: false,
+            r: {}
         }
     },
     componentWillUnmount() {
         /*
          * 组件被移除DMO,清除未完成的ajax
          * */
-        this.ajax.abort();
+        this.request.abort();
     },
     componentDidMount() {
-        let that = this;
-        that.setState({
-            loading: true
-        });
-        that.ajax = ajax.get({
-            url: '/dashboard.json'
-        });//TODO 这里有问题
-        that.ajax.then(function (res) {
-                that.setState({
-                    loading: false
+        let _this = this;
+        _this.request = ajax.get({
+            url: '/dashboard.json',
+            before(){
+                _this.setState({
+                    loading: true
                 });
+            },
+            success (res) {
                 console.log(res);
-            })
-            .catch(function (err) {
-                that.setState({
+            },
+            complete(error, res){
+                _this.setState({
                     loading: false
                 });
-                console.error(err);
-            });
+            }
+        });
     },
     render() {
         let pageHeader =
