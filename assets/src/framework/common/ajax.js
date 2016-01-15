@@ -60,8 +60,12 @@ export default {
         return this.ajax(options);
     },
     put(options){
+        options.type = 'PUT';
+        return this.ajax(options);
     },
     delete(options){
+        options.type = 'DELETE';
+        return this.ajax(options);
     }
 
 }
