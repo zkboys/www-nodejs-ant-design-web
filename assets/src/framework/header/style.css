@@ -16,6 +16,7 @@
     text-align: center;
     font-size: 18px;
     vertical-align: middle;
+    float: left;
 }
 
 .admin-logo > a,
@@ -29,11 +30,26 @@
 .admin-sidebar-toggle {
     display: inline-block;
     padding: 0 15px;
-    height: 50px;
+    height: 100%;
     line-height: 50px;
     font-size: 14px;
     color: #fff;
     vertical-align: middle;
+    float: left;
+}
+
+.admin-header-sys.ant-menu {
+    display: inline-block;
+    height: 100%;
+    float: left;
+    background: none;
+    border: none;
+}
+
+.admin-header-sys .ant-menu-item-active.ant-menu-item,
+.admin-header-sys .ant-menu-item-selected.ant-menu-item {
+    color: #fff;
+    border-bottom: 2px solid #fff;
 }
 
 .admin-sidebar-toggle:hover,
