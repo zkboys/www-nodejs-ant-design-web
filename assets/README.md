@@ -49,7 +49,7 @@ exports.devserver = {
 *可以在assets目录中直接执行`npm run dev-server`*    
 
 ```
-webpack-dev-server --port 8086  --cfg.clean=false --cfg.runmod=devserver --progress --inline
+RUNMODE=devserver CLEAN=false webpack-dev-server --port 8086 --progress --inline
 ```
 
 > 后端启动方式:(以devserver方式启动)
