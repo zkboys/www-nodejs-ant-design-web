@@ -33,6 +33,7 @@
     "map-json-webpack-plugin": "~1.0.0",
     "object-assign": "~4.0.1",
     "pre-commit": "~1.1.2",
+    "pubsub-js": "^1.5.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.3",
@@ -40,7 +41,10 @@
     "style-loader": "^0.13.0",
     "url-loader": "~0.5.6",
     "webpack": "~1.12.2",
-    "whatwg-fetch": "^0.10.1"
+    "whatwg-fetch": "^0.10.1",
+    "exports-loader": "^0.6.2",
+    "imports-loader": "^0.6.5",
+    "superagent": "^1.6.1"
   },
   "scripts": {
     "open-browser": "xdg-open http://localhost:3001/",
@@ -64,10 +68,5 @@
   "bugs": {
     "url": "https://github.com/zkboys/webpack-demo/issues"
   },
-  "homepage": "https://github.com/zkboys/webpack-demo#readme",
-  "dependencies": {
-    "exports-loader": "^0.6.2",
-    "imports-loader": "^0.6.5",
-    "superagent": "^1.6.1"
-  }
+  "homepage": "https://github.com/zkboys/webpack-demo#readme"
 }
