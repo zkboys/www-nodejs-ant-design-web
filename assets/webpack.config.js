@@ -22,54 +22,39 @@ var configs = {
         "publicPath": '/s/'
     }
 };
-var cfg = configs.development;
+
 /*
  * 构建之前是否清除之前构建的内容。
  * */
 var clean = true;
+if (process.env.CLEAN == 'false') {
+    clean = false;
+}
 /*
- * 获取自定义参数
- * 自定义参数约定：webpack --cfg.path=./public --cfg.runmod=dev
- *
- * 有更好的方法：
- * 但是报错：Option '-d' not supported. Trigger 'webpack -h' for more details.
- *
- var argv = require('argv');
- var args = argv.option({
- name: 'option',
- short: 'o',
- type: 'string',
- description: 'Defines an option for your script',
- example: "'script --opiton=value' or 'script -o value'"
- }).run();
-
- console.dir(args.options);
- 然后
- $ node app.js -o aaa
- { option: 'aaa' }
- *
- *
- * 还可以这么做:
- * JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
- * JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
- * BUILD_DEV=1 BUILD_PRERELEASE=1 webpack
- * TODO 有时间改一下参数的写法，正规一些。
- * */
-var arguments = process.argv.splice(2);
-if (arguments) {
-    for (var i = 0; i < arguments.length; i++) {
-        var arg = arguments[i];
-        var keyWordInex = arg.indexOf('--cfg.');
-        if (keyWordInex == 0) {
-            arg = arg.substr(6, arg.length);
-        }
-        var cfgs = arg.split('=');
-        if (cfgs[0] == 'runmod' && configs[cfgs[1]]) {
-            cfg = configs[cfgs[1]];
-        }
-        if (cfgs[0] == 'clean' && cfgs[1] == 'false') {
-            clean = false;
-        }
+* 获取不同的环境配置
+* */
+var cfg = configs.development;
+var env = process.env.RUNMODE;
+switch (env) {
+    case 'dev':
+    {
+        cfg = configs.development;
+        break;
+    }
+    case 'test':
+    {
+        cfg = configs.test;
+        break;
+    }
+    case 'pro':
+    {
+        cfg = configs.production;
+        break;
+    }
+    case 'devserver':
+    {
+        cfg = configs.devserver;
+        break;
     }
 }
 /*
@@ -134,7 +119,9 @@ module.exports = {
         path: join(__dirname, cfg.path),
         publicPath: cfg.publicPath,
         filename: "[name].js",
-        chunkFilename: "[name].js"
+        chunkFilename: "[name].js",
+        libraryTarget: 'umd',
+        umdNamedDefine: true
     },
     module: {
         loaders: [
@@ -190,8 +177,8 @@ module.exports = {
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
         /*
-        * 这样写法 fetch就可以全局使用了，各个不用单独import
-        * */
+         * 这样写法 fetch就可以全局使用了，各个不用单独import
+         * */
         new webpack.ProvidePlugin({
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         })
