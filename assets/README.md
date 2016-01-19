@@ -89,6 +89,14 @@ home
     -home.jsx    
     -style.less
 ```
+###URL(路由path)
+> 需要根据路由（浏览器url同步页面状态，主要是头部导航和左侧菜单的选中状态，以及页面要渲染哪个组件），所以需要有固定格式的url，方便提取信息。
+
+```
+初步定为：http[s]://www.xxxx.com/sys-path/menu-path
+sys-path：对应头部导航，确定是哪个系统，确定左侧显示哪个菜单
+menu-path：左侧菜单对应的path，同时跟路由有对应。menu-path可以多级，比如users/lists/...
+```
 ###路由
 > 后端所有的get请求最终没有被截获的，都打到index.html
 
@@ -111,42 +119,41 @@ import {Link} from 'react-router'
 <Link to="/xxxxx">XXXXX</Link>
 ```
 
-> 左侧导航菜单及路由配置在assets/src/page/MenusRouts.jsx中编辑
+> 左侧菜单数据由后台提供，会包含path，路由前端单独维护，通过path跟菜单（或者Link）关联。
 
 ```
-详见 左侧菜单写法
+左侧菜单数据，详见 菜单数据结构。 
 ```
  
-###左侧菜单写法：
-> 左侧菜单和路由公用一个数据结构，直接在assets/src/page/MenusRouts.jsx编辑即可，通过相关方法直接可以转换生成菜单和相关路由。
+###菜单数据结构：
+> 如果后端提供的数据结构字段名无法对应，做一层数据转换，或者修改转换函数。
 
 ```
 /*
  * 左侧菜单与路由公用的数据
  * current：true/false 是否是当前菜单
- * path：对应地址
- * component：对应渲染的组件
+ * path：对应地址,与路由关联
  * */
 var menusRouts = [
-    {text: '表单校验', icon: 'fa-arrow-right', path: '/validation0', component: ValidationDemo},
-    {text: '仪表盘', icon: 'fa-arrow-right', path: '/dashboard0', component: Dashboard},
+    {text: '表单校验', icon: 'fa-arrow-right', path: '/validation0'},
+    {text: '仪表盘', icon: 'fa-arrow-right', path: '/dashboard0'},
     {
         text: '用户管理', icon: 'fa-th-list',
         children: [
-            {text: '仪表盘', icon: 'fa-arrow-right', path: '/dashboard3', component: Dashboard},
-            {text: '我的表单', icon: 'fa-arrow-right', path: '/myForm3', component: MyForm},
-            {text: '用户查询', icon: 'fa-arrow-right', path: '/myTime3', component: MyTime}
+            {text: '仪表盘', icon: 'fa-arrow-right', path: '/dashboard3'},
+            {text: '我的表单', icon: 'fa-arrow-right', path: '/myForm3'},
+            {text: '用户查询', icon: 'fa-arrow-right', path: '/myTime3'}
         ]
     }
 ]
 ```
 
 ###地址栏与菜单自动关联
-> 点击菜单时(或其他链接)，不需要绑定事件，直接通过Link走路由跳转，地址栏改变后，会出发相应函数，同步左侧菜单状态
+> 点击菜单时(或其他链接)，不需要绑定事件，直接通过Link走路由跳转，地址栏改变后，会出发相应函数，同步头部导航和左侧菜单状态
 
 ```
 browserHistory.listen(function (data) {
-//细节参见 Routes.jsx
+//细节参见 具体代码
 }}
 ```
 
