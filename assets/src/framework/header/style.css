@@ -51,6 +51,9 @@
     color: #fff;
     border-bottom: 2px solid #fff;
 }
+.admin-header-sys-menu-text{
+    padding-left:10px;
+}
 
 .admin-sidebar-toggle:hover,
 .admin-sidebar-toggle:visited,

@@ -1,7 +1,9 @@
 import './style.less';
 import React from 'react';
-import { Menu} from 'antd';
-import {getMenus} from '../MenusRouts'
+import { Menu, Tooltip} from 'antd';
+import FAIcon from '../faicon/FAIcon';
+import {Link} from 'react-router'
+const SubMenu = Menu.SubMenu;
 var _sidebar;
 const Sidebar = React.createClass({
     statics: {
@@ -11,16 +13,19 @@ const Sidebar = React.createClass({
         getCurrentMenuKey: function () {
             return _sidebar.state.current;
         },
+        /*
+         * 菜单是否加载/渲染完成等状态。
+         * */
         getSidebarStatus: function () {
             return _sidebar ? _sidebar.state.status : false;
         }
     },
     getInitialState() {
         _sidebar = this;
-        var menus = getMenus(this.props.collapse);
         return {
-            current: menus.current,
-            openKeys: menus.openKeys,
+            menus: [],
+            current: '',
+            openKeys: [],
             maxWidth: 240,
             minWidth: 60,
             scrollBarWidth: 15
@@ -84,7 +89,7 @@ const Sidebar = React.createClass({
                         onClose={this.onToggle}
                         style={{marginLeft:-8}}
                         mode={this.props.collapse?'vertical':'inline'}>
-                        {getMenus(this.props.collapse).menus}
+                        {this.state.menus}
                     </Menu>
                 </div>
             </div>
