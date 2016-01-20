@@ -72,7 +72,7 @@ const Dashboard = React.createClass({
      * 在组件挂载之前调用一次。返回值将会作为 this.state 的初始值。
      * */
     getInitialState(){
-        console.log('getInitialState');
+        //console.log('getInitialState');
         return {
             seconds: 0,
             testAjax: 'testAjax'
@@ -83,7 +83,7 @@ const Dashboard = React.createClass({
      * 如果父组件没有指定 props 中的某个键，则此处返回的对象中的相应属性将会合并到 this.props （使用 in 检测属性）。
      * */
     getDefaultProps(){
-        console.log('getDefaultProps');
+        //console.log('getDefaultProps');
         return {
             test: 'I\'m a test'
         }
@@ -115,7 +115,7 @@ const Dashboard = React.createClass({
      * 如果在这个方法内调用 setState，render() 将会感知到更新后的 state，将会执行仅一次，尽管 state 改变了。
      * */
     componentWillMount(){
-        console.log('componentWillMount');
+        //console.log('componentWillMount');
     },
     /*
      * 在初始化渲染执行之后立刻调用一次，仅客户端有效（服务器端不会调用）。
@@ -124,7 +124,7 @@ const Dashboard = React.createClass({
      * 如果想和其它 JavaScript 框架集成，使用 setTimeout 或者 setInterval 来设置定时器，或者发送 AJAX 请求，可以在该方法中执行这些操作。
      * */
     componentDidMount: function () {
-        console.log('componentDidMount');
+        //console.log('componentDidMount');
         //console.log(this.getDOMNode());// 过时了
         //console.log(ReactDOM.findDOMNode(this));
         //this.setInterval(this.tick, 1000); // 调用 mixin 的方法
@@ -144,7 +144,7 @@ const Dashboard = React.createClass({
      * 如果确定新的 props 和 state 不会导致组件更新，则此处应该 返回 false。
      * */
     shouldComponentUpdate(nextProps, nextState){
-        console.log('shouldComponentUpdate');
+        //console.log('shouldComponentUpdate');
         return true;
     },
     /*
@@ -152,7 +152,7 @@ const Dashboard = React.createClass({
      * 使用该方法做一些更新之前的准备工作。
      * */
     componentWillUpdate(nextProps, nextState){
-        console.log('componentWillUpdate');
+        //console.log('componentWillUpdate');
 
     },
     /*
@@ -160,7 +160,7 @@ const Dashboard = React.createClass({
      * 使用该方法可以在组件更新之后操作 DOM 元素。
      * */
     componentDidUpdate(prevProps, prevState){
-        console.log('componentDidUpdate');
+        //console.log('componentDidUpdate');
     },
     /*
      * 在组件从 DOM 中移除的时候立刻被调用。
@@ -168,7 +168,7 @@ const Dashboard = React.createClass({
      * 清理未返回的ajax??
      * */
     componentWillUnmount(){
-        console.log('componentWillUnmount');
+        //console.log('componentWillUnmount');
     },
     /*
      * 在组件接收到新的 props 的时候调用。在初始化渲染的时候，该方法不会调用。
@@ -176,7 +176,7 @@ const Dashboard = React.createClass({
      * 在该函数中调用 this.setState() 将不会引起第二次渲染。
      * */
     componentWillReceiveProps(nextProps){
-        console.log('componentWillReceiveProps');
+        //console.log('componentWillReceiveProps');
     },
     tick: function () {
         this.setState({seconds: this.state.seconds + 1});
@@ -199,7 +199,7 @@ const Dashboard = React.createClass({
     *
     * */
     render() {
-        console.log('render');
+        //console.log('render');
         return (
             <Page header="auto" loading={this.state.loading}>
                 <div className="dashboard">
@@ -220,5 +220,4 @@ const Dashboard = React.createClass({
         );
     }
 });
-console.log(Dashboard.customMethod('bar'));
 export default Dashboard;

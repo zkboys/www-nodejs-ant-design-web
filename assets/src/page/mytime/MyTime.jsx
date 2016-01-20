@@ -16,20 +16,20 @@ const MyTime = React.createClass({
         }
     },
     componentDidMount: function () {
-        let _this = this;
-        _this.setState({
-            loading: true
-        });
-        fetch('/dashboard.json').then(function (response) {
-            return response.json()
-        }).then(function (json) {
-            _this.setState({
-                loading: false
-            });
-            console.log('use fetch parsed json', json)
-        }).catch(function (ex) {
-            console.log('parsing failed', ex)
-        });
+        //let _this = this;
+        //_this.setState({
+        //    loading: true
+        //});
+        //fetch('/dashboard.json').then(function (response) {
+        //    return response.json()
+        //}).then(function (json) {
+        //    _this.setState({
+        //        loading: false
+        //    });
+        //    console.log('use fetch parsed json', json)
+        //}).catch(function (ex) {
+        //    console.log('parsing failed', ex)
+        //});
     },
     render() {
         const pageHeader = {

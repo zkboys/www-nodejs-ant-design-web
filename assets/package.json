@@ -33,7 +33,6 @@
     "map-json-webpack-plugin": "~1.0.0",
     "object-assign": "~4.0.1",
     "pre-commit": "~1.1.2",
-    "pubsub-js": "^1.5.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.3",

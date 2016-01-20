@@ -2,9 +2,10 @@ import './style.less';
 import React from 'react';
 import {message, Breadcrumb,Spin, QueueAnim} from 'antd';
 import {Link} from 'react-router';
-import {menuRouts} from '../MenusRouts'
-import Sidebar from '../sidebar/Sidebar';
+import {getCurrentHeaderMenu} from '../HeaderMenu';
+import {getCurrentSidebarMenu} from '../SidebarMenu'
 import Settings from '../Settings'
+import PubSubMsg from '../common/pubsubmsg';
 /*
  * props:
  header: object / 'auto' 用来显示头部标题和右侧面包屑导航
@@ -37,16 +38,14 @@ const Page = React.createClass({
         }
     },
     getPageHeaderDateByMenu(){
-        let currentMenuKey = Sidebar.getCurrentMenuKey();
-        let currentMenu = null;
-        for (let i = 0; i < menuRouts.length; i++) {
-            let menu = menuRouts[i];
-            if (menu.key === currentMenuKey) {
-                currentMenu = menu;
-                break;
+        let currentMenu = getCurrentSidebarMenu();
+        let breadcrumbItems = [];
+        if (!currentMenu) {
+            return {
+                title: '',
+                breadcrumbItems
             }
         }
-        let breadcrumbItems = [];
         for (let i = 0; i < currentMenu.parentText.length; i++) {
             breadcrumbItems.push({text: currentMenu.parentText[i]});
         }
@@ -98,10 +97,10 @@ const Page = React.createClass({
             }
 
         }
-
         if (pageHeaderDate) {
+            let currentHeaderMenu = getCurrentHeaderMenu();
             let breadcrumbItems = [
-                <Breadcrumb.Item key="page-breadcrumb-item-home"><Link to="/">首页</Link></Breadcrumb.Item>
+                <Breadcrumb.Item key="page-breadcrumb-item-home"><Link to={currentHeaderMenu.path}>{currentHeaderMenu.text}</Link></Breadcrumb.Item>
             ];
             let items = pageHeaderDate.breadcrumbItems;
             for (let i = 0; i < items.length; i++) {
@@ -143,6 +142,7 @@ const Page = React.createClass({
         });
     },
     switchLoadingMessage(){
+
         if (this.props.loading) {
             if (!this.hideLoading) {
                 //this.hideLoading = message.loading('正在加载...', 0);
@@ -164,17 +164,10 @@ const Page = React.createClass({
     },
     componentDidMount(){
         let _this = this;
-        if (Sidebar.getSidebarStatus() === 'ok') {
+        PubSubMsg.subscribe('set-header-breadcrumb', function () {
             _this.setPageHeader();
-        } else {
-            /*
-             * 由于Routs中使用了一个setTimeout，处理页面首次进入时候的菜单状态，导致这里不能确保在菜单设置状态之后访问，所以加了个setTimeout
-             * TODO：Routs中的setTimeout和这里的setTimeout都是不好的解决方案，需要替换。
-             * */
-            setTimeout(function () {
-                _this.setPageHeader();
-            }, 10);//这种方式，切换页面的时候，头部会闪动，设置成1ms也会有闪动。
-        }
+        });
+        PubSubMsg.unsubscribe('set-header-breadcrumb');
 
     },
     componentWillUnmount(){

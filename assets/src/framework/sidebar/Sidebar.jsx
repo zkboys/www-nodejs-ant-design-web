@@ -1,38 +1,22 @@
 import './style.less';
 import React from 'react';
-import { Menu, Tooltip} from 'antd';
-import FAIcon from '../faicon/FAIcon';
-import {Link} from 'react-router'
-const SubMenu = Menu.SubMenu;
-var _sidebar;
+import { Menu} from 'antd';
+import PubSubMsg from '../common/pubsubmsg';
+import Settings from '../Settings';
 const Sidebar = React.createClass({
-    statics: {
-        setSidebarState: function (state) {
-            _sidebar.setState(state);
-        },
-        getCurrentMenuKey: function () {
-            return _sidebar.state.current;
-        },
-        /*
-         * 菜单是否加载/渲染完成等状态。
-         * */
-        getSidebarStatus: function () {
-            return _sidebar ? _sidebar.state.status : false;
-        }
-    },
     getInitialState() {
-        _sidebar = this;
         return {
-            menus: [],
+            menu: [],
             current: '',
             openKeys: [],
             maxWidth: 240,
             minWidth: 60,
+            collapseSidebar: Settings.collapseSidebar(),
             scrollBarWidth: 15
         };
     },
     handleClick(e) {
-        console.log('click menu', e);
+        //console.log('click menu', e);
         /*
          * 点击Link会改变地址栏，地址栏改变会同步菜单状态，这里就不用再改变菜单状态了，重复了。
          * 这里改变状态会导致没有点击到Link，但是点击到了菜单，菜单状态会改变，但是页面并没有跳转的bug。
@@ -43,13 +27,27 @@ const Sidebar = React.createClass({
         //});
     },
     onToggle(info){
-        if (this.props.collapse) return;//折叠状态时,不改变打开菜单状态,否则切回展开状态,无法恢复打开状态.
+        console.log(info);
+        if (this.state.collapseSidebar) return;//折叠状态时,不改变打开菜单状态,否则切回展开状态,无法恢复打开状态.
         this.setState({
             openKeys: info.openKeys
         });
     },
     componentDidMount(){
-        this.setState({
+        let _this = this;
+        PubSubMsg.subscribe('sidebar-menu', function (data) {
+            _this.setState({
+                menu: data.menu,
+                current: data.current,
+                openKeys: data.openKeys || _this.state.openKeys
+            });
+        });
+        PubSubMsg.subscribe('switch-sidebar', function (data) {
+            _this.setState({
+                collapseSidebar: data
+            });
+        });
+        _this.setState({
             status: 'ok',
             scrollBarWidth: this.scrollBarWidth()
         });
@@ -71,12 +69,12 @@ const Sidebar = React.createClass({
     },
     render() {
         let sidebarStyle = {
-            width: this.props.collapse ? this.state.minWidth : this.state.maxWidth,
-            overflow: this.props.collapse ? 'visible' : 'hidden'
+            width: this.state.collapseSidebar ? this.state.minWidth : this.state.maxWidth,
+            overflow: this.state.collapseSidebar ? 'visible' : 'hidden'
         };
         let sidebarInnerStyle = {
-            width: this.props.collapse ? this.state.minWidth : this.state.maxWidth + this.state.scrollBarWidth,
-            overflowY: this.props.collapse ? 'visible' : 'scroll'
+            width: this.state.collapseSidebar ? this.state.minWidth : this.state.maxWidth + this.state.scrollBarWidth,
+            overflowY: this.state.collapseSidebar ? 'visible' : 'scroll'
         };
         return (
             <div className="admin-sidebar" style={sidebarStyle}>
@@ -88,8 +86,8 @@ const Sidebar = React.createClass({
                         onOpen={this.onToggle}
                         onClose={this.onToggle}
                         style={{marginLeft:-8}}
-                        mode={this.props.collapse?'vertical':'inline'}>
-                        {this.state.menus}
+                        mode={this.state.collapseSidebar?'vertical':'inline'}>
+                        {this.state.menu}
                     </Menu>
                 </div>
             </div>
