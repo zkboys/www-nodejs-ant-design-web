@@ -10,13 +10,13 @@ let headerMenuData = [
         key: 'shop',
         icon: 'fa-th-list',
         text: '店铺',
-        path: '/shop/MyForm'
+        path: '/shop/Dashboard'
     },
     {
         key: 'service',
         icon: 'fa-th-list',
         text: '服务',
-        path: '/service/Dashboard'
+        path: '/service/MyForm'
     },
     {
         key: 'expressage',

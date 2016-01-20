@@ -18,14 +18,17 @@ export let getSidebarMenus = function () {
  * 获取要设为当前状态的做的菜单数据.
  * */
 export let getCurrentSidebarMenu = function () {
+    let defaultMenuData = {
+        key: '',
+        text: '',
+        path: '',
+        openKeys: []
+    };
     let [, , simpleMenuData] = getMenusData();
+
+
     if (!simpleMenuData) {
-        return {
-            key: '',
-            text: '',
-            path: '',
-            openKeys: []
-        }
+        return defaultMenuData;
     }
     let openAll = Settings.sidebarMenuAlwaysOpen();
     let openKeys = [];
@@ -46,6 +49,9 @@ export let getCurrentSidebarMenu = function () {
     }
     if (currentMenu) {//openKeys去重
         currentMenu.openKeys = Array.from(new Set(openKeys))
+    }
+    if (!currentMenu) {
+        return defaultMenuData;
     }
     return currentMenu;
 };
@@ -87,6 +93,24 @@ function getMenusData() {
             {text: '仪表盘1111', icon: 'fa-arrow-right', path: '/expressage/Dashboard'},
             {text: '我的时间111', icon: 'fa-arrow-right', path: '/expressage/MyTime'},
             {text: '校验demo111', icon: 'fa-arrow-right', path: '/expressage/ValidationDemo'}
+        ],
+        'system': [
+            {text: '系统设置', icon: 'fa-cogs', path: '/system/settings'},
+            {
+                text: '我的邮件', icon: 'fa-envelope-o',
+                children: [
+                    {text: '未读邮件', icon: 'fa-arrow-right', path: '/system/mail/unread'},
+                    {text: '已读邮件', icon: 'fa-arrow-right', path: '/system/mail/read'}
+                ]
+            },
+            {text: '我的提醒', icon: 'fa-bell-o', path: '/system/remind'},
+            {
+                text: '个人设置', icon: 'fa-envelope-o',
+                children: [
+                    {text: '修改个人信息', icon: 'fa-arrow-right', path: '/system/profile/message'},
+                    {text: '修改密码', icon: 'fa-arrow-right', path: '/system/profile/password'}
+                ]
+            }
         ]
     };
     let pathNames = location.pathname.split('/');

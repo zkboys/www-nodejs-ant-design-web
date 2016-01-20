@@ -22,7 +22,7 @@ const Header = React.createClass({
     },
     handleClick(e) {
         Settings.collapseSidebar(!Settings.collapseSidebar());
-        let sidebarMenus =getSidebarMenus();
+        let sidebarMenus = getSidebarMenus();
         let currentSidebarMenu = getCurrentSidebarMenu();
         PubSubMsg.publish('switch-sidebar', Settings.collapseSidebar());
         PubSubMsg.publish('sidebar-menu', {
@@ -58,20 +58,20 @@ const Header = React.createClass({
                 <ul className="admin-header-menu">
                     <li className="admin-header-menu-item">
                         <Tooltip placement="bottom" title="我的邮件">
-                            <a href="javascript:;">
+                            <Link to="/system/mail/unread">
                                 <Badge dot>
                                     <FAIcon type="fa-envelope-o"/>
                                 </Badge>
-                            </a>
+                            </Link>
                         </Tooltip>
                     </li>
                     <li className="admin-header-menu-item">
                         <Tooltip placement="bottom" title="我的提醒">
-                            <a href="javascript:;">
+                            <Link to="/system/remind">
                                 <Badge dot>
                                     <FAIcon type="fa-bell-o"/>
                                 </Badge>
-                            </a>
+                            </Link>
                         </Tooltip>
                     </li>
                     <li className="admin-header-menu-item">
@@ -81,10 +81,10 @@ const Header = React.createClass({
                     </li>
                     <li className="admin-header-menu-item">
                         <Tooltip placement="bottom" title="个人设置">
-                            <a href="javascript:;">
+                            <Link to="/system/profile/message">
                                 <img src={avatar} className="admin-user-avatar" alt="王树彬"/>
                                 王树彬
-                            </a>
+                            </Link>
                         </Tooltip>
                     </li>
                     <li className="admin-header-menu-item">
