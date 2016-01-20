@@ -1,7 +1,7 @@
-import MyForm from '../page/myform/MyForm'
-import Dashboard from '../page/dashboard/Dashboard'
-import MyTime from '../page/mytime/MyTime'
-import ValidationDemo from '../page/validation-demo/ValidationDemo'
+import MyForm from './myform/MyForm'
+import Dashboard from './dashboard/Dashboard'
+import MyTime from './mytime/MyTime'
+import ValidationDemo from './validation-demo/ValidationDemo'
 export default[
     {path: '/shop/MyForm', component: MyForm},
     {path: '/shop/Dashboard', component: Dashboard},
