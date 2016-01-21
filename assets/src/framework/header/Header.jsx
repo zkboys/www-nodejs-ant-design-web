@@ -40,7 +40,7 @@ const Header = React.createClass({
     },
     componentDidMount(){
         let _this = this;
-        PubSubMsg.subscribe('header-menu', function (data) {
+        PubSubMsg.subscribeAcceptOldMsg('header-menu', function (data) {
             _this.setState({
                 menu: data.menu,
                 current: data.current

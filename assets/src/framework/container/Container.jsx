@@ -17,12 +17,12 @@ const Container = React.createClass({
     },
     componentDidMount(){
         let _this = this;
-        PubSubMsg.subscribe('switch-sidebar', function (data) {
+        PubSubMsg.subscribeAcceptOldMsg('switch-sidebar', function (data) {
             _this.setState({
                 collapseSidebar: data
             });
         });
-        PubSubMsg.subscribe('sidebar-menu', function (data) {
+        PubSubMsg.subscribeAcceptOldMsg('sidebar-menu', function (data) {
             if (data.menu && data.menu.length > 0) {
                 _this.setState({
                     hidden: false

@@ -148,7 +148,7 @@ const Page = React.createClass({
     },
     componentDidMount(){
         let _this = this;
-        PubSubMsg.subscribeOnce('set-header-breadcrumb', function () {
+        PubSubMsg.subscribeOnceAcceptOldMsg('set-header-breadcrumb', function () {
             _this.setPageHeader();
         });
     },

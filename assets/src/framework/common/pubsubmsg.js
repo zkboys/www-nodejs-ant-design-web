@@ -1,12 +1,10 @@
 /*========================================================
- * 发布订阅模式,带有消息队列性质
- * 如果没有订阅者，发布的消息会存到一个消息队列中，如果有订阅后来订阅相应消息，就立即触发相应的回调，相应的消息会一直存在，防止多个订阅者都是后订阅，都能接收到消息。
- * 如果需要纯粹的发布订阅模式功能,可以使用其他插件,或者重构一下这里的代码.
+ * 发布订阅模式,带有消息队列 生产者消费者 性质
  * =======================================================*/
 var pubsubmsg = {};
 (function ($) {
     $.topics = {};
-    $.unConsumedMsg = {};//key 对应主题，value对应数据
+    $.unConsumedMsg = {};//key 对应主题，value对应消息数据
     /*
      * 发布或广播事件
      * topic：事件名称
@@ -41,14 +39,31 @@ var pubsubmsg = {};
             func = name;
             name = new Date().getTime();//未指定name，使用时间戳，指定一个
         }
-        return $._subscribe(topic, name, func, true);
+        return $._subscribe(topic, name, func, true, false);
+    };
+    /*
+     * 同subscribeOnce,但是会消费历史消息
+     * */
+    $.subscribeOnceAcceptOldMsg = function (topic, name, func) {
+        if (arguments.length == 2) {
+            func = name;
+            name = new Date().getTime();//未指定name，使用时间戳，指定一个
+        }
+        return $._subscribe(topic, name, func, true, true);
+    };
+    $.subscribeAcceptOldMsg = function (topic, name, func) {
+        if (arguments.length == 2) {
+            func = name;
+            name = new Date().getTime();//未指定name，使用时间戳，指定一个
+        }
+        return $._subscribe(topic, name, func, false, true);
     };
     $.subscribe = function (topic, name, func) {
         if (arguments.length == 2) {
             func = name;
             name = new Date().getTime();//未指定name，使用时间戳，指定一个
         }
-        return $._subscribe(topic, name, func, false);
+        return $._subscribe(topic, name, func, false, false);
     };
     /*
      * 通过事件名称、订阅者名称、回调函数订阅事件
@@ -56,21 +71,24 @@ var pubsubmsg = {};
      * name: 订阅者名 可选 如果没指定那么，那么不能单独取消订阅，只能统一取消订阅。
      * func: 订阅事件（发布时触发）
      * once: 是否只触发一次func
+     * acceptOldMsg:接受历史消息
      * 同一个事件，不同的订阅者可以单独取消自己的订阅
      */
-    $._subscribe = function (topic, name, func, once) {
+    $._subscribe = function (topic, name, func, once, acceptOldMsg) {
         if (!$.topics[topic])
             $.topics[topic] = {};
         $.topics[topic][name] = {};
         $.topics[topic][name]['func'] = func;
         $.topics[topic][name]['once'] = once;
-        // 对应topic下加入回调函数
-        /*
-         * 查询是否有未消费的相应消息，如果有，立即执行回调。
-         * */
-        if (topic in $.unConsumedMsg) {
-            let data = $.unConsumedMsg[topic];
-            func(data);
+        if (acceptOldMsg) {
+            // 对应topic下加入回调函数
+            /*
+             * 查询是否有未消费的相应消息，如果有，立即执行回调。
+             * */
+            if (topic in $.unConsumedMsg) {
+                let data = $.unConsumedMsg[topic];
+                func(data);
+            }
         }
         return this;
     };
