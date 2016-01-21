@@ -6,6 +6,7 @@ import Settings from '../Settings';
 const Sidebar = React.createClass({
     getInitialState() {
         return {
+            hidden: false,
             menu: [],
             current: '',
             openKeys: [],
@@ -36,11 +37,18 @@ const Sidebar = React.createClass({
     componentDidMount(){
         let _this = this;
         PubSubMsg.subscribe('sidebar-menu', function (data) {
-            _this.setState({
-                menu: data.menu,
-                current: data.current,
-                openKeys: data.openKeys || _this.state.openKeys
-            });
+            if (data.menu && data.menu.length > 0) {
+                _this.setState({
+                    hidden: false,
+                    menu: data.menu,
+                    current: data.current,
+                    openKeys: data.openKeys || _this.state.openKeys
+                });
+            } else {
+                _this.setState({
+                    hidden: true
+                });
+            }
         });
         PubSubMsg.subscribe('switch-sidebar', function (data) {
             _this.setState({
@@ -48,7 +56,6 @@ const Sidebar = React.createClass({
             });
         });
         _this.setState({
-            status: 'ok',
             scrollBarWidth: this.scrollBarWidth()
         });
     },
@@ -69,8 +76,8 @@ const Sidebar = React.createClass({
     },
     render() {
         let sidebarStyle = {
-            width: this.state.collapseSidebar ? this.state.minWidth : this.state.maxWidth,
-            overflow: this.state.collapseSidebar ? 'visible' : 'hidden'
+            width: this.state.hidden ? 0 : this.state.collapseSidebar ? this.state.minWidth : this.state.maxWidth,
+            overflow: this.state.hidden ? 'hidden' :this.state.collapseSidebar ? 'visible' : 'hidden'
         };
         let sidebarInnerStyle = {
             width: this.state.collapseSidebar ? this.state.minWidth : this.state.maxWidth + this.state.scrollBarWidth,

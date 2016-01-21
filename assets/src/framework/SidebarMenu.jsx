@@ -15,20 +15,12 @@ export let getSidebarMenus = function () {
     return min ? minSidebarMenu : maxSidebarMenu;
 };
 /*
- * 获取要设为当前状态的做的菜单数据.
+ * 获取要设为当前状态的菜单数据.
  * */
 export let getCurrentSidebarMenu = function () {
-    let defaultMenuData = {
-        key: '',
-        text: '',
-        path: '',
-        openKeys: []
-    };
     let [, , simpleMenuData] = getMenusData();
-
-
     if (!simpleMenuData) {
-        return defaultMenuData;
+        return null;
     }
     let openAll = Settings.sidebarMenuAlwaysOpen();
     let openKeys = [];
@@ -50,9 +42,6 @@ export let getCurrentSidebarMenu = function () {
     if (currentMenu) {//openKeys去重
         currentMenu.openKeys = Array.from(new Set(openKeys))
     }
-    if (!currentMenu) {
-        return defaultMenuData;
-    }
     return currentMenu;
 };
 /*
@@ -67,6 +56,7 @@ function getMenusData() {
 
     /*
      * 根据 headerMenuCurrent，获取对应的左侧菜单。
+     * TODO:如果是从后台获取的数据,是不是要做个缓存?
      *
      * */
     let sidebarMenuData = {

@@ -39,19 +39,15 @@ const Page = React.createClass({
     },
     getPageHeaderDateByMenu(){
         let currentMenu = getCurrentSidebarMenu();
+        let parentText = currentMenu ? currentMenu.parentText : [];
+        let title = currentMenu ? currentMenu.text : '';
         let breadcrumbItems = [];
-        if (!currentMenu) {
-            return {
-                title: '',
-                breadcrumbItems
-            }
+        for (let i = 0; i < parentText.length; i++) {
+            breadcrumbItems.push({text: parentText[i]});
         }
-        for (let i = 0; i < currentMenu.parentText.length; i++) {
-            breadcrumbItems.push({text: currentMenu.parentText[i]});
-        }
-        breadcrumbItems.push({text: currentMenu.text});
+        breadcrumbItems.push({text: title});
         return {
-            title: currentMenu.text,
+            title,
             breadcrumbItems
         };
     },
@@ -99,9 +95,12 @@ const Page = React.createClass({
         }
         if (pageHeaderDate) {
             let currentHeaderMenu = getCurrentHeaderMenu();
-            let breadcrumbItems = [
-                <Breadcrumb.Item key="page-breadcrumb-item-home"><Link to={currentHeaderMenu.path}>{currentHeaderMenu.text}</Link></Breadcrumb.Item>
-            ];
+            let breadcrumbItems = [];
+            if (currentHeaderMenu) {
+                breadcrumbItems.push(
+                    <Breadcrumb.Item key="page-breadcrumb-item-home"><Link to={currentHeaderMenu.path}>{currentHeaderMenu.text}</Link></Breadcrumb.Item>
+                );
+            }
             let items = pageHeaderDate.breadcrumbItems;
             for (let i = 0; i < items.length; i++) {
                 let item = items[i];

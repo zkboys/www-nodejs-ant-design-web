@@ -5,8 +5,9 @@ import Settings from '../Settings';
 const Container = React.createClass({
     getInitialState() {
         return {
+            hidden: false,
             collapseSidebar: Settings.collapseSidebar()
-    }
+        }
     },
     componentWillUpdate(){
         //console.log('Container', 'componentWillUpdate');
@@ -21,10 +22,24 @@ const Container = React.createClass({
                 collapseSidebar: data
             });
         });
+        PubSubMsg.subscribe('sidebar-menu', function (data) {
+            if (data.menu && data.menu.length > 0) {
+                _this.setState({
+                    hidden: false
+                });
+            } else {
+                _this.setState({
+                    hidden: true
+                });
+            }
+        });
     },
     render() {
+        let style = {
+            left: this.state.hidden ? 0 : this.state.collapseSidebar ? 60 : 240
+        };
         return (
-            <div className="admin-container " style={{left:this.state.collapseSidebar?60:240}}>{this.props.children}</div>
+            <div className="admin-container " style={style}>{this.props.children}</div>
         );
     }
 });

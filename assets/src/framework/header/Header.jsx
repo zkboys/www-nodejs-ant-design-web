@@ -22,12 +22,14 @@ const Header = React.createClass({
     },
     handleClick(e) {
         Settings.collapseSidebar(!Settings.collapseSidebar());
-        let sidebarMenus = getSidebarMenus();
+        let menu = getSidebarMenus();
         let currentSidebarMenu = getCurrentSidebarMenu();
+        let current = currentSidebarMenu ? currentSidebarMenu.key : '';
+
         PubSubMsg.publish('switch-sidebar', Settings.collapseSidebar());
         PubSubMsg.publish('sidebar-menu', {
-            menu: sidebarMenus,
-            current: currentSidebarMenu.key
+            menu,
+            current
         });
         this.setState({
             collapseSidebar: Settings.collapseSidebar()

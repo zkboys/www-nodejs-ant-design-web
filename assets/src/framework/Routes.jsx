@@ -37,12 +37,14 @@ browserHistory.listen(function (data) {
         menu: headerMenu,
         current: headerMenuCurrent
     });
-    let sidebarMenus =getSidebarMenus();
-    let  currentSidebarMenu = getCurrentSidebarMenu();
+    let menu = getSidebarMenus();
+    let currentSidebarMenu = getCurrentSidebarMenu();
+    let current = currentSidebarMenu ? currentSidebarMenu.key : '';
+    let openKeys = currentSidebarMenu ? currentSidebarMenu.openKeys : [];
     PubSubMsg.publish('sidebar-menu', {
-        menu: sidebarMenus,
-        current: currentSidebarMenu.key,
-        openKeys: currentSidebarMenu.openKeys
+        menu,
+        current,
+        openKeys
     });
     PubSubMsg.publish('set-header-breadcrumb')
 });

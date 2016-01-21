@@ -43,12 +43,7 @@ export let getCurrentHeaderMenu = function () {
             return headerMenuData[i]
         }
     }
-    return {
-        key: '',
-        icon: '',
-        text: '',
-        path: ''
-    }
+    return null
 };
 /*
  * 根据地址栏url 获取 头部菜单对应的key
