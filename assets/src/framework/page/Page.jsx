@@ -148,11 +148,9 @@ const Page = React.createClass({
     },
     componentDidMount(){
         let _this = this;
-        PubSubMsg.subscribe('set-header-breadcrumb', function () {
+        PubSubMsg.subscribeOnce('set-header-breadcrumb', function () {
             _this.setPageHeader();
         });
-        PubSubMsg.unsubscribe('set-header-breadcrumb');
-
     },
     componentWillUnmount(){
         if (this.hideLoading) {

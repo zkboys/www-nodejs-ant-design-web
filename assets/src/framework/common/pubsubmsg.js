@@ -21,32 +21,56 @@ var pubsubmsg = {};
         if (!$.topics[topic])
             return false;
         for (let p in $.topics[topic]) {
-            var func = $.topics[topic][p];
-            func(args);
+            var func = $.topics[topic][p]['func'];
+            var once = $.topics[topic][p]['once'];
+            if (func) {
+                func(args);
+                if (once) {
+                    delete ($.topics[topic][p]);
+                }
+            }
+
         }
         return this;
+    };
+    /*
+     * 同subscribe,但是相应函数只触发一次
+     * */
+    $.subscribeOnce = function (topic, name, func) {
+        if (arguments.length == 2) {
+            func = name;
+            name = new Date().getTime();//未指定name，使用时间戳，指定一个
+        }
+        return $._subscribe(topic, name, func, true);
+    };
+    $.subscribe = function (topic, name, func) {
+        if (arguments.length == 2) {
+            func = name;
+            name = new Date().getTime();//未指定name，使用时间戳，指定一个
+        }
+        return $._subscribe(topic, name, func, false);
     };
     /*
      * 通过事件名称、订阅者名称、回调函数订阅事件
      * topic：事件名
      * name: 订阅者名 可选 如果没指定那么，那么不能单独取消订阅，只能统一取消订阅。
      * func: 订阅事件（发布时触发）
+     * once: 是否只触发一次func
      * 同一个事件，不同的订阅者可以单独取消自己的订阅
      */
-    $.subscribe = function (topic, name, func) {
-        if (arguments.length == 2) {
-            func = name;
-            name = new Date().getTime();//未指定name，使用时间戳，指定一个
-        }
+    $._subscribe = function (topic, name, func, once) {
         if (!$.topics[topic])
             $.topics[topic] = {};
-        $.topics[topic][name] = func;// 对应topic下加入回调函数
+        $.topics[topic][name] = {};
+        $.topics[topic][name]['func'] = func;
+        $.topics[topic][name]['once'] = once;
+        // 对应topic下加入回调函数
         /*
-        * 查询是否有未消费的相应消息，如果有，立即执行回调。
-        * */
-        if(topic in $.unConsumedMsg){
+         * 查询是否有未消费的相应消息，如果有，立即执行回调。
+         * */
+        if (topic in $.unConsumedMsg) {
             let data = $.unConsumedMsg[topic];
-                func(data);
+            func(data);
         }
         return this;
     };
