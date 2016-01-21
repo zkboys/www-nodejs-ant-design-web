@@ -36,7 +36,7 @@ const Header = React.createClass({
         });
     },
     handleExit(e){
-        alert('确定退出系统');
+        alert('确定退出系统,跳转到登陆页面或者关闭浏览器');
     },
     componentDidMount(){
         let _this = this;
