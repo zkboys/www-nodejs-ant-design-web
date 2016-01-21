@@ -36,14 +36,14 @@ const SettingsPage = React.createClass({
         return (
             <Page header={pageHeader}>
                 <Form horizontal>
-                    <FormItem wrapperCol={{span: 23, offset: 1}}>
-                        <label className="ant-checkbox-vertical">
+                    <FormItem wrapperCol={{span: 6, offset: 1}}>
+                        <label className="ant-checkbox-vertical" style={{cursor:'pointer'}}>
                             <Checkbox checked={this.state.showPageAnimate} onChange={this.handleShowPageAnimate}/>
                             启用页面切换动画
                         </label>
                     </FormItem>
-                    <FormItem wrapperCol={{span: 23, offset: 1}}>
-                        <label className="ant-checkbox-vertical">
+                    <FormItem wrapperCol={{span: 6, offset: 1}}>
+                        <label className="ant-checkbox-vertical"  style={{cursor:'pointer'}}>
                             <Checkbox checked={this.state.sidebarMenuAlwaysOpen} onChange={this.handleSidebarMenuAlwaysOpen}/>
                             左侧菜单始终为展开状态
                         </label>
