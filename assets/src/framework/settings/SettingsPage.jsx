@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from '../page/Page';
 import { Form, Checkbox} from 'antd';
-import Settings from '../Settings'
+import Settings from './Settings'
 const FormItem = Form.Item;
 
 const SettingsPage = React.createClass({

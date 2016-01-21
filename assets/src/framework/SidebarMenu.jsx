@@ -2,7 +2,7 @@ import React from 'react';
 import FAIcon from './faicon/FAIcon';
 import {Link} from 'react-router'
 import {Menu, Tooltip} from 'antd';
-import Settings from './Settings'
+import Settings from './settings/Settings'
 const SubMenu = Menu.SubMenu;
 /*
  * 获取左侧菜单jsx数据,可以用于直接显示.

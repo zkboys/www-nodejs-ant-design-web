@@ -2,7 +2,7 @@ import './style.less';
 import React from 'react';
 import { Menu} from 'antd';
 import PubSubMsg from '../common/pubsubmsg';
-import Settings from '../Settings';
+import Settings from '../settings/Settings';
 const Sidebar = React.createClass({
     getInitialState() {
         return {

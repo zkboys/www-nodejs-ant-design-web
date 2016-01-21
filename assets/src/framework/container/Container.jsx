@@ -1,7 +1,7 @@
 import './style.less';
 import React from 'react';
 import PubSubMsg from '../common/pubsubmsg';
-import Settings from '../Settings';
+import Settings from '../settings/Settings';
 const Container = React.createClass({
     getInitialState() {
         return {

@@ -6,7 +6,7 @@ import FAIcon from '../faicon/FAIcon';
 import PubSubMsg from '../common/pubsubmsg';
 import avatar from './86.jpg';
 import {getSidebarMenus, getCurrentSidebarMenu} from '../SidebarMenu';
-import Settings from '../Settings';
+import Settings from '../settings/Settings';
 var logoMaxWidth = 240
     , logoMinWidth = 60
     , logoMax = "后台管理系统"

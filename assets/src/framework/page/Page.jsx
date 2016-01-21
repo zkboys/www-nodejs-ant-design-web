@@ -4,23 +4,8 @@ import {message, Breadcrumb,Spin, QueueAnim} from 'antd';
 import {Link} from 'react-router';
 import {getCurrentHeaderMenu} from '../HeaderMenu';
 import {getCurrentSidebarMenu} from '../SidebarMenu'
-import Settings from '../Settings'
+import Settings from '../settings/Settings'
 import PubSubMsg from '../common/pubsubmsg';
-/*
- * props:
- header: object / 'auto' 用来显示头部标题和右侧面包屑导航
- object demo:
- {
- title: '左侧标题啊',
- breadcrumbItems: [
- {text: '用户管理'},
- {text: '用户查询', path: '/myTime3'},
- {text: '修改用户'}
- ]
- }
-
- loading: true / false 切换页面loading和非loading状态。
- * */
 const Page = React.createClass({
     getInitialState(){
         return {

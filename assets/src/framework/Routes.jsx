@@ -5,13 +5,13 @@ import FAIcon from './faicon/FAIcon';
 import App from './app/App'
 import Home from '../page/home/Home'
 import Error404 from './error/Error404'
-import SettingsPage from './system/SettingsPage'
+import SettingsPage from './settings/SettingsPage'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
 import PubSubMsg from './common/pubsubmsg';
 import {getSidebarMenus, getCurrentSidebarMenu} from './SidebarMenu';
 import {getHeaderMenus} from './HeaderMenu';
-import pageRouts from '../page/Routes';
+import pageRouts from '../page/RoutesCfg';
 /*
  * 根据菜单数据，初始化路由
  * */
