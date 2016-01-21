@@ -51,6 +51,9 @@ var pubsubmsg = {};
         }
         return $._subscribe(topic, name, func, true, true);
     };
+    /*
+     * subscribe,但是会消费历史消息
+     * */
     $.subscribeAcceptOldMsg = function (topic, name, func) {
         if (arguments.length == 2) {
             func = name;
@@ -58,6 +61,9 @@ var pubsubmsg = {};
         }
         return $._subscribe(topic, name, func, false, true);
     };
+    /*
+     * 单纯的订阅.
+     * */
     $.subscribe = function (topic, name, func) {
         if (arguments.length == 2) {
             func = name;
