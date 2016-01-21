@@ -1,6 +1,6 @@
 import './style.less';
 import React from 'react';
-import {Badge, Tooltip ,Menu} from 'antd';
+import {Badge, Tooltip ,Menu, Popconfirm} from 'antd';
 import {Link} from 'react-router'
 import FAIcon from '../faicon/FAIcon';
 import PubSubMsg from '../common/pubsubmsg';
@@ -20,7 +20,7 @@ const Header = React.createClass({
             collapseSidebar: Settings.collapseSidebar()
         };
     },
-    handleClick(e) {
+    handleSwitchMenu(e) {
         Settings.collapseSidebar(!Settings.collapseSidebar());
         let menu = getSidebarMenus();
         let currentSidebarMenu = getCurrentSidebarMenu();
@@ -34,6 +34,9 @@ const Header = React.createClass({
         this.setState({
             collapseSidebar: Settings.collapseSidebar()
         });
+    },
+    handleExit(e){
+        alert('确定退出系统');
     },
     componentDidMount(){
         let _this = this;
@@ -49,7 +52,7 @@ const Header = React.createClass({
             <header className="admin-header">
                 <div className="admin-logo" style={{width:this.state.collapseSidebar?logoMinWidth:logoMaxWidth}}><Link to="/">{this.state.collapseSidebar ? logoMin : logoMax}</Link></div>
                 <Tooltip placement="bottom" title="切换菜单状态">
-                    <a className="admin-sidebar-toggle" onClick={this.handleClick}><FAIcon type="fa-bars"/></a>
+                    <a className="admin-sidebar-toggle" onClick={this.handleSwitchMenu}><FAIcon type="fa-bars"/></a>
                 </Tooltip>
                 <Menu className="admin-header-sys"
                       selectedKeys={[this.state.current]}
@@ -91,9 +94,12 @@ const Header = React.createClass({
                     </li>
                     <li className="admin-header-menu-item">
                         <Tooltip placement="bottomRight" title="退出系统">
-                            <a href="javascript:;">
-                                <FAIcon type="fa-sign-out"/>
-                            </a>
+                            <Popconfirm title="您确定要退出系统吗？" onConfirm={this.handleExit}>
+                                <a href="javascript:;">
+                                    <FAIcon type="fa-sign-out"/>
+                                </a>
+                            </Popconfirm>
+
                         </Tooltip>
                     </li>
                 </ul>
