@@ -268,4 +268,11 @@ let animConfig = [
 webpack.config.js中使用argv报错：
 Option '-d' not supported. Trigger 'webpack -h' for more details.
 目前自己写了个循环处理传入的参数,done 已经更改为其他方式了.
+
 ```
+
+##
+- 请求：superagent
+- cookie:
+- 本地存储：
+- 时间处理：moment 
