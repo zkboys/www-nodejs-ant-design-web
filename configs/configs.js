@@ -18,4 +18,10 @@ exports.development = {
 };
 exports.test = {};
 exports.preprod = {};
-exports.production = {};
+exports.production = {
+    sitename: 'ZKBOYS后台管理系统',
+    wetsite: 'inc.zkboys.com',
+    cookie_secret: 'ywcSahu4QQOhT7mzXmCl3dg1R7iIHUkFhrJJU69VaKo=',
+    xsrf_cookies: true,
+    static_url_prefix: '/s/'
+};

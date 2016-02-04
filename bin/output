@@ -1,0 +1,13 @@
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+Listening on port 3000， runmod production
+[0mGET /shop/Dashboard [32m200 [0m30.624 ms - 943[0m
+[0mGET /s/index.css?v=f0e13f075e159dbc1b04f8471b614e1b [36m304 [0m8.611 ms - -[0m
+[0mGET /s/common.js?v=02bebf959b2be5e42058a64bb7a4690f [36m304 [0m5.646 ms - -[0m
+[0mGET /s/index.js?v=3f81ad6d42c2add849fcb0c02948f03d [36m304 [0m5.331 ms - -[0m
+[0mGET /s/9dc563561e8bb3351418ca30c3338fe9.jpg [36m304 [0m1.170 ms - -[0m
+[0mGET /s/db812d8a70a4e88e888744c1c9a27e89.woff2 [36m304 [0m2.094 ms - -[0m
+{ query: 'Manny', range: '1..5', order: 'desc' }
+[0mGET /dashboard.json?query=Manny&range=1..5&order=desc [36m304 [0m1004.018 ms - -[0m
+[0mGET /favicon.ico [32m200 [0m2.683 ms - 943[0m
