@@ -40,10 +40,28 @@ export let getCurrentSidebarMenu = function () {
         }
     }
     if (currentMenu) {//openKeys去重
-        currentMenu.openKeys = Array.from(new Set(openKeys))
+        currentMenu.openKeys = arrayUnique(openKeys);
     }
     return currentMenu;
 };
+/*
+ * 对象键值法(该方法性能最优)
+ * @method 定义一个空对象和空新数组，遍历当前的数组，判断该对象是否存在数组的某一项，如果不存在
+ * 就当当前的某一项存入新数组去，且当前的项置为-1 目的过滤掉重复的项
+ */
+function arrayUnique(arrs) {
+    var newArrays = [];
+    var hash = {};
+    if (arrs.length > 0) {
+        for (var i = 0, ilen = arrs.length; i < ilen; i += 1) {
+            if (!hash[arrs[i]]) {
+                hash[arrs[i]] = 1;
+                newArrays.push(arrs[i]);
+            }
+        }
+    }
+    return newArrays;
+}
 /*
  * 获取菜单数据,数据来源可以是服务器,可以在这里硬编码
  * return:
