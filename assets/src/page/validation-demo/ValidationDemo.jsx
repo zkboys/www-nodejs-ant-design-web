@@ -217,7 +217,7 @@ const ValidationDemo = React.createClass({
                         </FormItem>
 
                         <FormItem
-                            wrapperCol={Object.assign({},wrapperCol,{span: 12, offset: labelCol.span})}>
+                            wrapperCol={{span: 12, offset: labelCol.span}}>
                             <Button type="primary" onClick={this.handleSubmit}>确定</Button>
                             &nbsp;&nbsp;&nbsp;
                             <Button type="ghost" onClick={this.handleReset}>重置</Button>
