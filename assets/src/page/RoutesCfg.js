@@ -1,31 +1,131 @@
-import MyForm from './myform/MyForm'
-import Dashboard from './dashboard/Dashboard'
-import MyTime from './mytime/MyTime'
-import ValidationDemo from './validation-demo/ValidationDemo'
-import UnReadMail from './mail/UnReadMail'
-import ReadMail from './mail/ReadMail'
-import Remind from './remind/Remind'
-import ProfileMessage from './profile/ProfileMessage'
-import ProfilePassWord from './profile/ProfilePassWord'
 export default[
-    {path: '/system/mail/unread', component: './mail/UnReadMail'},
-    {path: '/system/mail/read', component: './mail/ReadMail'},
-    {path: '/system/remind', component: './remind/Remind'},
-    {path: '/system/profile/message', component: './profile/ProfileMessage'},
-    {path: '/system/profile/password', component: './profile/ProfilePassWord'},
+    {
+        path: '/shop/test/require', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./testrequire/TestRequire.jsx'));
+        })
+    }
+    },
+    {
+        path: '/system/mail/unread', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./mail/UnReadMail'));
+        })
+    }
+    },
+    {
+        path: '/system/mail/read', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./mail/ReadMail'));
+        })
+    }
+    },
+    {
+        path: '/system/remind', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./remind/Remind'));
+        })
+    }
+    },
+    {
+        path: '/system/profile/message', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./profile/ProfileMessage'));
+        })
+    }
+    },
+    {
+        path: '/system/profile/password', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./profile/ProfilePassWord'));
+        })
+    }
+    },
 
-    {path: '/shop/MyForm', component: './myform/MyForm'},
-    {path: '/shop/Dashboard', component: './dashboard/Dashboard'},
-    {path: '/shop/MyTime', component: './mytime/MyTime'},
-    {path: '/shop/ValidationDemo', component: './validation-demo/ValidationDemo'},
+    {
+        path: '/shop/MyForm', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./myform/MyForm'));
+        })
+    }
+    },
+    {
+        path: '/shop/Dashboard', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./dashboard/Dashboard'));
+        })
+    }
+    },
+    {
+        path: '/shop/MyTime', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./mytime/MyTime'));
+        })
+    }
+    },
+    {
+        path: '/shop/ValidationDemo', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./validation-demo/ValidationDemo'));
+        })
+    }
+    },
 
-    {path: '/service/MyForm', component: './myform/MyForm'},
-    {path: '/service/Dashboard', component: './dashboard/Dashboard'},
-    {path: '/service/MyTime', component: './mytime/MyTime'},
-    {path: '/service/ValidationDemo', component: './validation-demo/ValidationDemo'},
+    {
+        path: '/service/MyForm', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./myform/MyForm'));
+        })
+    }
+    },
+    {
+        path: '/service/Dashboard', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./dashboard/Dashboard'));
+        })
+    }
+    },
+    {
+        path: '/service/MyTime', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./mytime/MyTime'));
+        })
+    }
+    },
+    {
+        path: '/service/ValidationDemo', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./validation-demo/ValidationDemo'));
+        })
+    }
+    },
 
-    {path: '/expressage/MyForm', component: './myform/MyForm'},
-    {path: '/expressage/Dashboard', component: './dashboard/Dashboard'},
-    {path: '/expressage/MyTime', component: './mytime/MyTime'},
-    {path: '/expressage/ValidationDemo', component: './validation-demo/ValidationDemo'}
+    {
+        path: '/expressage/MyForm', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./myform/MyForm'));
+        })
+    }
+    },
+    {
+        path: '/expressage/Dashboard', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./dashboard/Dashboard'));
+        })
+    }
+    },
+    {
+        path: '/expressage/MyTime', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./mytime/MyTime'));
+        })
+    }
+    },
+    {
+        path: '/expressage/ValidationDemo', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./validation-demo/ValidationDemo'));
+        })
+    }
+    }
 ]

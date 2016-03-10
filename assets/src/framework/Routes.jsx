@@ -7,30 +7,8 @@ const browserHistory = createBrowserHistory();
 import PubSubMsg from './common/pubsubmsg';
 import {getSidebarMenus, getCurrentSidebarMenu} from './SidebarMenu';
 import {getHeaderMenus} from './HeaderMenu';
-let pageRouts = [
-    {path: '/system/mail/unread', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/mail/UnReadMail'));})}},
-    {path: '/system/mail/read', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/mail/ReadMail'));})}},
-    {path: '/system/remind', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/remind/Remind'));})}},
-    {path: '/system/profile/message', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/profile/ProfileMessage'));})}},
-    {path: '/system/profile/password', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/profile/ProfilePassWord'));})}},
+import pageRouts from '../page/RoutesCfg';
 
-    {path: '/shop/MyForm', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/myform/MyForm'));})}},
-    {path: '/shop/Dashboard', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/dashboard/Dashboard'));})}},
-    {path: '/shop/MyTime', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/mytime/MyTime'));})}},
-    {path: '/shop/ValidationDemo', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/validation-demo/ValidationDemo'));})}},
-
-    {path: '/service/MyForm', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/myform/MyForm'));})}},
-    {path: '/service/Dashboard', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/dashboard/Dashboard'));})}},
-    {path: '/service/MyTime', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/mytime/MyTime'));})}},
-    {path: '/service/ValidationDemo', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/validation-demo/ValidationDemo'));})}},
-
-    {path: '/expressage/MyForm', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/myform/MyForm'));})}},
-    {path: '/expressage/Dashboard', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/dashboard/Dashboard'));})}},
-    {path: '/expressage/MyTime', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/mytime/MyTime'));})}},
-    {path: '/expressage/ValidationDemo', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/validation-demo/ValidationDemo'));})}},
-    {path: '/system/settings', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./settings/SettingsPage'));})}},
-    {path: '*', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./error/Error404'));})}}
-];
 /*
  * 根据菜单数据，初始化路由
  * */
@@ -42,6 +20,11 @@ const routes = {
     },
     childRoutes: pageRouts
 };
+pageRouts.push(
+    {path: '/system/settings', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./settings/SettingsPage'));})}},
+    {path: '*', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./error/Error404'));})}}
+);
+
 /*
  for (let i = 0; i < pageRouts.length; i++) {
  let r = {

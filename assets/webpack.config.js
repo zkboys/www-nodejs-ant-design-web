@@ -116,6 +116,7 @@ module.exports = {
      * filename：构建之后的文件名
      * */
     output: {
+        pathinfo: false,//去掉生成文件的相关注释
         path: join(__dirname, cfg.path),
         publicPath: cfg.publicPath,
         filename: "[name].js",
@@ -166,7 +167,11 @@ module.exports = {
         /*
          * 公共文件配置
          * */
-        new webpack.optimize.CommonsChunkPlugin('common', 'common.js'),
+        //new webpack.optimize.CommonsChunkPlugin('common', 'common.js'),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "common",
+            minChunks: 2
+        }),
         /*
          * css单独打包成一个css文件
          * 比如entry.js引入了多个less，最终会都打到一个xxx.css中。
