@@ -75,6 +75,8 @@ const Home = React.createClass({
         return (
             <Page header={pageHeader} loading={this.state.loading}>
                 <h1>首页</h1>
+                <p>测试缓存啊</p>
+                <p>这个坑啊　</p>
             </Page>
         );
     }

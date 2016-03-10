@@ -119,8 +119,8 @@ module.exports = {
         pathinfo: false,//去掉生成文件的相关注释
         path: join(__dirname, cfg.path),
         publicPath: cfg.publicPath,
-        filename: "[name].js",
-        chunkFilename: "[name].js",
+        filename: "[name].js",// entry　配置的文件
+        chunkFilename: "[name].[chunkhash:8].min.js",//非entry，但是需要单独打包出来的文件名配置，添加[chunkhash:8]　防止浏览器缓存不更新．
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
