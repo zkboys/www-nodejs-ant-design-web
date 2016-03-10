@@ -238,6 +238,17 @@ let animConfig = [
     ...
 </Page>
 ```
+## 按需加载
+react-router改成如下写法就可以按需加载:
+```
+{
+    path: '/system/mail/read', getComponent: (location, cb) => {
+    require.ensure([], (require) => {
+        cb(null, require('./mail/ReadMail'));
+    })
+}
+```
+具体某个模块改动，只会影响到当前模块对应生成的文件和common.js不会影响其他生成的文件，可以提高文件的缓存利用率，加速首页加载．
 
 ##待解决问题
 - 处理有些页面没有左侧菜单的情况，隐藏左侧菜单以及头部“切换菜单状态”按钮 done

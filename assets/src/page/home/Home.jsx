@@ -77,6 +77,7 @@ const Home = React.createClass({
                 <h1>首页</h1>
                 <p>测试缓存啊</p>
                 <p>这个坑啊　</p>
+                <p>文件每次会不会有改动</p>
             </Page>
         );
     }
