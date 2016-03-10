@@ -2,6 +2,7 @@
 * 由于次文件不在webpack watch 范围之内，
 * 开启watch或者dev-server模式时，改动此文件，
 * 需要手动执行 npm run generate-routes 命令来生成路由。
+* 这种写法不具有灵活性，只适合简单的路由配置。
 * */
 exports.simpleRoutes = {
     '/shop/test/require': './testrequire/TestRequire.jsx',
