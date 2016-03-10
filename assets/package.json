@@ -46,6 +46,7 @@
     "superagent": "^1.6.1"
   },
   "scripts": {
+    "generate-routes":"node ./src/page/RoutesGenerater.js",
     "open-browser": "xdg-open http://localhost:3001/",
     "watch": "webpack -w --progress --colors",
     "dev-server": "RUNMODE=devserver CLEAN=false webpack-dev-server --port 8086 --progress --inline",
