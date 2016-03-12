@@ -67,5 +67,8 @@
   "bugs": {
     "url": "https://github.com/zkboys/webpack-demo/issues"
   },
-  "homepage": "https://github.com/zkboys/webpack-demo#readme"
+  "homepage": "https://github.com/zkboys/webpack-demo#readme",
+  "dependencies": {
+    "react-color-picker": "^3.1.0"
+  }
 }

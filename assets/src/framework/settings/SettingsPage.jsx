@@ -2,13 +2,15 @@ import React from 'react';
 import Page from '../page/Page';
 import { Form, Checkbox} from 'antd';
 import Settings from './Settings'
+import ColorPicker from 'react-color-picker'
 const FormItem = Form.Item;
 
 const SettingsPage = React.createClass({
     getInitialState(){
         return {
             showPageAnimate: Settings.pageAnimate(),
-            sidebarMenuAlwaysOpen: Settings.sidebarMenuAlwaysOpen()
+            sidebarMenuAlwaysOpen: Settings.sidebarMenuAlwaysOpen(),
+            color:''
         }
     },
     handleShowPageAnimate(e) {
@@ -25,6 +27,9 @@ const SettingsPage = React.createClass({
     },
     componentDidMount: function () {
 
+    },
+    onDrag: function(color, c){
+        this.setState({'color',color})
     },
     render() {
         const pageHeader = {
@@ -49,6 +54,10 @@ const SettingsPage = React.createClass({
                         </label>
                     </FormItem>
                 </Form>
+                <ColorPicker value={this.state.color} onDrag={this.onDrag} />
+                <div style={{background: this.state.color, width: 100, height: 50, color: 'white'}}>
+                    {this.state.color}
+                </div>
             </Page>
         );
     }
