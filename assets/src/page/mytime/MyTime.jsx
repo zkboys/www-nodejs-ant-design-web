@@ -1,36 +1,39 @@
 import React from 'react';
 import Page from '../../framework/page/Page';
 import { TimePicker } from 'antd';
+
+class Hello extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {count: props.initialCount};
+    }
+
+    componentDidMount() {
+        console.log('父类中的 componentDidMount');
+    }
+
+    render() {
+        return <div>Hello {this.props.name}</div>;
+    }
+}
+
 function onChange(time) {
     if (time) {
         console.log(time.toLocaleTimeString('zh-CN', {hour12: false}));
     }
 }
-const MyTime = React.createClass({
-    getInitialState(){
-        return {
-            /*
-             * 修改loading,并以props方式传给Page组件，页面即可切换loading非loading状态。
-             * */
-            loading: false
-        }
-    },
-    componentDidMount: function () {
-        //let _this = this;
-        //_this.setState({
-        //    loading: true
-        //});
-        //fetch('/dashboard.json').then(function (response) {
-        //    return response.json()
-        //}).then(function (json) {
-        //    _this.setState({
-        //        loading: false
-        //    });
-        //    console.log('use fetch parsed json', json)
-        //}).catch(function (ex) {
-        //    console.log('parsing failed', ex)
-        //});
-    },
+class MyTime extends Hello {
+    constructor(props) {
+        super(props);
+        this.state = {loading: false};
+    }
+
+    componentDidMount() {
+        console.log('super.componentDidMount(); 需要显示调用父类的同名方法。');
+        super.componentDidMount();
+        console.log('子类中的 componentDidMount');
+
+    }
     render() {
         const pageHeader = {
             title: 'auto',
@@ -50,6 +53,5 @@ const MyTime = React.createClass({
             </Page>
         );
     }
-});
-
+}
 export default MyTime;

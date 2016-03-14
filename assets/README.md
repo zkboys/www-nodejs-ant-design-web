@@ -132,6 +132,8 @@ router.get('*', function (req, res, next) {
 import {Link} from 'react-router'
 <Link to="/xxxxx">XXXXX</Link>
 ```
+#### 路由编写说明
+> 为了简化路由编写，SimpleRoutesCfg.js编写简单的hash表，通过RoutesGenerater.js脚本生成RoutesCfg.js文件，相关命令已经写入package.json和webpack.config.js中，build之前会执行转换命令，由于SimpleRoutesCfg.js文件不在webpack watch范围之内，开启dev-server模式时，如果更新SimpleRoutesCfg.js，要手动执行一下 npm run generate-routes命令,RoutesCfg.js为生成文件，不要直接编写。
 
 ####菜单数据来源：
 > 左侧菜单数据由后台提供，会包含path，路由前端单独维护，通过path跟菜单（或者Link）关联。
@@ -238,6 +240,17 @@ let animConfig = [
     ...
 </Page>
 ```
+## 按需加载
+react-router改成如下写法就可以按需加载:
+```
+{
+    path: '/system/mail/read', getComponent: (location, cb) => {
+    require.ensure([], (require) => {
+        cb(null, require('./mail/ReadMail'));
+    })
+}
+```
+具体某个模块改动，只会影响到当前模块对应生成的文件和common.js不会影响其他生成的文件，可以提高文件的缓存利用率，加速首页加载．
 
 ##待解决问题
 - 处理有些页面没有左侧菜单的情况，隐藏左侧菜单以及头部“切换菜单状态”按钮 done

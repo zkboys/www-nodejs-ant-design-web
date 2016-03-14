@@ -17,7 +17,8 @@ const Header = React.createClass({
         return {
             menu: [],
             current: '',
-            collapseSidebar: Settings.collapseSidebar()
+            collapseSidebar: Settings.collapseSidebar(),
+            headerColor:''
         };
     },
     handleSwitchMenu(e) {
@@ -46,10 +47,16 @@ const Header = React.createClass({
                 current: data.current
             });
         });
+        PubSubMsg.subscribe('theme.colors','header',function(colors){
+            let color = 'rgba('+colors.header.r+','+colors.header.g+','+colors.header.b+','+colors.header.a+')';
+            _this.setState({
+                headerColor:color
+            });
+        });
     },
     render() {
         return (
-            <header className="admin-header">
+            <header className="admin-header" style={{'backgroundColor':this.state.headerColor}}>
                 <div className="admin-logo" style={{width:this.state.collapseSidebar?logoMinWidth:logoMaxWidth}}><Link to="/">{this.state.collapseSidebar ? logoMin : logoMax}</Link></div>
                 <Tooltip placement="bottom" title="切换菜单状态">
                     <a className="admin-sidebar-toggle" onClick={this.handleSwitchMenu}><FAIcon type="fa-bars"/></a>

@@ -2,32 +2,41 @@ import React from 'react';
 import {Router, Link} from 'react-router'
 import {Menu, Tooltip} from 'antd';
 import FAIcon from './faicon/FAIcon';
-import App from './app/App'
-import Home from '../page/home/Home'
-import Error404 from './error/Error404'
-import SettingsPage from './settings/SettingsPage'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
 import PubSubMsg from './common/pubsubmsg';
 import {getSidebarMenus, getCurrentSidebarMenu} from './SidebarMenu';
 import {getHeaderMenus} from './HeaderMenu';
 import pageRouts from '../page/RoutesCfg';
+
 /*
  * 根据菜单数据，初始化路由
  * */
 const routes = {
     path: '/',
-    component: App,
-    indexRoute: {component: Home},
+    component: require('./app/App'),
+    indexRoute: {
+        getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/home/Home'));})}
+    },
     childRoutes: pageRouts
 };
-/*
- * 所有未截获的请求,统一跳转到Error404组件
- * */
-routes.childRoutes.push(
-    {path: '/system/settings', component: SettingsPage},
-    {path: '*', component: Error404}
+pageRouts.push(
+    {path: '/system/settings', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./settings/SettingsPage'));})}},
+    {path: '*', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./error/Error404'));})}}
 );
+
+/*
+ for (let i = 0; i < pageRouts.length; i++) {
+ let r = {
+ path: pageRouts[i].path,
+ getComponent: (location, cb) => {
+ require.ensure([], (require) => {
+ cb(null, require(pageRouts[i].component))
+ })
+ }
+ };
+ routes.childRoutes.push(r);
+ }*/
 /*
  * 监听地址栏改变，通过左侧菜单状态
  * */
