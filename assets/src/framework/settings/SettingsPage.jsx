@@ -30,6 +30,7 @@ const SettingsPage = React.createClass({
 
     },
     handleChange(color) {
+        //这个函数调用会比较频繁，这里操作localStorage会不会是个性能问题？
         var themeColor = Settings.themeColors();
         themeColor.header = color.rgb;
         Settings.themeColors(themeColor);
