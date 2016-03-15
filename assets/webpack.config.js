@@ -155,7 +155,11 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/i,
-                loader: 'url?limit=10000'
+                loader: 'url',
+                query: {
+                    limit: 10000,
+                    name: '[name]-[hash:7].[ext]'
+                }
             },
             {
                 test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
