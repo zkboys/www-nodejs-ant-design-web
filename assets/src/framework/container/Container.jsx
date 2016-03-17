@@ -2,20 +2,25 @@ import './style.less';
 import React from 'react';
 import PubSubMsg from '../common/pubsubmsg';
 import Settings from '../settings/Settings';
-const Container = React.createClass({
-    getInitialState() {
-        return {
-            hidden: false,
-            collapseSidebar: Settings.collapseSidebar()
-        }
-    },
-    componentWillUpdate(){
+class Container extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+        hidden: false,
+        collapseSidebar: Settings.collapseSidebar()
+    };
+
+    componentWillUpdate() {
         //console.log('Container', 'componentWillUpdate');
-    },
-    componentDidUpdate(){
+    }
+
+    componentDidUpdate() {
         //console.log('Container', 'componentDidUpdate');
-    },
-    componentDidMount(){
+    }
+
+    componentDidMount() {
         let _this = this;
         PubSubMsg.subscribeAcceptOldMsg('switch-sidebar', function (data) {
             _this.setState({
@@ -33,7 +38,8 @@ const Container = React.createClass({
                 });
             }
         });
-    },
+    }
+
     render() {
         let style = {
             left: this.state.hidden ? 0 : this.state.collapseSidebar ? 60 : 240
@@ -42,6 +48,5 @@ const Container = React.createClass({
             <div className="admin-container " style={style}>{this.props.children}</div>
         );
     }
-});
-
+}
 export default Container;

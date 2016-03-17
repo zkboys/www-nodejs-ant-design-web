@@ -6,35 +6,42 @@ import PubSubMsg from '../common/pubsubmsg';
 import { ChromePicker, CompactPicker, MaterialPicker, PhotoshopPicker, SketchPicker, SliderPicker, SwatchesPicker } from 'react-color';
 const FormItem = Form.Item;
 
-const SettingsPage = React.createClass({
-    getInitialState(){
-        return {
-            showPageAnimate: Settings.pageAnimate(),
-            sidebarMenuAlwaysOpen: Settings.sidebarMenuAlwaysOpen(),
-        }
-    },
+class SettingsPage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+        showPageAnimate: Settings.pageAnimate(),
+        sidebarMenuAlwaysOpen: Settings.sidebarMenuAlwaysOpen(),
+    };
+
     handleShowPageAnimate(e) {
         this.setState({
             showPageAnimate: !this.state.showPageAnimate
         });
         Settings.pageAnimate(!this.state.showPageAnimate);
-    },
-    handleSidebarMenuAlwaysOpen(e){
+    }
+
+    handleSidebarMenuAlwaysOpen(e) {
         this.setState({
             sidebarMenuAlwaysOpen: !this.state.sidebarMenuAlwaysOpen
         });
         Settings.sidebarMenuAlwaysOpen(!this.state.sidebarMenuAlwaysOpen);
-    },
-    componentDidMount: function () {
+    }
 
-    },
-    handleChange(color) {
+    componentDidMount() {
+
+    }
+
+    handleChange = (color)=> {
         //这个函数调用会比较频繁，这里操作localStorage会不会是个性能问题？
         var themeColor = Settings.themeColors();
         themeColor.header = color.rgb;
         Settings.themeColors(themeColor);
         PubSubMsg.publish('theme.colors', Settings.themeColors())
-    },
+    };
+
     render() {
         const pageHeader = {
             title: '系统设置',
@@ -63,23 +70,22 @@ const SettingsPage = React.createClass({
                 <br/>
                 <SketchPicker color="#fff" onChange={ this.handleChange }/>
                 {/*
-                <ChromePicker color="#fff" onChange={ this.handleChange }/>
-                <br/>
-                <CompactPicker color="#fff" onChange={ this.handleChange }/>
-                <br/>
-                <MaterialPicker color="#fff" onChange={ this.handleChange }/>
-                <br/>
-                <PhotoshopPicker color="#fff" onChange={ this.handleChange }/>
-                <br/>
-                <SketchPicker color="#fff" onChange={ this.handleChange }/>
-                <br/>
-                <SliderPicker color="#fff" onChange={ this.handleChange }/>
-                <br/>
-                <SwatchesPicker color="#fff" onChange={ this.handleChange }/>
+                 <ChromePicker color="#fff" onChange={ this.handleChange }/>
+                 <br/>
+                 <CompactPicker color="#fff" onChange={ this.handleChange }/>
+                 <br/>
+                 <MaterialPicker color="#fff" onChange={ this.handleChange }/>
+                 <br/>
+                 <PhotoshopPicker color="#fff" onChange={ this.handleChange }/>
+                 <br/>
+                 <SketchPicker color="#fff" onChange={ this.handleChange }/>
+                 <br/>
+                 <SliderPicker color="#fff" onChange={ this.handleChange }/>
+                 <br/>
+                 <SwatchesPicker color="#fff" onChange={ this.handleChange }/>
                  */}
             </Page>
         );
     }
-});
-
+}
 export default SettingsPage;

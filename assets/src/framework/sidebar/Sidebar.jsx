@@ -3,20 +3,23 @@ import React from 'react';
 import { Menu} from 'antd';
 import PubSubMsg from '../common/pubsubmsg';
 import Settings from '../settings/Settings';
-const Sidebar = React.createClass({
-    getInitialState() {
-        return {
-            hidden: false,
-            menu: [],
-            current: '',
-            openKeys: [],
-            maxWidth: 240,
-            minWidth: 60,
-            collapseSidebar: Settings.collapseSidebar(),
-            scrollBarWidth: 15
-        };
-    },
-    handleClick(e) {
+class Sidebar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+        hidden: false,
+        menu: [],
+        current: '',
+        openKeys: [],
+        maxWidth: 240,
+        minWidth: 60,
+        collapseSidebar: Settings.collapseSidebar(),
+        scrollBarWidth: 15
+    };
+
+    handleClick = (e) => {
         //console.log('click menu', e);
         /*
          * 点击Link会改变地址栏，地址栏改变会同步菜单状态，这里就不用再改变菜单状态了，重复了。
@@ -26,15 +29,17 @@ const Sidebar = React.createClass({
         //    current: e.key,
         //    openKeys: e.keyPath.slice(1) // 点击是会关闭其他菜单,如果不需要改变其他菜单状态,注释掉这里即可.
         //});
-    },
-    onToggle(info){
+    };
+
+    handleToggle = (info)=>{
         console.log(info);
         if (this.state.collapseSidebar) return;//折叠状态时,不改变打开菜单状态,否则切回展开状态,无法恢复打开状态.
         this.setState({
             openKeys: info.openKeys
         });
-    },
-    componentDidMount(){
+    };
+
+    componentDidMount() {
         let _this = this;
         PubSubMsg.subscribeAcceptOldMsg('sidebar-menu', function (data) {
             if (data.menu && data.menu.length > 0) {
@@ -58,11 +63,12 @@ const Sidebar = React.createClass({
         _this.setState({
             scrollBarWidth: this.scrollBarWidth()
         });
-    },
+    }
+
     /*
      * 获取滚动条宽度函数
      * */
-    scrollBarWidth () {
+    scrollBarWidth() {
         var scrollDiv = document.createElement('div');
         scrollDiv.style.position = 'absolute';
         scrollDiv.style.top = '-9999px';
@@ -73,11 +79,12 @@ const Sidebar = React.createClass({
         var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
         document.body.removeChild(scrollDiv)
         return scrollbarWidth
-    },
+    }
+
     render() {
         let sidebarStyle = {
             width: this.state.hidden ? 0 : this.state.collapseSidebar ? this.state.minWidth : this.state.maxWidth,
-            overflow: this.state.hidden ? 'hidden' :this.state.collapseSidebar ? 'visible' : 'hidden'
+            overflow: this.state.hidden ? 'hidden' : this.state.collapseSidebar ? 'visible' : 'hidden'
         };
         let sidebarInnerStyle = {
             width: this.state.collapseSidebar ? this.state.minWidth : this.state.maxWidth + this.state.scrollBarWidth,
@@ -90,8 +97,8 @@ const Sidebar = React.createClass({
                         openKeys={this.state.openKeys}
                         selectedKeys={[this.state.current]}
                         onClick={this.handleClick}
-                        onOpen={this.onToggle}
-                        onClose={this.onToggle}
+                        onOpen={this.handleToggle}
+                        onClose={this.handleToggle}
                         style={{marginLeft:-8}}
                         mode={this.state.collapseSidebar?'vertical':'inline'}>
                         {this.state.menu}
@@ -100,5 +107,6 @@ const Sidebar = React.createClass({
             </div>
         );
     }
-});
+
+}
 export default Sidebar;

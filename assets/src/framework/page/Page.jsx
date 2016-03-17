@@ -6,23 +6,24 @@ import {getCurrentHeaderMenu} from '../HeaderMenu';
 import {getCurrentSidebarMenu} from '../SidebarMenu'
 import Settings from '../settings/Settings'
 import PubSubMsg from '../common/pubsubmsg';
-const Page = React.createClass({
-    getInitialState(){
-        return {
-            pageHeader: '',
-            showPageAnimate: Settings.pageAnimate()
-        }
-    },
-    getDefaultProps(){
-        return {
-            loading: false,
-            animConfig: [
-                {opacity: [1, 0], translateY: [0, 50]},
-                {opacity: [1, 0], translateY: [0, -50]}
-            ]
-        }
-    },
-    getPageHeaderDateByMenu(){
+class Page extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+        pageHeader: '',
+        showPageAnimate: Settings.pageAnimate()
+    };
+    static defaultProps = {
+        loading: false,
+        animConfig: [
+            {opacity: [1, 0], translateY: [0, 50]},
+            {opacity: [1, 0], translateY: [0, -50]}
+        ]
+    };
+
+    getPageHeaderDateByMenu() {
         let currentMenu = getCurrentSidebarMenu();
         let parentText = currentMenu ? currentMenu.parentText : [];
         let title = currentMenu ? currentMenu.text : '';
@@ -35,8 +36,9 @@ const Page = React.createClass({
             title,
             breadcrumbItems
         };
-    },
-    setPageHeader(){
+    }
+
+    setPageHeader() {
         let pageHeaderJsx = '';
         let pageHeaderDate = null;
         if (this.props.header === 'auto') {
@@ -124,8 +126,9 @@ const Page = React.createClass({
         this.setState({
             pageHeader: pageHeaderJsx
         });
-    },
-    switchLoadingMessage(){
+    }
+
+    switchLoadingMessage() {
 
         if (this.props.loading) {
             if (!this.hideLoading) {
@@ -136,27 +139,36 @@ const Page = React.createClass({
                 this.hideLoading();
             }
         }
-    },
-    componentWillUpdate(){
-        this.switchLoadingMessage();
-    },
-    componentDidUpdate(){
-        this.switchLoadingMessage();
-    },
-    componentWillMount(){
+    }
 
-    },
-    componentDidMount(){
+    componentWillUpdate() {
+        this.switchLoadingMessage();
+    }
+
+    componentDidUpdate() {
+        this.switchLoadingMessage();
+    }
+
+    componentWillMount() {
+
+    }
+
+    componentDidMount() {
+        if (super.componentDidMount) {
+            super.componentDidMount();
+        }
         let _this = this;
         PubSubMsg.subscribeOnceAcceptOldMsg('set-header-breadcrumb', function () {
             _this.setPageHeader();
         });
-    },
-    componentWillUnmount(){
+    }
+
+    componentWillUnmount() {
         if (this.hideLoading) {
             this.hideLoading();
         }
-    },
+    }
+
     render() {
         let pageChildren =
             <Spin spining={this.props.loading}>
@@ -181,6 +193,6 @@ const Page = React.createClass({
             </div>
         );
     }
-});
+}
 
 export default Page;

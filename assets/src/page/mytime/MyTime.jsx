@@ -5,8 +5,12 @@ import { TimePicker } from 'antd';
 class Hello extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {count: props.initialCount};
     }
+
+    state = {
+        test: '我特么是父类的test',
+        count: 11
+    };
 
     componentDidMount() {
         console.log('父类中的 componentDidMount');
@@ -17,7 +21,7 @@ class Hello extends React.Component {
     }
 }
 
-function onChange(time) {
+function handleChange(time) {
     if (time) {
         console.log(time.toLocaleTimeString('zh-CN', {hour12: false}));
     }
@@ -25,7 +29,11 @@ function onChange(time) {
 class MyTime extends Hello {
     constructor(props) {
         super(props);
-        this.state = {loading: false};
+        console.log(super().state);
+        this.state = Object.assign({
+            //test: '我特么是子类的test',
+            loading: false
+        },super().state);
     }
 
     componentDidMount() {
@@ -34,7 +42,9 @@ class MyTime extends Hello {
         console.log('子类中的 componentDidMount');
 
     }
+
     render() {
+        console.log(this.state.test);
         const pageHeader = {
             title: 'auto',
             breadcrumbItems: [
@@ -49,7 +59,7 @@ class MyTime extends Hello {
         ];
         return (
             <Page header={pageHeader} loading={this.state.loading} animConfig={animConfig}>
-                <TimePicker onChange={onChange}/>
+                <TimePicker handleChange={handleChange}/>
             </Page>
         );
     }

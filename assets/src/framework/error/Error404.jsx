@@ -5,11 +5,13 @@ import {Link} from 'react-router'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
 import Page from '../page/Page';
-
-export default React.createClass({
-    goBack(){
+class Error404 extends React.Component {
+    constructor(props){
+        super(props);
+    }
+    goBack() {
         browserHistory.goBack()
-    },
+    }
     render() {
         let header =
             <div>
@@ -31,4 +33,5 @@ export default React.createClass({
             </Page>
         );
     }
-});
+}
+export default Error404;

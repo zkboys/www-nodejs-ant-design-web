@@ -30,43 +30,49 @@ import Request from 'superagent';
  * 组件是 React 里复用代码最佳方式，但是有时一些复杂的组件间也需要共用一些功能。
  * 有时会被称为 跨切面关注点。React 使用 mixins 来解决这类问题。
  * */
-let SetIntervalMixin = {
+let RequestMixin = {
     getInitialState(){
         return {
             loading: false
         }
     },
-    componentWillMount: function () {
-        this.intervals = [];
+    componentDidMount(){
+        this.requests = [];
     },
-    setInterval: function () {
-        this.intervals.push(setInterval.apply(null, arguments));
-    },
-    componentWillUnmount: function () {
-        this.intervals.map(clearInterval);
-        /*
-         * 组件被移除DMO,清除未完成的ajax
-         * */
-        this.req.abort();
-    },
-    get(url, {data={},end=function () {
-    }}){//带有默认值的函数,写的好难看...
+    requests: [],
+    fetch(options){
+        let defaultOptions = {
+            url: '',
+            data: {},
+            end(){
+            }
+        };
+        options = Object.assign(defaultOptions, options);
         let that = this;
         that.setState({
             loading: true
         });
-        that.req = Request
-            .get(url)
-            .query(data)
+        let re = Request
+            .get(options.url)
+            .query(options.data)
             .end(function (err, res) {
-                end(err, res);
+                options.end(err, res);
                 that.setState({
                     loading: false
                 });
             });
+        this.requests.push(re);
+    },
+    componentWillUnmount(){
+        console.log(this.requests.length);
+        for (let i = 0; i < this.requests.length; i++) {
+            let r = this.requests[i];
+            r.abort();
+        }
     }
-
 };
+
+
 const Dashboard = React.createClass({
     /*
      * 在组件挂载之前调用一次。返回值将会作为 this.state 的初始值。
@@ -97,7 +103,7 @@ const Dashboard = React.createClass({
     /*
      * 引用 mixin
      * */
-    mixins: [SetIntervalMixin],
+    mixins: [RequestMixin],
     /*
      * statics 对象允许你定义静态的方法，这些静态的方法可以在组件类上调用。
      * 调用方法:Dashboard.customMethod('bar')
@@ -124,17 +130,24 @@ const Dashboard = React.createClass({
      * 如果想和其它 JavaScript 框架集成，使用 setTimeout 或者 setInterval 来设置定时器，或者发送 AJAX 请求，可以在该方法中执行这些操作。
      * */
     componentDidMount: function () {
-        //console.log('componentDidMount');
-        //console.log(this.getDOMNode());// 过时了
-        //console.log(ReactDOM.findDOMNode(this));
-        //this.setInterval(this.tick, 1000); // 调用 mixin 的方法
-        let that = this;
-        that.get('/dashboard.json', {
-            data: {query: 'Manny', range: '1..5', order: 'desc'},
+        let _this = this;
+        _this.fetch({
+            url:'/dashboard.json',
+            data:{query: 'Manny', range: '1..5', order: 'desc', delay: 1000},
             end(err, res) {
                 console.log('use superagent', res.body);
-                that.setState({
+                _this.setState({
                     testAjax: res.body.name
+                });
+            }
+        });
+        _this.fetch({
+            url:'/dashboard.json',
+            data:{query: 'Manny', range: '1..5', order: 'desc', delay: 3000},
+            end(err, res) {
+                console.log('use superagent', res.body);
+                _this.setState({
+                    testAjax: '3000延迟的Ajax'
                 });
             }
         });
@@ -194,10 +207,10 @@ const Dashboard = React.createClass({
         });
     },
     /*
-    * 调用this.setState函数会出发render函数，
-    * 不要在render函数内部调用this.setState会导致死循环！！！
-    *
-    * */
+     * 调用this.setState函数会出发render函数，
+     * 不要在render函数内部调用this.setState会导致死循环！！！
+     *
+     * */
     render() {
         //console.log('render');
         return (

@@ -12,16 +12,19 @@ var logoMaxWidth = 240
     , logoMax = "后台管理系统"
     , logoMin = "后台"
     ;
-const Header = React.createClass({
-    getInitialState(){
-        return {
-            menu: [],
-            current: '',
-            collapseSidebar: Settings.collapseSidebar(),
-            headerColor:''
-        };
-    },
-    handleSwitchMenu(e) {
+class Header extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+        menu: [],
+        current: '',
+        collapseSidebar: Settings.collapseSidebar(),
+        headerColor: ''
+    };
+
+    handleSwitchMenu = (e) => {
         Settings.collapseSidebar(!Settings.collapseSidebar());
         let menu = getSidebarMenus();
         let currentSidebarMenu = getCurrentSidebarMenu();
@@ -35,11 +38,13 @@ const Header = React.createClass({
         this.setState({
             collapseSidebar: Settings.collapseSidebar()
         });
-    },
-    handleExit(e){
+    };
+
+    handleExit = (e) => {
         alert('确定退出系统,跳转到登陆页面或者关闭浏览器');
-    },
-    componentDidMount(){
+    };
+
+    componentDidMount() {
         let _this = this;
         PubSubMsg.subscribeAcceptOldMsg('header-menu', function (data) {
             _this.setState({
@@ -47,13 +52,14 @@ const Header = React.createClass({
                 current: data.current
             });
         });
-        PubSubMsg.subscribe('theme.colors','header',function(colors){
-            let color = 'rgba('+colors.header.r+','+colors.header.g+','+colors.header.b+','+colors.header.a+')';
+        PubSubMsg.subscribe('theme.colors', 'header', function (colors) {
+            let color = 'rgba(' + colors.header.r + ',' + colors.header.g + ',' + colors.header.b + ',' + colors.header.a + ')';
             _this.setState({
-                headerColor:color
+                headerColor: color
             });
         });
-    },
+    }
+
     render() {
         return (
             <header className="admin-header" style={{'backgroundColor':this.state.headerColor}}>
@@ -113,6 +119,7 @@ const Header = React.createClass({
             </header>
         );
     }
-});
+}
+
 
 export default Header;
