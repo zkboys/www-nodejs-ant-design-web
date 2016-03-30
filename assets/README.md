@@ -1,15 +1,15 @@
-#前端项目架构
+# 前端项目架构
 *基于node.js 和 ant.design*
-##需要node.js版本
+## 需要node.js版本
 ```
 node 4.x
 ```
-##准备
+## 准备
 ```
 sudo npm install webpack -g
 sudo npm install webpack-dev-server -g
 ```
-##前端环境安装启动
+## 前端环境安装启动
 ```
 cd assets
 npm install
@@ -22,7 +22,7 @@ npm run build-pro #构建production（生产）环境前端代码
 ```
 
 
-##dev-server
+## dev-server
 >- 结合webpack-dev-server 可以做到代码改动,浏览器自动刷新.
  - 使用webpack-dev-server 作为静态服务器,以--inline方式启动,js中会添加热刷新相关的代码.前后端各添加一个开发服务器的配置,对项目基本无侵入.
  - 注意前端静态服务器的端口，硬编码方式，多处有对应。
@@ -64,10 +64,12 @@ PORT=3001 NODE_ENV=devserver npm start
 ```
 http://localhost:3001/    
 ```    
+## 需要做的改动
+- 前后端分离，html文件直接前端提供？url会是什么样子？
+- 项目改为Redux结构。
 
-
-##约定
-###目录结构
+## 约定
+### 目录结构
 ```
 -assets
     -src
@@ -103,7 +105,7 @@ home
     -home.jsx    
     -style.less
 ```
-###URL(路由&菜单path)
+### URL(路由&菜单path)
 > 需要根据路由同步页面状态（浏览器url同步页面状态，主要是头部导航和左侧菜单的选中状态，以及页面要渲染哪个组件），所以需要有固定格式的url，方便提取信息。
 
 ```
@@ -111,7 +113,7 @@ home
 sys-path：对应头部导航，确定是哪个系统，确定左侧显示哪组菜单
 menu-path：左侧菜单对应的path，同时跟路由有对应。menu-path可以多级，比如users/lists/...
 ```
-###路由&菜单
+### 路由&菜单
 > 后端所有的get请求最终没有被截获的，都打到index.html
 
 ```
@@ -135,16 +137,16 @@ import {Link} from 'react-router'
 #### 路由编写说明
 > 为了简化路由编写，SimpleRoutesCfg.js编写简单的hash表，通过RoutesGenerater.js脚本生成RoutesCfg.js文件，相关命令已经写入package.json和webpack.config.js中，build之前会执行转换命令，由于SimpleRoutesCfg.js文件不在webpack watch范围之内，开启dev-server模式时，如果更新SimpleRoutesCfg.js，要手动执行一下 npm run generate-routes命令,RoutesCfg.js为生成文件，不要直接编写。
 
-####菜单数据来源：
+#### 菜单数据来源：
 > 左侧菜单数据由后台提供，会包含path，路由前端单独维护，通过path跟菜单（或者Link）关联。
 > *注:头部和左侧菜单也可以前端硬编码,根据项目具体需求,具体决定.*
 
 ```
 左侧菜单数据:详见 framework/SidebarMenu.jsx
-头部导航菜单:详见 framework/HeaderMenu.jsx 
+头部导航菜单:详见 framework/HeaderMenu.jsx
 ```
- 
-####菜单数据结构：
+
+#### 菜单数据结构：
 > 如果后端提供的数据结构字段名无法对应，做一层数据转换，或者修改转换函数。
 
 ```
@@ -167,7 +169,7 @@ var menusRouts = [
 ]
 ```
 
-####地址栏与菜单自动关联
+#### 地址栏与菜单自动关联
 > 点击菜单时(或其他链接)，不需要绑定事件，直接通过Link走路由跳转，地址栏改变后，会触发监听事件，同步头部导航和左侧菜单状态
 
 ```
@@ -176,8 +178,8 @@ browserHistory.listen(function (data) {
 }}
 ```
 
-###各个页面头部的写法：
-####目前一共三种写法：
+### 各个页面头部的写法：
+#### 目前一共三种写法：
 
 > 第一种，直接写jsx：
 
@@ -220,7 +222,7 @@ let pageHeader = {
 </Page>
 ```
 
-###页面加载状态切换
+### 页面加载状态切换
 > 传给Page loading（true/false）属性即可
 
 ```
@@ -228,7 +230,7 @@ let pageHeader = {
     ...
 </Page>
 ```
-###进场动画
+### 进场动画
 > Page组件中有默认进场动画，各个页面可以自定义进场动画
 
 ```
@@ -252,7 +254,7 @@ react-router改成如下写法就可以按需加载:
 ```
 具体某个模块改动，只会影响到当前模块对应生成的文件和common.js不会影响其他生成的文件，可以提高文件的缓存利用率，加速首页加载．
 
-##待解决问题
+## 待解决问题
 - 处理有些页面没有左侧菜单的情况，隐藏左侧菜单以及头部“切换菜单状态”按钮 done
 - 通过发布订阅或者其他模式，统一管理头部导航和左侧菜单，以及url与页面状态的对应。由于地址栏改变事件会提前于菜单渲染，发布订阅模式是否合适？生产者消费者？还是使用发布订阅，通过状态检测？有点恶心。。。 done
 - react react-dom antd 做成全局，节省打包时间。
@@ -261,7 +263,7 @@ react-router改成如下写法就可以按需加载:
 - 表单校验 done 官网有提供
 - 执行构建有些慢 done 构建慢一般可以接受，watch速度还是可以的。
 - 根据地址定位左侧菜单 目前使用全局持有菜单句柄的方法，有点恶心，有没有好一点的方法？ done 使用发布订阅模式解决
-- 根据左侧菜单修改右上角对应的面包屑 done 
+- 根据左侧菜单修改右上角对应的面包屑 done
 - 由于这个是一个单页面应用,从新发送ajax请求的时候,一些ajax请求需要被打断,否则用户网络情况不好,点击了多个按钮,最终不能确定哪个ajax会被执行,会导致页面错乱问题. done 通过xhr的abort方法取消请求.
 - 组件之间的通信
     - 父级->子级 props
@@ -275,8 +277,8 @@ react-router改成如下写法就可以按需加载:
     这样一个路由,会导致Dashboard渲染页面特别慢
     ```
 - 前端代码生成工具，主要针对CRUD页面。    
-    
-##报错
+
+## 报错
 ```
 webpack.config.js中使用argv报错：
 Option '-d' not supported. Trigger 'webpack -h' for more details.
@@ -402,8 +404,8 @@ render() {
 - 一些周期函数子类如何自动调用?而不是super.componentDidMount()这种显示调用
 
 
-##
+## 组件
 - 请求：superagent
 - cookie:
 - 本地存储：
-- 时间处理：moment 
+- 时间处理：moment
