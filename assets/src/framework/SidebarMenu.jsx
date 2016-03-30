@@ -79,6 +79,8 @@ function getMenusData() {
      * */
     let sidebarMenuData = {
         'shop': [
+            {text: 'TODO', icon: 'fa-arrow-right', path: '/shop/todo'},
+            {text: 'Reddit API', icon: 'fa-arrow-right', path: '/shop/reddit'},
             {text: '表单校验11111', icon: 'fa-arrow-right', path: '/shop/MyForm'},
             {
                 text: '店铺管理', icon: 'fa-th-list',

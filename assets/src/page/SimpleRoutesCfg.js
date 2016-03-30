@@ -5,6 +5,7 @@
 * 这种写法不具有灵活性，只适合简单的路由配置。
 * */
 exports.simpleRoutes = {
+    '/shop/todo': './todo/index.jsx',
     '/shop/test/require': './testrequire/TestRequire.jsx',
     '/system/mail/unread': './mail/UnReadMail',
     '/system/mail/read': './mail/ReadMail',
