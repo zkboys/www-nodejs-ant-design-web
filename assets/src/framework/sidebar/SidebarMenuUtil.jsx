@@ -1,9 +1,10 @@
 import React from 'react';
-import FAIcon from './faicon/FAIcon';
+import FAIcon from '../../common/faicon/FAIcon';
 import {Link} from 'react-router'
 import {Menu, Tooltip} from 'antd';
-import Settings from './settings/Settings'
+import Settings from './../settings/Settings'
 const SubMenu = Menu.SubMenu;
+import sidebarMenuData from './SidebarMenus'
 /*
  * 获取左侧菜单jsx数据,可以用于直接显示.
  * */
@@ -44,6 +45,9 @@ export let getCurrentSidebarMenu = function () {
     }
     return currentMenu;
 };
+export let  createSidebarMenus = function(menuData){
+    return buildSidebarMenu(menuData)[0];
+};
 /*
  * 对象键值法(该方法性能最优)
  * @method 定义一个空对象和空新数组，遍历当前的数组，判断该对象是否存在数组的某一项，如果不存在
@@ -63,7 +67,6 @@ function arrayUnique(arrs) {
     return newArrays;
 }
 /*
- * 获取菜单数据,数据来源可以是服务器,可以在这里硬编码
  * return:
  *   minSidebarMenu: 收缩时菜单数据 jsx
  *   maxSidebarMenu: 展开时菜单数据 jsx
@@ -71,58 +74,6 @@ function arrayUnique(arrs) {
  *
  * */
 function getMenusData() {
-
-    /*
-     * 根据 headerMenuCurrent，获取对应的左侧菜单。
-     * TODO:如果是从后台获取的数据,是不是要做个缓存?
-     *
-     * */
-    let sidebarMenuData = {
-        'shop': [
-            {text: 'TODO', icon: 'fa-arrow-right', path: '/shop/todo'},
-            {text: 'Reddit API', icon: 'fa-arrow-right', path: '/shop/reddit'},
-            {text: '表单校验11111', icon: 'fa-arrow-right', path: '/shop/MyForm'},
-            {
-                text: '店铺管理', icon: 'fa-th-list',
-                children: [
-                    {text: '仪表盘1111', icon: 'fa-arrow-right', path: '/shop/Dashboard'},
-                    {text: '我的时间111', icon: 'fa-arrow-right', path: '/shop/MyTime'},
-                    {text: '校验demo111', icon: 'fa-arrow-right', path: '/shop/ValidationDemo'}
-                ]
-            }
-
-        ],
-        'service': [
-            {text: '表单校验11111', icon: 'fa-arrow-right', path: '/service/MyForm'},
-            {text: '仪表盘1111', icon: 'fa-arrow-right', path: '/service/Dashboard'},
-            {text: '我的时间111', icon: 'fa-arrow-right', path: '/service/MyTime'},
-            {text: '校验demo111', icon: 'fa-arrow-right', path: '/service/ValidationDemo'}
-        ],
-        'expressage': [
-            {text: '表单校验11111', icon: 'fa-arrow-right', path: '/expressage/MyForm'},
-            {text: '仪表盘1111', icon: 'fa-arrow-right', path: '/expressage/Dashboard'},
-            {text: '我的时间111', icon: 'fa-arrow-right', path: '/expressage/MyTime'},
-            {text: '校验demo111', icon: 'fa-arrow-right', path: '/expressage/ValidationDemo'}
-        ],
-        'system': [
-            {text: '系统设置', icon: 'fa-cogs', path: '/system/settings'},
-            {
-                text: '我的邮件', icon: 'fa-envelope-o',
-                children: [
-                    {text: '未读邮件', icon: 'fa-arrow-right', path: '/system/mail/unread'},
-                    {text: '已读邮件', icon: 'fa-arrow-right', path: '/system/mail/read'}
-                ]
-            },
-            {text: '我的提醒', icon: 'fa-bell-o', path: '/system/remind'},
-            {
-                text: '个人设置', icon: 'fa-envelope-o',
-                children: [
-                    {text: '修改个人信息', icon: 'fa-arrow-right', path: '/system/profile/message'},
-                    {text: '修改密码', icon: 'fa-arrow-right', path: '/system/profile/password'}
-                ]
-            }
-        ]
-    };
     let pathNames = location.pathname.split('/');
     let headerMenuCurrent = null;
     if (pathNames && pathNames.length > 0) {

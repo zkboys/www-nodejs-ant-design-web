@@ -1,4 +1,4 @@
-import storage from './../common/storage'
+import storage from '../../common/storage'
 export default {
     pageAnimate(value){
         return getSetValue('showPageAnimate', value, true);

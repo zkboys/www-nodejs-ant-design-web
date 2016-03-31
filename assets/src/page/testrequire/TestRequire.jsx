@@ -2,8 +2,7 @@ import './style.css';
 import React from 'react';
 import { Breadcrumb } from 'antd'
 import Page from '../../framework/page/Page';
-import ajax from '../../framework/common/ajax'
-import jQuery from '../../framework/common/jquery.ajax'
+import ajax from '../../common/ajax'
 let initRequestMixin = {
     getInitialState(){
         return {

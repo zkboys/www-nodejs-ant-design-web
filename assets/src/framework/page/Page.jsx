@@ -1,16 +1,14 @@
-import './style.less';
 import React from 'react';
 import {message, Breadcrumb,Spin, QueueAnim} from 'antd';
 import {Link} from 'react-router';
-import {getCurrentHeaderMenu} from '../HeaderMenu';
-import {getCurrentSidebarMenu} from '../SidebarMenu'
+import {getCurrentHeaderMenu} from '../header/HeaderMenuUtil';
+import {getCurrentSidebarMenu} from '../sidebar/SidebarMenuUtil'
 import Settings from '../settings/Settings'
-import PubSubMsg from '../common/pubsubmsg';
+import PubSubMsg from '../../common/pubsubmsg';
 class Page extends React.Component {
     constructor(props) {
         super(props);
     }
-
     state = {
         pageHeader: '',
         showPageAnimate: Settings.pageAnimate()

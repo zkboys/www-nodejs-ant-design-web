@@ -2,7 +2,7 @@ import React from 'react';
 import Page from '../page/Page';
 import { Form, Checkbox} from 'antd';
 import Settings from './Settings'
-import PubSubMsg from '../common/pubsubmsg';
+import PubSubMsg from '../../common/pubsubmsg';
 import { ChromePicker, CompactPicker, MaterialPicker, PhotoshopPicker, SketchPicker, SliderPicker, SwatchesPicker } from 'react-color';
 const FormItem = Form.Item;
 

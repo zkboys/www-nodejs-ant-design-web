@@ -1,11 +1,11 @@
 import React from 'react';
 import {Router, Link} from 'react-router'
 import {Menu, Tooltip} from 'antd';
-import FAIcon from './faicon/FAIcon';
+import FAIcon from '../common/faicon/FAIcon';
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
-import PubSubMsg from './common/pubsubmsg';
-import {getSidebarMenus, getCurrentSidebarMenu} from './SidebarMenu';
+import PubSubMsg from '../common/pubsubmsg';
+import {getSidebarMenus, getCurrentSidebarMenu} from './sidebar/SidebarMenuUtil';
 import pageRouts from '../page/RoutesCfg';
 
 /*
@@ -28,10 +28,12 @@ pageRouts.push(
  * 监听地址栏改变，通过左侧菜单状态
  * */
 browserHistory.listen(function (data) {
-    let pathNames = location.pathname.split('/');
+    console.log(data);
+    let pathNames = data.pathname.split('/');
     let headerMenuCurrent = pathNames&&pathNames.length&&pathNames[1];
     PubSubMsg.publish('current-header-menu', headerMenuCurrent);
-    let menu = getSidebarMenus();
+    PubSubMsg.publish('set-sidebar-menus', headerMenuCurrent);
+
     let currentSidebarMenu = getCurrentSidebarMenu();
     let selectedKeys = currentSidebarMenu ? currentSidebarMenu.key : '';
     let openKeys = currentSidebarMenu ? currentSidebarMenu.openKeys : [];

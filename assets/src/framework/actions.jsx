@@ -18,10 +18,10 @@ export function setHeaderCurrentMenu(current) {
 }
 
 
-export function setSidebarMenus(menus) {
+export function setSidebarMenus(currentHeaderMenu) {
     return {
         type: SET_SIDEBAR_MENUS,
-        menus
+        currentHeaderMenu
     }
 }
 export function setSidebarMenuStatus(status) {

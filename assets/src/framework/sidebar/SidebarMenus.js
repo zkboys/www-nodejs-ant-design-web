@@ -11,7 +11,6 @@ export default {
                 {text: '校验demo111', icon: 'fa-arrow-right', path: '/shop/ValidationDemo'}
             ]
         }
-
     ],
     'service': [
         {text: '表单校验11111', icon: 'fa-arrow-right', path: '/service/MyForm'},

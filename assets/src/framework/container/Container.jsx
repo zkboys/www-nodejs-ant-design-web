@@ -4,10 +4,9 @@ import assign from 'object-assign';
 import React from 'react';
 import { connect } from 'react-redux'
 import { Menu, Icon} from 'antd';
-import HeaderBar from '../components/Header';
-import Sidebar from '../components/Sidebar';
-import PubSubMsg from '../common/pubsubmsg';
-import sidebarMenus from '../SidebarMenus';
+import HeaderBar from '../header/Header';
+import Sidebar from '../sidebar/Sidebar';
+import PubSubMsg from '../../common/pubsubmsg';
 import {
     toggleSidebar,
     setHeaderCurrentMenu,
@@ -34,7 +33,9 @@ class Container extends React.Component {
         let dispatch = this.props.dispatch;
         PubSubMsg.subscribeAcceptOldMsg('current-header-menu', function (current) {
             dispatch(setHeaderCurrentMenu(current));
-            dispatch(setSidebarMenus(sidebarMenus[current]))
+        });
+        PubSubMsg.subscribeAcceptOldMsg('set-sidebar-menus', function (current) {
+            dispatch(setSidebarMenus(current))
         });
         PubSubMsg.subscribeAcceptOldMsg('current-sidebar-menu', function (data) {
             dispatch(setSidebarMenuStatus(data));

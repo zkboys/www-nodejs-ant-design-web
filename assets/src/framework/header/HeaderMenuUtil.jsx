@@ -1,30 +1,9 @@
 import React from 'react';
-import FAIcon from './faicon/FAIcon';
+import FAIcon from '../../common/faicon/FAIcon';
 import {Link} from 'react-router'
 import {Menu, Tooltip} from 'antd';
-/*
- * 数据来源可以是后端动态数据，或者是前端硬编码。
- * */
-let headerMenuData = [
-    {
-        key: 'shop',
-        icon: 'fa-th-list',
-        text: '店铺',
-        path: '/shop/Dashboard'
-    },
-    {
-        key: 'service',
-        icon: 'fa-th-list',
-        text: '服务',
-        path: '/service/MyForm'
-    },
-    {
-        key: 'expressage',
-        icon: 'fa-th-list',
-        text: '快递',
-        path: '/expressage/MyTime'
-    }
-];
+import headerMenuData from './HeaderMenus'
+
 /*
  * 获取头部菜单构建完成的jsx数据,直接可以用于显示
  * */
