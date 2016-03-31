@@ -1,52 +1,60 @@
+import 'antd/lib/index.css';
 import './style.less';
+import assign from 'object-assign';
 import React from 'react';
+import { connect } from 'react-redux'
+import { Menu, Icon} from 'antd';
+import HeaderBar from '../components/Header';
+import Sidebar from '../components/Sidebar';
 import PubSubMsg from '../common/pubsubmsg';
-import Settings from '../settings/Settings';
-class Container extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+import sidebarMenus from '../SidebarMenus';
+import {
+    toggleSidebar,
+    setHeaderCurrentMenu,
+    setSidebarMenus,
+    setSidebarMenuStatus
+} from '../actions'
 
-    state = {
-        hidden: false,
-        collapseSidebar: Settings.collapseSidebar()
+class Container extends React.Component {
+
+    handleToggleSidebar = ()=> {
+        this.props.dispatch(toggleSidebar());
     };
 
-    componentWillUpdate() {
-        //console.log('Container', 'componentWillUpdate');
-    }
-
-    componentDidUpdate() {
-        //console.log('Container', 'componentDidUpdate');
-    }
+    handleToggleMenu = (info)=> {
+        let selectedKeys = this.props.sidebar.selectedKeys;
+        let data = {
+            selectedKeys: selectedKeys,
+            openKeys: info.openKeys
+        };
+        this.props.dispatch(setSidebarMenuStatus(data));
+    };
 
     componentDidMount() {
-        let _this = this;
-        PubSubMsg.subscribeAcceptOldMsg('switch-sidebar', function (data) {
-            _this.setState({
-                collapseSidebar: data
-            });
+        let dispatch = this.props.dispatch;
+        PubSubMsg.subscribeAcceptOldMsg('current-header-menu', function (current) {
+            dispatch(setHeaderCurrentMenu(current));
+            dispatch(setSidebarMenus(sidebarMenus[current]))
         });
-        PubSubMsg.subscribeAcceptOldMsg('sidebar-menu', function (data) {
-            if (data.menu && data.menu.length > 0) {
-                _this.setState({
-                    hidden: false
-                });
-            } else {
-                _this.setState({
-                    hidden: true
-                });
-            }
+        PubSubMsg.subscribeAcceptOldMsg('current-sidebar-menu', function (data) {
+            dispatch(setSidebarMenuStatus(data));
         });
     }
 
     render() {
-        let style = {
-            left: this.state.hidden ? 0 : this.state.collapseSidebar ? 60 : 240
-        };
         return (
-            <div className="admin-container " style={style}>{this.props.children}</div>
+            <div>
+                <HeaderBar {...this.props} onToggleSidebar={this.handleToggleSidebar}/>
+                <Sidebar {...this.props} onToggle={this.handleToggleMenu}/>
+                <div className="admin-container" style={{left:this.props.style.centerLeft}}>
+                    {this.props.children}
+                </div>
+            </div>
         );
     }
 }
-export default Container;
+
+function mapStateToProps(state) {
+    return assign({}, state);
+}
+export default connect(mapStateToProps)(Container)

@@ -1,10 +1,217 @@
+@headerHeight: 50px;
+@sideBarWidth: 240px;
+@headerBgColor: #f39c12;
+@headerLogoBgColor: #e08e0b;
+@headerLogoColor: #fff;
+
+.admin-header {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  height: @headerHeight;
+  background-color: @headerBgColor;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  /*logo*/
+  .admin-logo {
+    display: inline-block;
+    height: 100%;
+    line-height: @headerHeight;
+    background-color: @headerLogoBgColor;
+    text-align: center;
+    font-size: 18px;
+    vertical-align: middle;
+    float: left;
+    & > a,
+    & > a:visited,
+    & > a:active,
+    & > a:hover {
+      display: block;
+      color: @headerLogoColor;
+    }
+  }
+  /*收起展开菜单按钮*/
+  .admin-sidebar-toggle {
+    display: inline-block;
+    padding: 0 15px;
+    height: 100%;
+    line-height: @headerHeight;
+    font-size: 14px;
+    color: @headerLogoColor;
+    vertical-align: middle;
+    float: left;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+  /*导航菜单*/
+  .admin-header-sys {
+    &.ant-menu {
+      display: inline-block;
+      height: 100%;
+      line-height: @headerHeight;
+      float: left;
+      background: none;
+      border: none;
+      .ant-menu-item {
+        height: 47px;
+        a > span {
+          margin-left: 7px;
+        }
+      }
+    }
+    .ant-menu-item-active.ant-menu-item,
+    .ant-menu-item-selected.ant-menu-item {
+      a,
+      a:hover {
+        color: #fff;
+      }
+      border-bottom: 2px solid #fff;
+    }
+  }
+  /*头部右侧菜单*/
+  .admin-header-menu {
+    float: right;
+    display: inline-block;
+    .admin-header-menu-item {
+      display: inline-block;
+      .fa {
+        font-weight: bold;
+      }
+      a {
+        display: inline-block;
+        padding: 15px;
+        height: 50px;
+        line-height: 20px;
+        color: #fff;
+        font-size: 14px;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+        & > span {
+          margin-left: 7px;
+        }
+      }
+      .admin-user-avatar {
+        margin-top: -2px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+/*中间主体部分样式*/
 .admin-container {
   position: absolute;
-  top: 50px;
+  top: @headerHeight;
   right: 0;
   bottom: 0;
-  left: 240px;
+  left: @sideBarWidth;
   padding: 15px;
   overflow: hidden;
   box-sizing: border-box;
 }
+
+/*左侧菜单样式*/
+@sideBarBgColor: #222d32;
+@sideBarMenuBgColor: #2c3b41;
+@sideBarMenuColor: #b8c7ce;
+@sideBarMenuActiveBgColor: #1e282c;
+@sideBarMenuActiveColor: #f39c13;
+.admin-sidebar {
+  position: fixed;
+  z-index: 100;
+  top: @headerHeight;
+  bottom: 0;
+  left: 0;
+  width: @sideBarWidth;
+  background-color: @sideBarBgColor;
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  .admin-sidebar-inner {
+    position: relative;
+    z-index: 999;
+    height: 100%;
+    overflow-x: visible;
+    overflow-y: scroll;
+    .ant-menu,
+    .ant-menu-submenu > .ant-menu {
+      color: @sideBarMenuColor;
+      background-color: @sideBarMenuBgColor;
+      border-right: none;
+      .fa {
+        margin-right: 5px;
+      }
+      .ant-menu-item {
+        border-right: none;
+        left: 0;
+        margin-left: 0;
+        padding-right: 0; /*扩大Link可点击区域*/
+        a {
+          color: @sideBarMenuColor;
+        }
+      }
+    }
+    .ant-menu-submenu-title {
+      font-weight: bold;
+      &:hover {
+        background-color: @sideBarBgColor;
+        color: #fff;
+      }
+    }
+    .ant-menu-item-active{
+      background-color: lighten(@sideBarMenuActiveBgColor, 5%);
+      border-right: 1px solid lighten(@sideBarMenuActiveColor, 10%) !important;
+      a {
+        color: lighten(@sideBarMenuActiveColor, 20%) !important;
+      }
+    }
+    .ant-menu-item-selected {
+      background-color: @sideBarMenuActiveBgColor;
+      border-right: 1px solid @sideBarMenuActiveColor !important;
+      a {
+        color: @sideBarMenuActiveColor !important;
+      }
+    }
+
+    & > .ant-menu-vertical > .ant-menu-submenu-vertical > .ant-menu-submenu-title {
+      padding-left: 20px;
+      font-size: 18px;
+      & > span > span {
+        display: none;
+      }
+      &:after {
+        content: ''
+      }
+    }
+    & > .ant-menu-vertical > .ant-menu-item > a {
+      & > i {
+        margin-left: -6px;
+        font-size: 15px;
+      }
+      & > span {
+        display: none;
+      }
+
+    }
+  }
+
+  /*
+  修复菜单展开/折叠状态切换bug
+  */
+  .ant-menu-vertical {
+    display: block !important;
+    &.ant-menu-hidden {
+      display: none !important;
+    }
+  }
+}
+
+
+
+
+

@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/run.js",
-    "dev": "supervisor -w ./app,./configs ./bin/run.js",
-    "dev-server": "cross-env PORT=3001 cross-env NODE_ENV=devserver supervisor -w ./app,./configs ./bin/run.js"
+    "dev": "cross-env PORT=3001 cross-env NODE_ENV=devserver supervisor -w ./app,./configs ./bin/run.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

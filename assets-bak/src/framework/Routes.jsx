@@ -6,6 +6,7 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
 import PubSubMsg from './common/pubsubmsg';
 import {getSidebarMenus, getCurrentSidebarMenu} from './SidebarMenu';
+import {getHeaderMenus} from './HeaderMenu';
 import pageRouts from '../page/RoutesCfg';
 
 /*
@@ -13,7 +14,7 @@ import pageRouts from '../page/RoutesCfg';
  * */
 const routes = {
     path: '/',
-    component: require('./Index'),
+    component: require('./app/App'),
     indexRoute: {
         getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/home/Home'));})}
     },
@@ -21,22 +22,37 @@ const routes = {
 };
 pageRouts.push(
     {path: '/system/settings', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./settings/SettingsPage'));})}},
-    {path: '*', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/error/Error404'));})}}
+    {path: '*', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./error/Error404'));})}}
 );
 
+/*
+ for (let i = 0; i < pageRouts.length; i++) {
+ let r = {
+ path: pageRouts[i].path,
+ getComponent: (location, cb) => {
+ require.ensure([], (require) => {
+ cb(null, require(pageRouts[i].component))
+ })
+ }
+ };
+ routes.childRoutes.push(r);
+ }*/
 /*
  * 监听地址栏改变，通过左侧菜单状态
  * */
 browserHistory.listen(function (data) {
-    let pathNames = location.pathname.split('/');
-    let headerMenuCurrent = pathNames&&pathNames.length&&pathNames[1];
-    PubSubMsg.publish('current-header-menu', headerMenuCurrent);
+    let [headerMenu, headerMenuCurrent] = getHeaderMenus();
+    PubSubMsg.publish('header-menu', {
+        menu: headerMenu,
+        current: headerMenuCurrent
+    });
     let menu = getSidebarMenus();
     let currentSidebarMenu = getCurrentSidebarMenu();
-    let selectedKeys = currentSidebarMenu ? currentSidebarMenu.key : '';
+    let current = currentSidebarMenu ? currentSidebarMenu.key : '';
     let openKeys = currentSidebarMenu ? currentSidebarMenu.openKeys : [];
-    PubSubMsg.publish('current-sidebar-menu', {
-        selectedKeys,
+    PubSubMsg.publish('sidebar-menu', {
+        menu,
+        current,
         openKeys
     });
     PubSubMsg.publish('set-header-breadcrumb')
