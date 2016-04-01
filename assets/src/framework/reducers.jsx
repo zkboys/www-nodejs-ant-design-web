@@ -43,6 +43,7 @@ let defaultState = {
         items: headerMenus
     },
     sidebar: {
+        hidden: false,
         openKeys: [],
         selectedKeys: '',
         mode: '',
@@ -76,7 +77,13 @@ export default combineReducers({
     sidebar(state = defaultState.sidebar, action){
         switch (action.type) {
             case SET_SIDEBAR_MENUS :// 设置左侧菜单内容
+                if (!action.currentHeaderMenu) {
+                    return assign({}, state, {
+                        hidden: true
+                    });
+                }
                 return assign({}, state, {
+                    hidden: false,
                     items: sidebarMenus[action.currentHeaderMenu]
                 });
             case SET_SIDEBAR_MENU_STATUS://设置左侧菜单状态，展开状态以及选中状态

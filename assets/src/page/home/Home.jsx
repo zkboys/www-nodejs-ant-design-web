@@ -14,7 +14,7 @@ let initRequestMixin = {
         /*
          * 组件被移除DMO,清除未完成的ajax
          * */
-        this.initReq.abort();
+        //this.initReq.abort();
     },
     componentDidMount() {
         console.log('mixin 中的 componentDidMount');

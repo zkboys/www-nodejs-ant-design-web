@@ -1,13 +1,16 @@
 import React from 'react';
 import { Menu} from 'antd';
 import {createSidebarMenus} from './SidebarMenuUtil'
+import assign from 'object-assign'
 class Sidebar extends React.Component {
     constructor(props) {
         super(props);
     }
+
     handleToggle = (info)=> {
         this.props.onToggle(info);
     };
+
     render() {
         const {
             sidebarStyle,
@@ -15,12 +18,14 @@ class Sidebar extends React.Component {
             sidebarMode
             } = this.props.style;
         const {
+            hidden,
             openKeys,
             selectedKeys,
             items
             } = this.props.sidebar;
+        let style = assign({}, sidebarStyle, hidden ? {width: 0} : {});
         return (
-            <div className="admin-sidebar" style={sidebarStyle}>
+            <div className="admin-sidebar" style={style}>
                 <div className="admin-sidebar-inner" style={sidebarInnerStyle}>
                     <Menu
                         openKeys={openKeys}

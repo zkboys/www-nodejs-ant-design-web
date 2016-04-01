@@ -43,11 +43,12 @@ class Container extends React.Component {
     }
 
     render() {
+        let centerLeft = this.props.sidebar.hidden ? 0 : this.props.style.centerLeft;
         return (
             <div>
                 <HeaderBar {...this.props} onToggleSidebar={this.handleToggleSidebar}/>
                 <Sidebar {...this.props} onToggle={this.handleToggleMenu}/>
-                <div className="admin-container" style={{left:this.props.style.centerLeft}}>
+                <div className="admin-container" style={{left:centerLeft}}>
                     {this.props.children}
                 </div>
             </div>
