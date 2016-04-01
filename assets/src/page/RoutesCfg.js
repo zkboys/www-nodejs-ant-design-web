@@ -4,14 +4,18 @@
  * npm run generate-routes 命令已经写入webpack.config.js，build之前会自动执行。
  */
 export default[{
-
+    path: '/shop/list-page', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./list-page/ListPage.jsx'));
+        })
+    }
+},{
     path: '/shop/reddit', getComponent: (location, cb) => {
         require.ensure([], (require) => {
             cb(null, require('./reddit/Index.jsx'));
         })
     }
 },{
-
     path: '/shop/todo', getComponent: (location, cb) => {
         require.ensure([], (require) => {
             cb(null, require('./todo/index.jsx'));
