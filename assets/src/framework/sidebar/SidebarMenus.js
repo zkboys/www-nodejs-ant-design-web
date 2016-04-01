@@ -1,4 +1,4 @@
-export default {
+let menus = {
     'shop': [
         {text: 'TODO', icon: 'fa-arrow-right', path: '/shop/todo'},
         {text: 'Reddit API', icon: 'fa-arrow-right', path: '/shop/reddit'},
@@ -43,3 +43,4 @@ export default {
         }
     ]
 }
+export default menus

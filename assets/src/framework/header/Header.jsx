@@ -5,9 +5,6 @@ import FAIcon from '../../common/faicon/FAIcon';
 import avatar from './86.jpg';
 
 class Header extends React.Component {
-    handleToggleSidebar = ()=> {
-        this.props.onToggleSidebar();
-    };
     render() {
         const {
             headerLogoWidth,
@@ -20,7 +17,7 @@ class Header extends React.Component {
         return (
             <header className="admin-header">
                 <div className="admin-logo" style={{width:headerLogoWidth}}><Link to="/">{headerLogo}</Link></div>
-                <a className="admin-sidebar-toggle" onClick={this.handleToggleSidebar}><FAIcon type="fa-bars"/></a>
+                <a className="admin-sidebar-toggle" onClick={this.props.onToggleSidebar}><FAIcon type="fa-bars"/></a>
                 <Menu className="admin-header-sys"
                       selectedKeys={[current]}
                       mode="horizontal">

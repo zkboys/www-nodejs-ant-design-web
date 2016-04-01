@@ -8,17 +8,17 @@ import sidebarMenuData from './SidebarMenus'
 /*
  * 获取左侧菜单jsx数据,可以用于直接显示.
  * */
-export let getSidebarMenus = function () {
+function getSidebarMenus() {
     let [minSidebarMenu, maxSidebarMenu] = getMenusData();
     let min = Settings.collapseSidebar() ? true : false;
     minSidebarMenu = minSidebarMenu || [];
     maxSidebarMenu = maxSidebarMenu || [];
     return min ? minSidebarMenu : maxSidebarMenu;
-};
+}
 /*
  * 获取要设为当前状态的菜单数据.
  * */
-export let getCurrentSidebarMenu = function () {
+function getCurrentSidebarMenu() {
     let [, , simpleMenuData] = getMenusData();
     if (!simpleMenuData) {
         return null;
@@ -44,10 +44,11 @@ export let getCurrentSidebarMenu = function () {
         currentMenu.openKeys = arrayUnique(openKeys);
     }
     return currentMenu;
-};
-export let  createSidebarMenus = function(menuData){
+}
+function createSidebarMenus(menuData) {
     return buildSidebarMenu(menuData)[0];
-};
+}
+
 /*
  * 对象键值法(该方法性能最优)
  * @method 定义一个空对象和空新数组，遍历当前的数组，判断该对象是否存在数组的某一项，如果不存在
@@ -125,8 +126,10 @@ function buildSidebarMenu(menuData, min) {
                 if (min && parent.key === '0') {
                     parent.subMenus.push(
                         <Menu.Item key={menu.key}>
-                            <Tooltip placement="right" title={<Link to={menu.path} activeClassName="active" style={{color:'#fff'}}>{menu.text}</Link>}>
-                                <Link to={menu.path} activeClassName="active"><FAIcon type={menu.icon}/>{menu.text[0]}</Link>
+                            <Tooltip placement="right"
+                                     title={<Link to={menu.path} activeClassName="active" style={{color:'#fff'}}>{menu.text}</Link>}>
+                                <Link to={menu.path} activeClassName="active"><FAIcon type={menu.icon}/>{menu.text[0]}
+                                </Link>
                             </Tooltip>
                         </Menu.Item>
                     );
@@ -143,5 +146,5 @@ function buildSidebarMenu(menuData, min) {
     }
 
     return covertMenuFromData(menuData, min);
-
 }
+export {getSidebarMenus,getCurrentSidebarMenu,createSidebarMenus}
