@@ -1,13 +1,16 @@
+import './style.less'
 import React from 'react';
 import {Row, Col} from 'antd'
 import assign from 'object-assign'
 import InputItem from './InputItem'
 import LabelItem from './LabelItem'
 import DatePickerItem from './DatePickerItem'
+import TimePickerItem from './TimePickerItem'
 import SelectItem from './SelectItem'
 import RadioButtonItem from './RadioButtonItem'
+import CheckboxItem from './CheckboxItem'
 class SearchCondition extends React.Component {
-    createConditions(options){
+    createConditions(options) {
         // TODO 关于日期类型的查询条件，要支持可选时间范围。
         // TODO 校验是否要加？
         //type: select radio radioButton input date time dateTime dataArea timeArea dateTimeArea
@@ -15,6 +18,12 @@ class SearchCondition extends React.Component {
         let towValueItems = 'dateTime dateArea timeArea dateTimeArea'.split(' ');
         let multipleValueItems = 'select searchSelect radio radioButton'.split(' ');
         let data = {};//保存所有的查询条件数据
+        let defaultOptins = {
+            labelWidth: '80px',//可选，默认：‘80px’,防止有些label text太长，这里给个全局设置，每个条件可以覆盖这个属性。
+            onSearch: function (data) {// 点击查询按钮时的回调函数 data为所有的查询条件
+                //如果查询条件未选，或未填写，将不会包含到data中？还是包含，值为undefined;
+            }
+        };
         let defaultItem = {
             //name: '',// 必选，给后台传数据的时候，会用到这个name
             //label: '',// 必选
@@ -27,12 +36,7 @@ class SearchCondition extends React.Component {
             //options: undefined // 如果是select等类型，这个value是个数组，如果是input，value可以为可选，默认：undefined。
         };
         //处理默认值
-        options = assign({}, {
-            labelWidth: '80px',//可选，默认：‘80px’,防止有些label text太长，这里给个全局设置，每个条件可以覆盖这个属性。
-            onSearch: function (data) {// 点击查询按钮时的回调函数 data为所有的查询条件
-                //如果查询条件未选，或未填写，将不会包含到data中？还是包含，值为undefined;
-            }
-        }, options);
+        options = assign({}, defaultOptins, options);
         options.conditionItems = options.conditionItems.map((item, index, arr)=> {
             if (item instanceof Array) {//一行多个查询条件
                 return item.map((it)=> {
@@ -84,16 +88,17 @@ class SearchCondition extends React.Component {
                     return [<LabelItem key={'label-'+index} {...item}/>,
                         <DatePickerItem key={index} {...item} search={search} setData={setData}/>]
 
+                case 'time':
+                    return [<LabelItem key={'label-'+index} {...item}/>,
+                        <TimePickerItem key={index} {...item} search={search} setData={setData}/>]
+
+                case 'dateTime':
+                    return [<LabelItem key={'label-'+index} {...item}/>,
+                        <DatePickerItem key={index} showTime={true} {...item} search={search} setData={setData}/>]
+
                 case 'dateArea':
                 {
-                    let startItem = assign({}, {
-                        name: item.name + 'Start',
-                        defaultValue: item.options && (item.options.length > 0 ? item.options[0] : undefined)
-                    }, item);
-                    let endItem = assign({}, {
-                        name: item.name + 'End',
-                        defaultValue: item.options && (item.options.length > 1 ? item.options[1] : undefined)
-                    }, item);
+                    let [startItem,endItem] = getStartAndEndItem(item);
                     return [
                         <LabelItem key={'label-'+index} {...item}/>,
                         <DatePickerItem key={'start-'+index} {...startItem} search={search} setData={setData}/>,
@@ -101,7 +106,48 @@ class SearchCondition extends React.Component {
                         <DatePickerItem key={'end-'+index} {...endItem} search={search} setData={setData}/>
                     ]
                 }
+                case 'timeArea':
+                {
+                    let [startItem,endItem] = getStartAndEndItem(item);
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <TimePickerItem key={'start-'+index} {...startItem} search={search} setData={setData}/>,
+                        <Col key={'-'+index}><p className="ant-form-split">-</p></Col>,
+                        <TimePickerItem key={'end-'+index} {...endItem} search={search} setData={setData}/>
+                    ]
+                }
+                case 'dateTimeArea':
+                {
+                    let [startItem,endItem] = getStartAndEndItem(item);
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <DatePickerItem showTime={true} key={'start-'+index} {...startItem} search={search}
+                                        setData={setData}/>,
+                        <Col key={'-'+index}><p className="ant-form-split">-</p></Col>,
+                        <DatePickerItem showTime={true} key={'end-'+index} {...endItem} search={search}
+                                        setData={setData}/>
+                    ]
+                }
+                case 'checkbox':
+                {
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <CheckboxItem key={'start-'+index} {...item} search={search} setData={setData}/>
+                    ]
+                }
             }
+        }
+
+        function getStartAndEndItem(item) {
+            let startItem = assign({}, item, {
+                name: item.name + 'Start',
+                defaultValue: item.options && (item.options.length > 0 ? item.options[0] : undefined)
+            });
+            let endItem = assign({}, item, {
+                name: item.name + 'End',
+                defaultValue: item.options && (item.options.length > 1 ? item.options[1] : undefined)
+            });
+            return [startItem, endItem]
         }
 
         function setData(name, value) {
@@ -109,10 +155,16 @@ class SearchCondition extends React.Component {
         }
 
         function search() {
-            console.log('我特么是表单数据：', data);
+            for (let p in data) {
+                console.log(p + ':' + data[p]);
+            }
+            console.log('*************************************');
+            options.onSearch && options.onSearch(data);
         }
+
         return conditions;
     }
+
     render() {
         return (
             <div className="search-area">

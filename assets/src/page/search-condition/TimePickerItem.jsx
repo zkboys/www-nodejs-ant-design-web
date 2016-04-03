@@ -1,6 +1,6 @@
 import React from 'react';
-import {Row, Col, DatePicker} from 'antd';
-class DatePickerItem extends React.Component {
+import {Row, Col, TimePicker} from 'antd';
+class TimePickerItem extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -14,11 +14,7 @@ class DatePickerItem extends React.Component {
     }
 
     handleChange = (value)=> {
-        if(this.props.showTime){
-            value = value&&(value.toLocaleDateString('zh-CN')+' ' +value.toLocaleTimeString('zh-CN'))
-        }else{
-            value = value && value.toLocaleDateString('zh-CN');
-        }
+        value = value && value.toLocaleTimeString('zh-CN', {hour12: false})
         this.props.setData(this.props.name, value);
         this.setState({
             value: value
@@ -29,24 +25,15 @@ class DatePickerItem extends React.Component {
     };
 
     render() {
-        let props = {
-            format:'yyyy-MM-dd'
-        };
-        if(this.props.showTime){
-            props = {
-                showTime:true,
-                format:"yyyy-MM-dd HH:mm"
-            }
-        }
         return (
             <Col>
-                <DatePicker
-                    {...props}
+                <TimePicker
                     style={{width:this.props.width}}
-                    value={this.state.value}
+                    defaultValue={this.props.defaultValue}
+                    format="HH:mm"
                     onChange={this.handleChange}/>
             </Col>
         );
     }
 }
-export default DatePickerItem;
+export default TimePickerItem;

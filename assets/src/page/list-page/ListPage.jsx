@@ -1,9 +1,11 @@
 import './style.less'
 import React from 'react';
-import { Breadcrumb,Row,Col, Form, Select,Radio, Input,Button ,DatePicker} from 'antd'
+import { Breadcrumb,Row,Col, Form, Select,Radio, Input,Button ,DatePicker, Checkbox} from 'antd'
 import assign from 'object-assign'
 import Page from '../../framework/page/Page';
 import SearchCondition from '../search-condition/SearchCondition'
+
+const CheckboxGroup = Checkbox.Group;
 
 let ListPage = React.createClass({
     getInitialState() {
@@ -41,42 +43,61 @@ let ListPage = React.createClass({
                         width: 300
                     }
                 ],
-                [
-                    {
-                        type: 'select',
-                        name: 'testSelect',
-                        label: '我是下拉',
-                        showSearch: true,
-                        defaultValue: 'all',
-                        options: [
-                            {value: 'all', text: '全部'},
-                            {value: '1', text: '和平门'},
-                            {value: '2', text: '前门大街'},
-                            {value: '3', text: '东直门'},
-                            {value: '4', text: '宋家庄'}
-                        ]
-                    },
-                    {
-                        type: 'radioButton',
-                        name: 'radioButton',
-                        label: '悬着按钮',
-                        defaultValue: 'all',
-                        options: [
-                            {value: 'all', text: '全部'},
-                            {value: '1', text: '和平门'},
-                            {value: '2', text: '前门大街'},
-                            {value: '3', text: '东直门'},
-                            {value: '4', text: '宋家庄'}
-                        ]
-                    }],
-                [
-                    {
-                        type: 'dateArea',
-                        name: 'joinTime',
-                        label: '加入时间',
-                        options: ['2016-06-06', '2016-07-07']
+                {
+                    type: 'select',
+                    name: 'testSelect',
+                    label: '搜索下拉',
+                    showSearch: true,
+                    defaultValue: 'all',
+                    options: [
+                        {value: 'all', text: '全部'},
+                        {value: '1', text: '和平门'},
+                        {value: '2', text: '前门大街'},
+                        {value: '3', text: '东直门'},
+                        {value: '4', text: '宋家庄'}
+                    ]
+                },
 
-                    },
+                {
+                    type: 'select',
+                    name: 'testSelect',
+                    label: '普通下拉',
+                    defaultValue: 'all',
+                    options: [
+                        {value: 'all', text: '全部'},
+                        {value: '1', text: '和平门'},
+                        {value: '2', text: '前门大街'},
+                        {value: '3', text: '东直门'},
+                        {value: '4', text: '宋家庄'}
+                    ]
+                },
+                {
+                    type: 'radioButton',
+                    name: 'radioButton',
+                    label: '单选按钮',
+                    defaultValue: 'all',
+                    options: [
+                        {value: 'all', text: '全部'},
+                        {value: '1', text: '和平门'},
+                        {value: '2', text: '前门大街'},
+                        {value: '3', text: '东直门'},
+                        {value: '4', text: '宋家庄'}
+                    ]
+                },
+                {
+                    type: 'radioButton',
+                    name: 'checkboxButton',
+                    label: '多选按钮',
+                    defaultValue: 'all',
+                    options: [
+                        {value: 'all', text: '搞一个'},
+                        {value: '1', text: '多选'},
+                        {value: '2', text: '按钮'},
+                        {value: '3', text: '怎么样'},
+                        {value: '4', text: '呢？'}
+                    ]
+                },
+                [
                     {
                         name: 'age',
                         label: '年龄啊',
@@ -88,17 +109,62 @@ let ListPage = React.createClass({
                     type: 'date',
                     name: 'date',
                     label: '日期',
-                    value: '2015-01-01'
+                    defaultValue: '2015-01-01'
+                },
+                {
+                    type: 'dateArea',
+                    name: 'dateArea',
+                    label: '日期区间',
+                    options: ['2016-06-06', '2016-07-07']
+
+                },
+                {
+
+                    type: 'time',
+                    name: 'time',
+                    label: '时间',
+                    defaultValue: '11:51'
+                },
+                {
+
+                    type: 'timeArea',
+                    name: 'timeArea',
+                    label: '时间区间',
+                    width: 73,
+                    options: ['11:11', '12:12']
+                },
+                {
+
+                    type: 'dateTime',
+                    name: 'dateTime',
+                    label: '日期时间',
+                    defaultValue: '2016-01-01 11:51'
+                },
+                {
+
+                    type: 'dateTimeArea',
+                    name: 'dateTimeArea',
+                    label: '日期时间区',
+                    options: ['2016-01-01 11:11', '2016-02-02 22:22']
+                },
+                {
+
+                    type: 'checkbox',
+                    name: 'checkbox',
+                    label: '复选框',
+                    searchOnChange: true,
+                    defaultValue: ['1', '5', '3'],
+                    options: [
+                        {value: '1', text: '哈哈1'},
+                        {value: '2', text: '哈哈2'},
+                        {value: '3', text: '哈哈3'},
+                        {value: '4', text: '哈哈4'},
+                        {value: '5', text: '哈哈5'}
+                    ]
                 },
                 {
                     type: 'customer',//自定义查询条件
-                    component: '',
-                    getDate: function () {
-                        return {
-                            name: 'customer',
-                            value: '这个是我自定义的'
-                        }
-                    }
+                    component: ''
                 }
 
             ]
@@ -106,8 +172,20 @@ let ListPage = React.createClass({
         return (
             <Page header="auto" loading={this.state.loading}>
                 <SearchCondition options={options}/>
+                <label>
+                    <Checkbox defaultChecked={false} onChange={onChange} value="1" name="aa"/>
+                    Checkbox1
+                </label>
+                <label>
+                    <Checkbox defaultChecked={false} onChange={onChange} value="2" name="aa"/>
+                    Checkbox2
+                </label>
             </Page>
         );
     }
 });
+function onChange(e) {
+    console.log(e.target.name, e.target.value);
+    console.log(`checked = ${e.target.checked}`);
+}
 export default ListPage;
