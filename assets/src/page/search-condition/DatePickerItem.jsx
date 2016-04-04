@@ -1,5 +1,6 @@
 import React from 'react';
-import {Row, Col, DatePicker} from 'antd';
+import {Col, DatePicker} from 'antd';
+import {dateFormat} from './utils'
 class DatePickerItem extends React.Component {
     constructor(props) {
         super(props);
@@ -14,10 +15,11 @@ class DatePickerItem extends React.Component {
     }
 
     handleChange = (value)=> {
-        if(this.props.showTime){
-            value = value&&(value.toLocaleDateString('zh-CN')+' ' +value.toLocaleTimeString('zh-CN'))
-        }else{
-            value = value && value.toLocaleDateString('zh-CN');
+        // TODO 日期转换暂时有错
+        if (this.props.showTime) {
+            value = value && dateFormat(value, 'yyyy-MM-dd hh:mm')
+        } else {
+            value = value && dateFormat(value, 'yyyy-MM-dd');
         }
         this.props.setData(this.props.name, value);
         this.setState({
@@ -30,12 +32,12 @@ class DatePickerItem extends React.Component {
 
     render() {
         let props = {
-            format:'yyyy-MM-dd'
+            format: 'yyyy-MM-dd'
         };
-        if(this.props.showTime){
+        if (this.props.showTime) {
             props = {
-                showTime:true,
-                format:"yyyy-MM-dd HH:mm"
+                showTime: true,
+                format: "yyyy-MM-dd HH:mm"
             }
         }
         return (

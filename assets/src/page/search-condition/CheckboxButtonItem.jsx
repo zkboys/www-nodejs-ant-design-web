@@ -1,7 +1,8 @@
 import React from 'react';
-import {Col, Checkbox} from 'antd';
+import {Col, Button} from 'antd';
 import assign from 'object-assign'
-class CheckboxItem extends React.Component {
+const ButtonGroup = Button.Group;
+class CheckboxButtonItem extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -35,20 +36,19 @@ class CheckboxItem extends React.Component {
     render() {
         let checkboxes = this.props.options.map((opt, index)=> {
             let checked = this.props.defaultValue && this.props.defaultValue.indexOf(opt.value) > -1;
+
             return (
-                <label key={index} style={{cursor:'pointer', marginRight:'20px'}}>
-                    <Checkbox defaultChecked={checked} onChange={this.handleChange} value={opt.value}
-                              name={this.props.name}/>
-                    {opt.text}
-                </label>
+                <Button key={index} type={checked?"primary":"ghost"}value={opt.value}>{opt.text}</Button>
             )
 
         });
         return (
             <Col>
-                {checkboxes}
+                <ButtonGroup>
+                    {checkboxes}
+                </ButtonGroup>
             </Col>
         );
     }
 }
-export default CheckboxItem
+export default CheckboxButtonItem

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col, Input} from 'antd';
+import {Col, Input} from 'antd';
 class InputItem extends React.Component {
     constructor(props) {
         super(props);

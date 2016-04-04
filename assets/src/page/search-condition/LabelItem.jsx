@@ -5,6 +5,7 @@ class LabelItem extends React.Component {
         const labelColProps = {
             style: {
                 flexBasis: this.props.labelWidth,
+                width:this.props.labelWidth,
                 textAlign: 'right'
             }
         };

@@ -4,6 +4,7 @@ import { Breadcrumb,Row,Col, Form, Select,Radio, Input,Button ,DatePicker, Check
 import assign from 'object-assign'
 import Page from '../../framework/page/Page';
 import SearchCondition from '../search-condition/SearchCondition'
+import InputItem from '../search-condition/InputItem'
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -15,9 +16,12 @@ let ListPage = React.createClass({
     },
     render() {
         let options = {
+            showSearchBtn: false,
             //labelWidth: '80px',//可选，默认：‘80px’,防止有些label text太长，这里给个全局设置，每个条件可以覆盖这个属性。
             onSearch: function (data) {// 点击查询按钮时的回调函数 data为所有的查询条件
                 //如果查询条件未选，或未填写，将不会包含到data中？还是包含，值为undefined;
+                console.log(data);
+                console.log(JSON.stringify(data));
             },
             conditionItems: [//每一个查询条件
                 [],//一行多个条件，为数组
@@ -82,19 +86,6 @@ let ListPage = React.createClass({
                         {value: '2', text: '前门大街'},
                         {value: '3', text: '东直门'},
                         {value: '4', text: '宋家庄'}
-                    ]
-                },
-                {
-                    type: 'radioButton',
-                    name: 'checkboxButton',
-                    label: '多选按钮',
-                    defaultValue: 'all',
-                    options: [
-                        {value: 'all', text: '搞一个'},
-                        {value: '1', text: '多选'},
-                        {value: '2', text: '按钮'},
-                        {value: '3', text: '怎么样'},
-                        {value: '4', text: '呢？'}
                     ]
                 },
                 [
@@ -163,10 +154,26 @@ let ListPage = React.createClass({
                     ]
                 },
                 {
-                    type: 'customer',//自定义查询条件
-                    component: ''
-                }
 
+                    type: 'checkboxButton',
+                    name: 'checkboxButton',
+                    label: '复选框按钮',
+                    searchOnChange: true,
+                    defaultValue: ['1', '5', '3'],
+                    options: [
+                        {value: 'all', text: '搞一个'},
+                        {value: '1', text: '多选'},
+                        {value: '2', text: '按钮'},
+                        {value: '3', text: '怎么样'},
+                        {value: '4', text: '呢？'}
+                    ]
+                },
+                {
+                    type:'customer',
+                    name:'customer',
+                    label:'用户自定义',
+                    component:InputItem
+                }
             ]
         };
         return (
