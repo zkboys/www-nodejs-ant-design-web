@@ -15,7 +15,6 @@ class DatePickerItem extends React.Component {
     }
 
     handleChange = (value)=> {
-        // TODO 日期转换暂时有错
         if (this.props.showTime) {
             value = value && dateFormat(value, 'yyyy-MM-dd hh:mm')
         } else {

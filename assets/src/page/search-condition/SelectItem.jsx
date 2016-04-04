@@ -24,16 +24,12 @@ class SelectItem extends React.Component {
     };
 
     render() {
-        let searchPros = this.props.showSearch ? {
-            showSearch: true,
-            searchPlaceholder: "输入关键词",
-            notFoundContent: "无法找到"
-        } : {};
         let options = this.props.options.map((opt, index)=><Option key={index} value={opt.value}>{opt.text}</Option>);
         return (
             <Col>
                 <Select
-                    {...searchPros}
+                    {...this.props.searchPros}
+                    {...this.props.multipleProps}
                     style={{width:this.props.width}}
                     placeholder={this.props.placeHolder}
                     optionFilterProp="children"

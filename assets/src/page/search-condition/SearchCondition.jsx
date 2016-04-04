@@ -3,19 +3,24 @@ import React from 'react';
 import {Row, Col, Button} from 'antd'
 import assign from 'object-assign'
 import InputItem from './InputItem'
+import ComboboxItem from './ComboboxItem'
 import LabelItem from './LabelItem'
 import DatePickerItem from './DatePickerItem'
 import DatePickerAreaItem from './DatePickerAreaItem'
 import TimePickerItem from './TimePickerItem'
 import TimePickerAreaItem from './TimePickerAreaItem'
 import SelectItem from './SelectItem'
+import SelectSearchItem from './SelectSearchItem'
+import SelectMultipleItem from './SelectMultipleItem'
 import RadioButtonItem from './RadioButtonItem'
+import RadioItem from './RadioItem'
 import CheckboxItem from './CheckboxItem'
 import CheckboxButtonItem from './CheckboxButtonItem'
 class SearchCondition extends React.Component {
     createConditions(options) {
         // TODO 关于日期类型的查询条件，要支持可选时间范围。
         // TODO 校验是否要加？
+        // TODO 级联下拉
         //type: checkbox select radioButton input date time dateTime dataArea timeArea dateTimeArea
         let data = {};//保存所有的查询条件数据
         let defaultOptions = {
@@ -65,14 +70,27 @@ class SearchCondition extends React.Component {
                 case 'input':
                     return [<LabelItem key={'label-'+index} {...item}/>,
                         <InputItem key={index} {...item} search={search} setData={setData}/>]
+                case 'combobox':
+                    return [<LabelItem key={'label-'+index} {...item}/>,
+                        <ComboboxItem key={index} {...item} search={search} setData={setData}/>]
 
                 case 'select':
                     return [<LabelItem key={'label-'+index} {...item}/>,
                         <SelectItem key={index} {...item} search={search} setData={setData}/>]
 
+                case 'selectSearch':
+                    return [<LabelItem key={'label-'+index} {...item}/>,
+                        <SelectSearchItem key={index} {...item} search={search} setData={setData}/>]
+                case 'selectMultiple':
+                    return [<LabelItem key={'label-'+index} {...item}/>,
+                        <SelectMultipleItem key={index} {...item} search={search} setData={setData}/>]
+
                 case 'radioButton':
                     return [<LabelItem key={'label-'+index} {...item}/>,
                         <RadioButtonItem key={index} {...item} search={search} setData={setData}/>]
+                case 'radio':
+                    return [<LabelItem key={'label-'+index} {...item}/>,
+                        <RadioItem key={index} {...item} search={search} setData={setData}/>]
 
                 case 'date':
                     return [<LabelItem key={'label-'+index} {...item}/>,
