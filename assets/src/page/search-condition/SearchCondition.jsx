@@ -53,20 +53,6 @@ class SearchCondition extends React.Component {
             align: "middle",
             style: {marginBottom: '5px'}
         };
-        let submitButton = <Col key="submit-buttom" style={{marginLeft:'5px'}}><Button type="primary" onClick={search}>查询</Button></Col>;
-        let conditions = options.conditionItems.map((item, index, arr)=> {
-            let cols = [];
-            if (item instanceof Array) {//一行多个查询条件
-                cols = item.map((it, i)=>getConditions(it, index + '-' + i));
-            } else {//一行一个查询条件
-                cols = getConditions(item, index);
-            }
-            if (options.showSearchBtn && cols && (index === arr.length - 1)) {
-                cols.push(submitButton);
-            }
-            return <Row key={index} {...rowProps}>{cols}</Row>
-
-        });
 
         function getItemOptions(item) {
             let itemObj = assign({}, {labelWidth: options.labelWidth}, defaultItem, item);
@@ -149,6 +135,7 @@ class SearchCondition extends React.Component {
                 }
             }
         }
+
         function setData(name, value) {
             data[name] = value;
         }
@@ -157,7 +144,19 @@ class SearchCondition extends React.Component {
             options.onSearch && options.onSearch(data);
         }
 
-        return conditions;
+        return options.conditionItems.map((item, index, arr)=> {
+            let cols = [];
+            if (item instanceof Array) {//一行多个查询条件
+                cols = item.map((it, i)=>getConditions(it, index + '-' + i));
+            } else {//一行一个查询条件
+                cols = getConditions(item, index);
+            }
+            if (options.showSearchBtn && cols && (index === arr.length - 1)) {
+                let submitButton = <Col key="submit-buttom" style={{marginLeft:'5px'}}><Button type="primary" onClick={search}>查询</Button></Col>;
+                cols.push(submitButton);
+            }
+            return <Row key={index} {...rowProps}>{cols}</Row>
+        });
     }
 
     render() {

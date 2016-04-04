@@ -8,39 +8,49 @@ class CheckboxButtonItem extends React.Component {
     }
 
     state = {
-        value: new Set(this.props.defaultValue || [])
+        value: this.props.options.map((opt, index)=> {
+            let checked = this.props.defaultValue && this.props.defaultValue.indexOf(opt.value) > -1;
+            return {
+                type: checked ? "primary" : "ghost",
+                value: opt.value,
+                text: opt.text
+            }
+        })
     };
 
     componentDidMount() {
-        this.props.setData(this.props.name, Array.from(this.state.value));
+        this.props.setData(this.props.name, this.props.defaultValue);
     }
 
-    handleChange = (e)=> {
-        let value = e.target.value;
-        let values = this.state.value;
-        if (e.target.checked) {
-            values.add(value);
+    handleClick = (index)=> {
+        let stateValue = this.state.value;
+        let opt = stateValue[index];
+        if (opt.type == "primary") {
+            opt.type = "ghost";
         } else {
-            values.delete(value);
+            opt.type = "primary";
         }
-        this.props.setData(this.props.name, Array.from(values));
-        this.setState({
-            value: values
-        });
+        this.setState(
+            {value: stateValue}
+        );
+        let values = stateValue.filter(opt=>opt.type == "primary").map(opt=>opt.value);
+        this.props.setData(this.props.name, values);
         if (this.props.searchOnChange) {
-            // 加入函数节流功能。
             this.props.search();
         }
-    };
+    }
 
     render() {
-        let checkboxes = this.props.options.map((opt, index)=> {
-            let checked = this.props.defaultValue && this.props.defaultValue.indexOf(opt.value) > -1;
-
+        let checkboxes = this.state.value.map((opt, index)=> {
             return (
-                <Button key={index} type={checked?"primary":"ghost"}value={opt.value}>{opt.text}</Button>
+                <Button
+                    style={{paddingLeft:'15px',paddingRight:'15px'}}
+                    key={index}
+                    type={opt.type}
+                    onClick={e=>{this.handleClick(index)}}>
+                    {opt.text}
+                </Button>
             )
-
         });
         return (
             <Col>
