@@ -18,6 +18,68 @@ let ListPage = React.createClass({
             },
             conditionItems: [
                 {
+                    type: 'selectCascaded',
+                    items: [
+                        {
+                            type: 'select',
+                            name: 'select1',
+                            label: '一级下拉',
+                            searchOnChange: true,
+                            //defaultValue: '4',
+                            options: [
+                                {value: 'all', text: '全部'},
+                                {value: '1', text: '和平门'},
+                                {value: '2', text: '前门大街'},
+                                {value: '3', text: '东直门'},
+                                {value: '4', text: '宋家庄'}
+                            ],
+                            getNextOptions: function (value) {
+                                return [
+                                    {value: value + '-1', text: value + '-1 二级下拉'},
+                                    {value: value + '-2', text: value + '-2 二级下拉'},
+                                    {value: value + '-3', text: value + '-3 二级下拉'},
+                                    {value: value + '-4', text: value + '-4 二级下拉'}
+                                ]
+                            }
+                        },
+                        {
+                            type: 'selectSearch',
+                            name: 'select2',
+                            label: '二级下拉',
+                            width:200,
+                            searchOnChange: true,
+                            getNextOptions: function (value) {
+                                return [
+                                    {value: value + '-1', text: value + '-1 三级下拉'},
+                                    {value: value + '-2', text: value + '-2 三级下拉'},
+                                    {value: value + '-3', text: value + '-3 三级下拉'},
+                                    {value: value + '-4', text: value + '-4 三级下拉'}
+                                ]
+                            }
+                        },
+                        {
+                            type: 'select',// 支持多选意义不大
+                            name: 'select3',
+                            label: '三级下拉',
+                            searchOnChange: true,
+                            getNextOptions: function (value) {
+                                return [
+                                    {value: value + '-1', text: value + '-1 四级下拉'},
+                                    {value: value + '-2', text: value + '-2 四级下拉'},
+                                    {value: value + '-3', text: value + '-3 四级下拉'},
+                                    {value: value + '-4', text: value + '-4 四级下拉'}
+                                ]
+                            }
+                        },
+                        {
+                            type: 'select',
+                            name: 'select4',
+                            label: '四级下拉',
+                            searchOnChange: true
+                        }
+                    ]
+                },
+                {
                     name: 'store',
                     label: '门店',
                     type: 'input',
@@ -28,15 +90,15 @@ let ListPage = React.createClass({
                     label: '智能提示',
                     type: 'combobox',
                     searchOnChange: true,
-                    defaultValue:'瞎写的',
-                    separator:'@',
-                    options:['gmail.com', '163.com', 'qq.com']
+                    defaultValue: '瞎写的',
+                    separator: '@',
+                    options: ['gmail.com', '163.com', 'qq.com']
                 },
 
                 [
                     {
                         type: 'select',
-                        name: 'testSelect',
+                        name: 'select',
                         label: '普通下拉',
                         defaultValue: 'all',
                         options: [
@@ -49,7 +111,7 @@ let ListPage = React.createClass({
                     },
                     {
                         type: 'selectSearch',
-                        name: 'testSelect',
+                        name: 'selectSearch',
                         label: '搜索下拉',
                         defaultValue: 'all',
                         options: [

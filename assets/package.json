@@ -57,7 +57,7 @@
   },
   "scripts": {
     "clean": "rimraf ../public",
-    "dev": " npm update antd && cross-env runmod=devserver webpack-dev-server --port 8086 --progress --inline",
+    "dev": " cross-env runmod=devserver webpack-dev-server --port 8086 --progress --inline",
     "build-dev": "npm run clean && cross-env runmod=development webpack -d -p --profile --progress --colors --display-modules",
     "build-test": "npm run clean && cross-env runmod=test webpack -d -p --profile --progress --colors --display-modules",
     "build-stage": "npm run clean && cross-env runmod=stage webpack --progress",

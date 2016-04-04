@@ -9,8 +9,7 @@ class SelectSearchItem extends React.Component {
     render() {
         let searchPros = {
             showSearch: true,
-            searchPlaceholder: "输入关键词",
-            notFoundContent: "无法找到"
+            searchPlaceholder: "输入关键词"
         }
         return (
             <SelectItem searchPros={searchPros} {...this.props}/>

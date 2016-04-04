@@ -12,6 +12,7 @@ import TimePickerAreaItem from './TimePickerAreaItem'
 import SelectItem from './SelectItem'
 import SelectSearchItem from './SelectSearchItem'
 import SelectMultipleItem from './SelectMultipleItem'
+import SelectCascadedItem from './SelectCascadedItem'
 import RadioButtonItem from './RadioButtonItem'
 import RadioItem from './RadioItem'
 import CheckboxItem from './CheckboxItem'
@@ -52,6 +53,7 @@ class SearchCondition extends React.Component {
                 return getItemOptions(item);
             }
         });
+
         const rowProps = {
             type: "flex",
             justify: "start",
@@ -60,6 +62,9 @@ class SearchCondition extends React.Component {
         };
 
         function getItemOptions(item) {
+            if(item.items){
+                item.items = item.items.map(i=>getItemOptions(i));
+            }
             let itemObj = assign({}, {labelWidth: options.labelWidth}, defaultItem, item);
             itemObj.placeHolder = (itemObj.placeHolder === undefined) && (itemObj.type === 'input' ? '请输入' : '请选择') + itemObj.label;
             return itemObj;
@@ -81,9 +86,14 @@ class SearchCondition extends React.Component {
                 case 'selectSearch':
                     return [<LabelItem key={'label-'+index} {...item}/>,
                         <SelectSearchItem key={index} {...item} search={search} setData={setData}/>]
+
                 case 'selectMultiple':
                     return [<LabelItem key={'label-'+index} {...item}/>,
                         <SelectMultipleItem key={index} {...item} search={search} setData={setData}/>]
+
+                case 'selectCascaded':
+                    return [
+                        <SelectCascadedItem key={index} {...item} search={search} setData={setData}/>]
 
                 case 'radioButton':
                     return [<LabelItem key={'label-'+index} {...item}/>,

@@ -53,6 +53,7 @@ let conditionConfig = {
 |select|下拉框|
 |selectSearch|带搜索下拉框|
 |selectMultiple|多选下拉框|
+|selectCascaded|联动下拉（级联下拉）|
 |radio|单选|
 |radioButton|单选按钮|
 |checkbox|多选|
@@ -76,3 +77,59 @@ let conditionConfig = {
 }
 ```
 component如何编写，请参考其他系统提供的组件。
+
+## 几个特殊组件
+特殊组件有几个自己的属性
+### combobox
+separator //可选
+
+###  selectCascaded
+```
+{
+    type: 'selectCascaded',
+    items: [// 和 conditionItems 的配置相同，多了一个getNextOptions，
+        {
+            type: 'select',
+            name: 'select1',
+            label: '一级下拉',
+            searchOnChange: true,
+            options: [
+                {value: 'all', text: '全部'},
+                {value: '1', text: '和平门'},
+                {value: '2', text: '前门大街'},
+                {value: '3', text: '东直门'},
+                {value: '4', text: '宋家庄'}
+            ],
+            getNextOptions: function (value) {//根据当前下拉value，获取下一个下拉的options
+                return [
+                    {value:  value + '-1', text: value + '-1'},
+                    {value:  value + '-2', text: value + '-2'},
+                    {value:  value + '-3', text: value + '-3'},
+                    {value:  value + '-4', text: value + '-4'}
+                ]
+            }
+        },
+        {// 2级以后的下拉不要配置options选项
+            type: 'selectSearch',
+            name: 'select2',
+            label: '二级下拉',
+            searchOnChange: true,
+            getNextOptions: function (value) {
+                return [
+                    {value:  value + '-1', text: value + '-1'},
+                    {value:  value + '-2', text: value + '-2'},
+                    {value:  value + '-3', text: value + '-3'},
+                    {value:  value + '-4', text: value + '-4'}
+                ]
+            }
+        },
+        {
+            type: 'selectMultiple',// 支持多选意义不大
+            name: 'select3',
+            label: '三级下拉',
+            searchOnChange: true
+        }
+    ]
+}
+```
+
