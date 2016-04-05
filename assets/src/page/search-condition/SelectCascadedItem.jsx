@@ -40,11 +40,21 @@ class SelectCascadedItem extends React.Component {
 
     render() {
         let selects = this.state.selects.map((item, index, arr)=> {
-            let TempSelect = SelectItem;
-            if (item.type === 'selectSearch') {
-                TempSelect = SelectSearchItem;
-            } else if (item.type === 'selectMultiple') {
-                TempSelect = SelectMultipleItem;
+            let TempSelect;
+            switch(item.type){
+                case 'selectSearch':{
+                    TempSelect = SelectSearchItem;
+                    break;
+                }
+                case 'selectMultiple':{
+                    TempSelect = SelectMultipleItem;
+                    break;
+                }
+                default:{
+                    TempSelect = SelectItem;
+                    break;
+                }
+
             }
             return (
                 <div key={index} style={{display: 'flex',alignItems:'center'}}>

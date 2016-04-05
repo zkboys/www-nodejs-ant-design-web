@@ -14,7 +14,6 @@ class SelectItem extends React.Component {
         let _this = this;
         _this.props.setData(this.props.name, this.props.defaultValue);
         PubSubMsg.subscribe('setNextOptions' + _this.props.name, 'aa', function (data) {
-            console.log(data);
             _this.setState({
                 value: [],
                 options: data.options

@@ -1,20 +1,36 @@
 import './style.less'
 import React from 'react';
+import assign from 'object-assign'
 import Page from '../../framework/page/Page';
 import SearchCondition from '../search-condition/SearchCondition'
 import InputItem from '../search-condition/InputItem'
 
-let ListPage = React.createClass({
-    getInitialState() {
-        return {
-            loading: false
-        };
-    },
+class ListPage extends React.Component {
+    state = {
+        loading: false,
+        conditionData: {},
+        currentPage: 1,
+        pageSize: 10
+    };
+
+    componentDidMount() {
+
+    }
+
+    handleSearch = ()=> {
+        let conditions = assign({}, this.state.conditionData, {
+            currentPage: this.state.currentPage,
+            pageSize: this.state.pageSize
+        });
+        console.log(conditions);
+    };
+
     render() {
+        let _this = this;
         let options = {
             showSearchBtn: true,
-            onSearch: function (data) {
-                console.log(data);
+            onSearch: (data)=> {
+                _this.handleSearch();
             },
             conditionItems: [
                 {
@@ -25,7 +41,7 @@ let ListPage = React.createClass({
                             name: 'select1',
                             label: '一级下拉',
                             searchOnChange: true,
-                            //defaultValue: '4',
+                            defaultValue: '4',
                             options: [
                                 {value: 'all', text: '全部'},
                                 {value: '1', text: '和平门'},
@@ -46,7 +62,7 @@ let ListPage = React.createClass({
                             type: 'selectSearch',
                             name: 'select2',
                             label: '二级下拉',
-                            width:200,
+                            width: 200,
                             searchOnChange: true,
                             getNextOptions: function (value) {
                                 return [
@@ -244,9 +260,9 @@ let ListPage = React.createClass({
         };
         return (
             <Page header="auto" loading={this.state.loading}>
-                <SearchCondition options={options}/>
+                <SearchCondition options={options} setConditionData={(data)=>this.setState({ conditionData: data})}/>
             </Page>
         );
     }
-});
+}
 export default ListPage;

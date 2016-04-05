@@ -17,13 +17,16 @@ import RadioButtonItem from './RadioButtonItem'
 import RadioItem from './RadioItem'
 import CheckboxItem from './CheckboxItem'
 import CheckboxButtonItem from './CheckboxButtonItem'
+
 class SearchCondition extends React.Component {
-    createConditions(options) {
+    getConditions() {
+        let options = this.props.options;
         // TODO 关于日期类型的查询条件，要支持可选时间范围。
         // TODO 校验是否要加？
         // TODO 级联下拉
         //type: checkbox select radioButton input date time dateTime dataArea timeArea dateTimeArea
-        let data = {};//保存所有的查询条件数据
+        options.data = {};
+        let data = options.data;//保存所有的查询条件数据
         let defaultOptions = {
             showSearchBtn: true,
             labelWidth: '80px',//可选，默认：‘80px’,防止有些label text太长，这里给个全局设置，每个条件可以覆盖这个属性。
@@ -53,16 +56,8 @@ class SearchCondition extends React.Component {
                 return getItemOptions(item);
             }
         });
-
-        const rowProps = {
-            type: "flex",
-            justify: "start",
-            align: "middle",
-            style: {marginBottom: '5px'}
-        };
-
         function getItemOptions(item) {
-            if(item.items){
+            if (item.items) {
                 item.items = item.items.map(i=>getItemOptions(i));
             }
             let itemObj = assign({}, {labelWidth: options.labelWidth}, defaultItem, item);
@@ -71,101 +66,130 @@ class SearchCondition extends React.Component {
         }
 
         function getConditions(item, index) {
+            let commonProps = {
+                key: index,
+                search,
+                setData
+            };
             switch (item.type) {
                 case 'input':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <InputItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <InputItem {...item} {...commonProps}/>
+                    ];
                 case 'combobox':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <ComboboxItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <ComboboxItem {...item} {...commonProps}/>
+                    ];
 
                 case 'select':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <SelectItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <SelectItem {...item} {...commonProps}/>
+                    ];
 
                 case 'selectSearch':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <SelectSearchItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <SelectSearchItem {...item} {...commonProps}/>
+                    ];
 
                 case 'selectMultiple':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <SelectMultipleItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <SelectMultipleItem {...item} {...commonProps}/>
+                    ];
 
                 case 'selectCascaded':
-                    return [
-                        <SelectCascadedItem key={index} {...item} search={search} setData={setData}/>]
+                    return [<SelectCascadedItem {...item} {...commonProps}/>];
 
                 case 'radioButton':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <RadioButtonItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <RadioButtonItem {...item} {...commonProps}/>
+                    ];
                 case 'radio':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <RadioItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <RadioItem {...item} {...commonProps}/>
+                    ];
 
                 case 'date':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <DatePickerItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <DatePickerItem {...item} {...commonProps}/>
+                    ];
 
                 case 'time':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <TimePickerItem key={index} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <TimePickerItem {...item} {...commonProps}/>
+                    ];
 
                 case 'dateTime':
-                    return [<LabelItem key={'label-'+index} {...item}/>,
-                        <DatePickerItem key={index} showTime={true} {...item} search={search} setData={setData}/>]
+                    return [
+                        <LabelItem key={'label-'+index} {...item}/>,
+                        <DatePickerItem showTime={true} {...item} {...commonProps}/>
+                    ];
 
                 case 'dateArea':
                 {
                     return [
                         <LabelItem key={'label-'+index} {...item}/>,
-                        <DatePickerAreaItem key={'start-'+index} {...item} search={search} setData={setData}/>
+                        <DatePickerAreaItem {...item} {...commonProps}/>
                     ]
                 }
                 case 'timeArea':
                 {
                     return [
                         <LabelItem key={'label-'+index} {...item}/>,
-                        <TimePickerAreaItem key={'start-'+index} {...item} search={search} setData={setData}/>
+                        <TimePickerAreaItem {...item} {...commonProps}/>
                     ]
                 }
                 case 'dateTimeArea':
                 {
                     return [
                         <LabelItem key={'label-'+index} {...item}/>,
-                        <DatePickerAreaItem showTime={true} key={'start-'+index} {...item} search={search}
-                                            setData={setData}/>
+                        <DatePickerAreaItem showTime={true} {...item} {...commonProps}/>
                     ]
                 }
                 case 'checkbox':
                 {
                     return [
                         <LabelItem key={'label-'+index} {...item}/>,
-                        <CheckboxItem key={'start-'+index} {...item} search={search} setData={setData}/>
+                        <CheckboxItem {...item} {...commonProps}/>
                     ]
                 }
                 case 'checkboxButton':
                 {
                     return [
                         <LabelItem key={'label-'+index} {...item}/>,
-                        <CheckboxButtonItem key={'start-'+index} {...item} search={search} setData={setData}/>
+                        <CheckboxButtonItem {...item} {...commonProps}/>
                     ]
                 }
                 case 'customer':
                 {
                     return [
                         <LabelItem key={'label-'+index} {...item}/>,
-                        <item.component key={index} {...item} search={search} setData={setData}/>
+                        <item.component {...item} {...commonProps}/>
                     ]
                 }
                 default:
                 {
+                    throw Error(`查询条件没有此类型：type:${item.type}`);
                     return []
                 }
             }
         }
 
+        let setConditionData = this.props.setConditionData;
+
         function setData(name, value) {
             data[name] = value;
+            if (setConditionData) {
+                setConditionData(data);
+            }
         }
 
         function search() {
@@ -180,9 +204,16 @@ class SearchCondition extends React.Component {
                 cols = getConditions(item, index);
             }
             if (options.showSearchBtn && cols && (index === arr.length - 1)) {
-                let submitButton = <Col key="submit-buttom" style={{marginLeft:'5px'}}><Button type="primary" onClick={search}>查询</Button></Col>;
+                let submitButton = <Col key="submit-buttom" style={{marginLeft:'5px'}}><Button type="primary"
+                                                                                               onClick={search}>查询</Button></Col>;
                 cols.push(submitButton);
             }
+            const rowProps = {
+                type: "flex",
+                justify: "start",
+                align: "middle",
+                style: {marginBottom: '5px'}
+            };
             return <Row key={index} {...rowProps}>{cols}</Row>
         });
     }
@@ -190,7 +221,7 @@ class SearchCondition extends React.Component {
     render() {
         return (
             <div className="search-area">
-                {this.createConditions(this.props.options)}
+                {this.getConditions()}
             </div>
         );
     }
