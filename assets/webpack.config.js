@@ -40,16 +40,6 @@ var _entry = {
 };
 
 /*
- *　Routes转化
- * */
-/*child_process.exec('node ./src/page/RoutesGenerater.js', function (error, stdout, stderr) {
-    if (error !== null) {
-        console.log('exec error: ' + error);
-    }
-});*/
-
-
-/*
  * babel参数
  * */
 var babelQuery = {

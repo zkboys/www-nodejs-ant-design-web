@@ -27,7 +27,7 @@ class SelectItem extends React.Component {
             }
         } else {
             let isEndsWidth = this.props.options.filter((opt)=>value.endsWith(opt));
-            if (isEndsWidth&&isEndsWidth.length) {
+            if (isEndsWidth && isEndsWidth.length) {
                 options = [];
             } else {
                 options = this.props.options.map((domain) => {
@@ -36,9 +36,7 @@ class SelectItem extends React.Component {
                 });
             }
         }
-
         this.setState({options});
-
         this.props.setData(this.props.name, value);
         if (this.props.searchOnChange) {
             this.props.search();
@@ -49,11 +47,11 @@ class SelectItem extends React.Component {
         // filterOption 需要设置为 false，数据是动态设置的
         return (
             <Select combobox
-                    style={{ width: 200 }}
+                    style={{width:this.props.width}}
                     onChange={this.handleChange}
                     filterOption={false}
                     defaultValue={this.props.defaultValue}
-                    searchPlaceholder="请输入账户名">
+                    searchPlaceholder={this.props.placeHolder}>
                 {this.state.options}
             </Select>
         );

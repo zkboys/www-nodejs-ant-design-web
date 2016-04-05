@@ -19,14 +19,14 @@ import CheckboxItem from './CheckboxItem'
 import CheckboxButtonItem from './CheckboxButtonItem'
 
 class SearchCondition extends React.Component {
+    data = {};//保存所有的查询条件数据
     getConditions() {
+        let _this = this;
         let options = this.props.options;
         // TODO 关于日期类型的查询条件，要支持可选时间范围。
         // TODO 校验是否要加？
         // TODO 级联下拉
         //type: checkbox select radioButton input date time dateTime dataArea timeArea dateTimeArea
-        options.data = {};
-        let data = options.data;//保存所有的查询条件数据
         let defaultOptions = {
             showSearchBtn: true,
             labelWidth: '80px',//可选，默认：‘80px’,防止有些label text太长，这里给个全局设置，每个条件可以覆盖这个属性。
@@ -61,7 +61,7 @@ class SearchCondition extends React.Component {
                 item.items = item.items.map(i=>getItemOptions(i));
             }
             let itemObj = assign({}, {labelWidth: options.labelWidth}, defaultItem, item);
-            itemObj.placeHolder = (itemObj.placeHolder === undefined) && (itemObj.type === 'input' ? '请输入' : '请选择') + itemObj.label;
+            itemObj.placeHolder = (itemObj.placeHolder === undefined) ? (itemObj.type === 'input' || 'combobox' ? '请输入' : '请选择') + itemObj.label : itemObj.placeHolder;
             return itemObj;
         }
 
@@ -186,14 +186,14 @@ class SearchCondition extends React.Component {
         let setConditionData = this.props.setConditionData;
 
         function setData(name, value) {
-            data[name] = value;
+            _this.data[name] = value;
             if (setConditionData) {
-                setConditionData(data);
+                setConditionData(assign({}, _this.data));
             }
         }
 
         function search() {
-            options.onSearch && options.onSearch(data);
+            options.onSearch && options.onSearch(_this.data);
         }
 
         return options.conditionItems.map((item, index, arr)=> {
@@ -204,8 +204,7 @@ class SearchCondition extends React.Component {
                 cols = getConditions(item, index);
             }
             if (options.showSearchBtn && cols && (index === arr.length - 1)) {
-                let submitButton = <Col key="submit-buttom" style={{marginLeft:'5px'}}><Button type="primary"
-                                                                                               onClick={search}>查询</Button></Col>;
+                let submitButton = <Col key="submit-buttom" style={{marginLeft:'5px'}}><Button type="primary" onClick={search}>查询</Button></Col>;
                 cols.push(submitButton);
             }
             const rowProps = {
@@ -220,7 +219,7 @@ class SearchCondition extends React.Component {
 
     render() {
         return (
-            <div className="search-area">
+            <div className="search-condition">
                 {this.getConditions()}
             </div>
         );

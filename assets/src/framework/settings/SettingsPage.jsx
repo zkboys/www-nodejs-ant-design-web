@@ -13,17 +13,17 @@ class SettingsPage extends React.Component {
 
     state = {
         showPageAnimate: Settings.pageAnimate(),
-        sidebarMenuAlwaysOpen: Settings.sidebarMenuAlwaysOpen(),
+        sidebarMenuAlwaysOpen: Settings.sidebarMenuAlwaysOpen()
     };
 
-    handleShowPageAnimate(e) {
+    handleShowPageAnimate = (e)=> {
         this.setState({
             showPageAnimate: !this.state.showPageAnimate
         });
         Settings.pageAnimate(!this.state.showPageAnimate);
     }
 
-    handleSidebarMenuAlwaysOpen(e) {
+    handleSidebarMenuAlwaysOpen = (e)=> {
         this.setState({
             sidebarMenuAlwaysOpen: !this.state.sidebarMenuAlwaysOpen
         });
