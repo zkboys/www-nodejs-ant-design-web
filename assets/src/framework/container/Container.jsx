@@ -1,4 +1,3 @@
-import 'antd/lib/index.css';
 import './style.less';
 import assign from 'object-assign';
 import React from 'react';

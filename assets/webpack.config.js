@@ -2,6 +2,7 @@ var join = require("path").join;
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require('webpack');
 var child_process = require('child_process');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var rummod = process.env.runmod || 'development';
 /*
  * 基于不同模式，区分配置
@@ -16,11 +17,11 @@ var configs = {
         "publicPath": '/s/'
     },
     "test": {
-        "path": './dist',
+        "path": '../public',
         "publicPath": '/s/'
     },
     "production": {
-        "path": './dist',
+        "path": '../public',
         "publicPath": '/s/'
     }
 };
@@ -30,6 +31,8 @@ var configs = {
  * 获取不同的环境配置
  * */
 var cfg = configs[rummod] || configs.development;
+
+
 /*
  * 定义entry
  * 如果项目结构命名有良好的约定，是否考虑使用代码自动生成entry？
@@ -78,8 +81,14 @@ module.exports = {
         publicPath: cfg.publicPath,
         filename: "[name].js",// entry　配置的文件
         chunkFilename: "[name].[chunkhash:8].min.js",//非entry，但是需要单独打包出来的文件名配置，添加[chunkhash:8]　防止浏览器缓存不更新．
-        libraryTarget: 'umd',
-        umdNamedDefine: true
+        //libraryTarget: 'umd',
+        'libraryTarget': 'var'
+        //umdNamedDefine: true
+    },
+    externals: {// 这些在页面上通过script标签引入，不参与webpack的构建，提高构建速度。
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+        'antd': 'antd'
     },
     module: {
         loaders: [
@@ -147,6 +156,16 @@ module.exports = {
          * */
         new webpack.ProvidePlugin({
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-        })
+        }),
+
+        /*
+         * 拷贝externals文件到制定静态目录，这些文件无法通过webpack-dev-server提供，只能引用cfg.path中的文件。
+         * */
+        new CopyWebpackPlugin([
+            {from: 'src/static/antd-0.12.12.min.css'},
+            {from: 'src/static/antd-0.12.12.min.js'},
+            {from: 'src/static/react-0.14.6.min.js'},
+            {from: 'src/static/react-dom-0.14.6.min.js'}
+        ])
     ]
 };

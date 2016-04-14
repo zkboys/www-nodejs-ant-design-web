@@ -18,6 +18,7 @@
     "babel-preset-react": "~6.3.13",
     "babel-preset-stage-0": "~6.3.13",
     "commander": "~2.9.0",
+    "copy-webpack-plugin": "^1.1.1",
     "coveralls": "~2.11.4",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
@@ -57,7 +58,7 @@
   },
   "scripts": {
     "clean": "rimraf ../public",
-    "dev": " cross-env runmod=devserver webpack-dev-server --port 8086 --progress --inline",
+    "dev": " cross-env runmod=devserver webpack-dev-server --port 8088 --progress --inline",
     "build-dev": "npm run clean && cross-env runmod=development webpack -d -p --profile --progress --colors --display-modules",
     "build-test": "npm run clean && cross-env runmod=test webpack -d -p --profile --progress --colors --display-modules",
     "build-stage": "npm run clean && cross-env runmod=stage webpack --progress",
