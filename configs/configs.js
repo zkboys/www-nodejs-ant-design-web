@@ -7,7 +7,7 @@ exports.devserver = {
     wetsite: 'inc.zkboys.com',
     cookie_secret: 'ywcSahu4QQOhT7mzXmCl3dg1R7iIHUkFhrJJU69VaKo=',
     xsrf_cookies: true,
-    static_url_prefix: 'http://localhost:8086/s/'
+    static_url_prefix: 'http://localhost:8088/s/'
 };
 exports.development = {
     sitename: 'ZKBOYS后台管理系统',

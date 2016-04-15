@@ -10,7 +10,7 @@ var rummod = process.env.runmod || 'development';
 var configs = {
     "devserver": {
         "path": '../public',
-        "publicPath": 'http://localhost:8086/s/'
+        "publicPath": 'http://localhost:8088/s/'
     },
     "development": {
         "path": '../public',
