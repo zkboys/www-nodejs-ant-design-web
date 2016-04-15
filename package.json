@@ -20,6 +20,7 @@
     "swig": "^1.4.2"
   },
   "devDependencies": {
+    "commander": "^2.9.0",
     "cross-env": "^1.0.7"
   }
 }

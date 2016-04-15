@@ -159,7 +159,7 @@ module.exports = {
         }),
 
         /*
-         * 拷贝externals文件到制定静态目录，这些文件无法通过webpack-dev-server提供，只能引用cfg.path中的文件。
+         * 拷贝externals文件到指定静态目录，webpack-dev-server也可以获取到这些文件。
          * */
         new CopyWebpackPlugin([
             {from: 'src/static/antd-0.12.12.min.css'},
