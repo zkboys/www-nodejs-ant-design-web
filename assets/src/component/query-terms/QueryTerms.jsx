@@ -5,7 +5,7 @@ const RadioGroup = Radio.Group;
 const createForm = Form.create;
 const FormItem = Form.Item;
 
-let Demo = React.createClass({
+let QueryTerms = React.createClass({
     componentDidMount() {
         this.props.form.setFieldsValue({
             eat: true,
@@ -160,9 +160,13 @@ let Demo = React.createClass({
                                 兴趣爱好：
                             </div>
                             <FormItem className="query-terms-item" style={{width:'200px'}}>
-                                <Checkbox {...getFieldProps('eat', {
-                                    valuePropName: 'checked',
-                                })} />吃饭饭 &nbsp;
+                                <label style={{cursor:'pointer'}}>
+                                    <Checkbox {...getFieldProps('eat', {
+                                        valuePropName: 'checked',
+                                    })} />
+                                    吃饭饭
+                                </label>
+                                 &nbsp;
                                 <Checkbox {...getFieldProps('sleep', {
                                     valuePropName: 'checked',
                                 })} />睡觉觉 &nbsp;
@@ -204,5 +208,5 @@ let Demo = React.createClass({
     },
 });
 
-Demo = createForm()(Demo);
-export default Demo;
+QueryTerms = createForm()(QueryTerms);
+export default QueryTerms;
