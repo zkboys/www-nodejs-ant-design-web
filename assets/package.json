@@ -38,6 +38,7 @@
     "less-loader": "~2.2.0",
     "map-json-webpack-plugin": "~1.0.0",
     "mkdirp": "^0.5.1",
+    "moment": "^2.13.0",
     "ncp": "^2.0.0",
     "object-assign": "~4.0.1",
     "pre-commit": "~1.1.2",

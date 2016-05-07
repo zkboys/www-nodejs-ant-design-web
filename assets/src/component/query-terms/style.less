@@ -1,9 +1,33 @@
+
+.ant-cascader-menus {
+  z-index: 999;
+}
+
 .query-terms {
   .ant-form-item.ant-form-item-with-help {
     margin-bottom: 3px;
   }
   .ant-form-item {
     margin-bottom: 10px;
+  }
+  .ant-time-picker {
+    & > input {
+      width: 100%;
+    }
+  }
+  .ant-radio-button {
+    margin-right: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    &.ant-radio-button-checked {
+      background-color: #2db7f5;
+      border-color: #2db7f5;
+      color: #fff;
+    }
+    &:first-child,
+    &:last-child {
+      border-radius: 3px;
+    }
   }
   .query-terms-label {
     float: left;
@@ -12,5 +36,22 @@
   }
   .query-terms-item {
     display: inline-block;
+  }
+  .query-terms-item-label {
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .check {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .area-item,
+  .area-split {
+    float: left;
+    display: inline-block;
+  }
+  .area-split {
+    margin-top: 6px;
+    text-align: center;
   }
 }
