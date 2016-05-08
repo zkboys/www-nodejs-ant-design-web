@@ -28,9 +28,9 @@ const TabPane = Tabs.TabPane;
 class QueryTerms extends React.Component {
     componentDidMount() {
         //默认值要写在这里
-        this.props.options.items.map((v)=> {
+        this.props.options.items.forEach((v)=> {
             if (v instanceof Array) {
-                v.map((value)=> {
+                v.forEach((value)=> {
                     this.setDefaultValue(value);
                 })
             } else {
@@ -39,6 +39,7 @@ class QueryTerms extends React.Component {
         });
     };
 
+    checkboxValueSeparator = '<@>';
     setDefaultValue = (itemOptions)=> {
         const {getFieldProps, setFieldsValue, getFieldValue} = this.props.form;
         const type = itemOptions.type;
@@ -58,25 +59,29 @@ class QueryTerms extends React.Component {
             setFieldsValue({
                 [itemOptions.name]: undefined,
             });
-            for (let i = 0; i < options.length; i++) {
-                let name = options[i].value;
-                if (defaultValue.includes(name)) {
+            options.forEach((v)=> {
+                const realValue = v.value;
+                // 如果不同组的checkbox有相同的value，就会互相影响
+                v.value = name + this.checkboxValueSeparator + v.value;
+
+                let value = v.value;
+                if (defaultValue.includes(realValue)) {
                     this.setState({
-                        [name]: true
+                        [value]: true
                     });
                     this.props.form.setFieldsValue({
-                        [name]: true
+                        [value]: true
                     });
                     let values = getFieldValue(itemOptions.name)
                     if (!values) {
                         values = [];
                     }
-                    values.push(name);
+                    values.push(realValue);
                     setFieldsValue({
                         [itemOptions.name]: values
                     });
                 }
-            }
+            });
         } else {
 
             // 日期相关的默认值，如果时string，转为date，方便处理
@@ -125,9 +130,10 @@ class QueryTerms extends React.Component {
     state = {};
     static defaultProps = {
         options: {
-            showSearchBtn: true,              // 可选，默认true 是否显示查询按钮
+            showSearchBtn: false,              // 可选，默认true 是否显示查询按钮
             labelWidth: '100px',               // 可选，默认：‘80px’,全局设置label长度，每个条件可以覆盖这个属性。
             eleWidth: '150px',                // 可选，默认：‘150px’,全局元素长度，每个条件可以覆盖这个属性。
+            resultDateToString: true,         // 可选，默认 true，查询条件日期相关数据是否转为字符串
             onSearch: function (data) {       // 必选，点击查询按钮时的回调函数 data为所有的查询条件数据，可以在这个函数中发起请求等操作。
                 console.log('***', data);
             },
@@ -136,7 +142,8 @@ class QueryTerms extends React.Component {
                 {
                     type: 'tabs', // tab页，页只是做个查询条件，不是真实的tab页切换，只是用了个tab头
                     name: 'tabsName',
-                    //defaultValue: 'tab2',
+                    defaultValue: 'tab2',
+                    searchOnChange: true,
                     options: [
                         {value: 'tab1', label: 'Tab页1'},
                         {value: 'tab2', label: 'Tab页2'},
@@ -148,6 +155,7 @@ class QueryTerms extends React.Component {
                     type: 'checkboxButton',
                     name: 'checkboxButtonName',
                     label: '多选按钮',
+                    searchOnChange: true,
                     eleWidth: 'auto',
                     defaultValue: '33',
                     expandable: true,// 是否启用展开收起功能
@@ -355,6 +363,7 @@ class QueryTerms extends React.Component {
                         type: 'checkbox',
                         name: 'checkboxName',
                         label: '多选框',
+                        searchOnChange: true,
                         eleWidth: 'auto',
                         defaultValue: '33',
                         options: [
@@ -364,6 +373,21 @@ class QueryTerms extends React.Component {
                             {value: '44', label: '加拿大'},
                         ],
                     },
+                    {
+                        type: 'checkbox',
+                        name: 'checkboxName2',
+                        label: '多选框2',
+                        searchOnChange: true,
+                        eleWidth: 'auto',
+                        defaultValue: '33',
+                        options: [
+                            {value: '11', label: '中国'},
+                            {value: '22', label: '美国'},
+                            {value: '33', label: '俄罗斯'},
+                            {value: '44', label: '加拿大'},
+                        ],
+                    },
+
 
                 ],
                 {
@@ -443,11 +467,57 @@ class QueryTerms extends React.Component {
                 console.log('Errors in form!!!', errors);
                 return;
             }
+            const options = this.props.options;
+            const dateToString = options.resultDateToString === undefined ? true : options.resultDateToString;
+
+            if (dateToString) {
+                options.items.forEach((value, index, array)=> {
+                    if (value instanceof Array) {
+                        value.forEach((v)=> {
+                            const format = v.format;
+                            const name = v.name;
+                            const startName = v.startName;
+                            const endName = v.endName;
+
+                            if (values[name] instanceof Date) {
+                                values[name] = this.dateToString(values[name], format);
+                            }
+                            if (values[startName] instanceof Date) {
+                                values[startName] = this.dateToString(values[startName], format);
+                            }
+                            if (values[endName] instanceof Date) {
+                                values[endName] = this.dateToString(values[endName], format);
+                            }
+                        })
+                    } else {
+                        const format = value.format;
+                        const name = value.name;
+                        const startName = value.startName;
+                        const endName = value.endName;
+
+                        if (values[name] instanceof Date) {
+                            values[name] = this.dateToString(values[name], format);
+                        }
+                        if (values[startName] instanceof Date) {
+                            values[startName] = this.dateToString(values[startName], format);
+                        }
+                        if (values[endName] instanceof Date) {
+                            values[endName] = this.dateToString(values[endName], format);
+                        }
+                    }
+                });
+            }
             this.onSearch(values);
         });
     };
+    dateToString = (date, format)=> {
+        format = format.replace('yyyy', 'YYYY');
+        format = format.replace('dd', 'DD');
+        return moment(date).format(format);
+    };
 
     getItem = (options, itemOptions)=> {
+        const searchOnChange = itemOptions.searchOnChange;
         const itemType = itemOptions.type;
         const label = itemOptions.label;
         const name = itemOptions.name;
@@ -505,56 +575,53 @@ class QueryTerms extends React.Component {
                 {label}：
             </div>
         );
+        const searchDelay = 300;
+        eleProps.onChange = (e)=> {
+            const value = e && e.target ? e.target.value : e;
+            if (['checkbox', 'checkboxButton'].includes(itemType)) {
+                const checkValue = e.target.checked;
+                const name = e.target.id;
+                const realValue = name.split(this.checkboxValueSeparator)[1];
 
-        // FIXME 为了调试方便，这里统一使用 searchOnChange= true
-        //if (searchOnChange) {
-        if (true) {
-            const searchDelay = 300;
-            eleProps.onChange = (e)=> {
-                const value = e && e.target ? e.target.value : e;
-                if (['checkbox', 'checkboxButton'].includes(itemType)) {
-                    const checkValue = e.target.checked;
-                    const name = e.target.id;
-                    this.setState({
-                        [name]: checkValue
-                    });
-                    let values = getFieldValue(itemOptions.name);
-                    if (!values) {
-                        values = [];
-                    }
-                    if (checkValue) {
-                        values.push(name);
-                    } else {
-                        let index = values.indexOf(name);
-                        if (index !== -1) {
-                            values.splice(index, 1)
-                        }
-                    }
-
-                    setFieldsValue({
-                        [name]: checkValue,
-                        [itemOptions.name]: values,
-                    });
+                this.setState({
+                    [name]: checkValue
+                });
+                let values = getFieldValue(itemOptions.name);
+                if (!values) {
+                    values = [];
+                }
+                if (checkValue) {
+                    values.push(realValue);
                 } else {
-                    this.setState({
-                        [name]: value
-                    });
-                    setFieldsValue({
-                        [name]: value,
-                    });
+                    let index = values.indexOf(realValue);
+                    if (index !== -1) {
+                        values.splice(index, 1)
+                    }
                 }
 
-                if (['input', 'inputNumber', 'combobox'].includes(itemType)) {
-                    clearTimeout(this.searchTimeout);
-                    this.searchTimeout = setTimeout(()=> {
-                        this.handleSubmit();
-                    }, searchDelay);
-                } else {
-                    this.handleSubmit();
-                }
-
+                setFieldsValue({
+                    [name]: checkValue,
+                    [itemOptions.name]: values,
+                });
+            } else {
+                this.setState({
+                    [name]: value
+                });
+                setFieldsValue({
+                    [name]: value,
+                });
             }
-        }
+
+            if (['input', 'inputNumber', 'combobox'].includes(itemType)) {
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(()=> {
+                    searchOnChange && this.handleSubmit();
+                }, searchDelay);
+            } else {
+                searchOnChange && this.handleSubmit();
+            }
+
+        };
         let areaElement = ()=> {
             let type = itemOptions.type;
             let format = itemOptions.format;
@@ -643,6 +710,24 @@ class QueryTerms extends React.Component {
                     </div>
                 </Col>
             );
+        };
+        let handleExpandBtnClick = (e)=> {
+            let button = e.currentTarget;
+            let btnClassNames = button.className.split(' ');
+            if (btnClassNames.includes('expanded')) {
+                btnClassNames.splice(btnClassNames.indexOf('expanded'), 1);
+                button.title = "显示更多";
+                this.setState({
+                    [name + 'expanded']: false,
+                })
+            } else {
+                btnClassNames.push('expanded');
+                button.title = "收起更多";
+                this.setState({
+                    [name + 'expanded']: true,
+                })
+            }
+            button.className = btnClassNames.join(' ');
         };
         switch (itemType) {
             case 'input':
@@ -782,27 +867,6 @@ class QueryTerms extends React.Component {
             }
             case 'radioButton':
             {
-                let handleExpandBtnClick = (e)=> {
-                    let button = e.currentTarget;
-                    let btnClassNames = button.className.split(' ');
-                    if (btnClassNames.includes('expanded')) {
-                        btnClassNames.splice(btnClassNames.indexOf('expanded'), 1);
-                        button.title = "显示更多";
-                        this.setState({
-                            [name + 'expanded']: false,
-                        })
-                    } else {
-                        btnClassNames.push('expanded');
-                        button.title = "收起更多";
-                        this.setState({
-                            [name + 'expanded']: true,
-                        })
-                    }
-                    button.className = btnClassNames.join(' ');
-
-                    console.log(button.className);
-
-                };
                 itemProps.style.marginBottom = '0';
                 let showCount = itemOptions.minCount || 10;
                 let showExpandedBtn = itemOptions.expandable && itemOptions.options.length > showCount;
@@ -888,36 +952,14 @@ class QueryTerms extends React.Component {
             }
             case 'checkboxButton':
             {
-                let handleExpandBtnClick = (e)=> {
-                    let button = e.currentTarget;
-                    let btnClassNames = button.className.split(' ');
-                    if (btnClassNames.includes('expanded')) {
-                        btnClassNames.splice(btnClassNames.indexOf('expanded'), 1);
-                        button.title = "显示更多";
-                        this.setState({
-                            [name + 'expanded']: false,
-                        })
-                    } else {
-                        btnClassNames.push('expanded');
-                        button.title = "收起更多";
-                        this.setState({
-                            [name + 'expanded']: true,
-                        })
-                    }
-                    button.className = btnClassNames.join(' ');
-
-                    console.log(button.className);
-
-                };
                 let commonHandleChange = eleProps.onChange;
                 let handleChange = (value)=> {
-                    console.log(this.state[value]);
                     const e = {
-                        target:{
-                            checked:!this.state[value],
-                            id:value,
+                        target: {
+                            checked: !this.state[value],
+                            id: value,
                         }
-                    }
+                    };
                     commonHandleChange && commonHandleChange(e)
                 };
 
@@ -1022,13 +1064,7 @@ class QueryTerms extends React.Component {
                 );
             }
             case 'dateArea':
-            {
-                return areaElement();
-            }
             case 'timeArea':
-            {
-                return areaElement();
-            }
             case 'dateTimeArea':
             {
                 return areaElement();
@@ -1091,7 +1127,6 @@ class QueryTerms extends React.Component {
                 )
             } else {
                 // 一行一个查询条件
-                //console.log(value);
                 return (
                     <Row  {...rowProps}>
                         {this.getItem(options, value)}
