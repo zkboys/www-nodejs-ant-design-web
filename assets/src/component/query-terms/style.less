@@ -52,7 +52,8 @@
     padding-top: 7px;
     text-align: right;
   }
-  .ant-radio-group {
+  .ant-radio-group,
+  .checkbox-btn-item {
     .query-terms-label {
       padding-top: 0;
     }
@@ -76,5 +77,29 @@
   .area-split {
     margin-top: 6px;
     text-align: center;
+  }
+  .checkbox-btn {
+    height: 32px;
+    line-height: 30px;
+    //margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    background: #fff;
+    padding: 0 16px;
+    color: #666;
+    display: inline-block;
+    transition: all .3s ease;
+    cursor: pointer;
+    font-size: 12px;
+    &:hover {
+      color: #2db7f5;
+      position: relative;
+    }
+    &.checkbox-btn-checked{
+      background-color: #2db7f5;
+      border-color: #2db7f5;
+      color: #fff;
+    }
   }
 }

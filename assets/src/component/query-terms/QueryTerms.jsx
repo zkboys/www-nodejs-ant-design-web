@@ -15,6 +15,7 @@ import {
     Cascader,
     Row,
     Col,
+    Tabs,
 } from 'antd';
 
 const Option = Select.Option;
@@ -22,6 +23,7 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const createForm = Form.create;
 const FormItem = Form.Item;
+const TabPane = Tabs.TabPane;
 
 class QueryTerms extends React.Component {
     componentDidMount() {
@@ -49,10 +51,13 @@ class QueryTerms extends React.Component {
         const options = itemOptions.options;
 
         // 表单元素初始化默认值
-        if (itemOptions.type === 'checkbox') {
+        if (['checkbox', 'checkboxButton'].includes(type)) {
             if (typeof defaultValue === 'string') {
                 defaultValue = [defaultValue];
             }
+            setFieldsValue({
+                [itemOptions.name]: undefined,
+            });
             for (let i = 0; i < options.length; i++) {
                 let name = options[i].value;
                 if (defaultValue.includes(name)) {
@@ -73,6 +78,8 @@ class QueryTerms extends React.Component {
                 }
             }
         } else {
+
+            // 日期相关的默认值，如果时string，转为date，方便处理
             if (['date', 'dateArea', 'time', 'timeArea', 'dateTime', 'dateTimeArea'].includes(type)) {
                 if (typeof defaultValue === 'string') {
                     defaultValue = moment(defaultValue, 'HH:mm:ss').toDate();
@@ -83,6 +90,9 @@ class QueryTerms extends React.Component {
                 if (typeof endDefaultValue === 'string') {
                     endDefaultValue = moment(endDefaultValue, 'HH:mm:ss').toDate();
                 }
+            }
+            if (type === 'tabs' && !defaultValue) {
+                defaultValue = options[0].value;
             }
             this.setState({
                 [name]: defaultValue,
@@ -123,6 +133,44 @@ class QueryTerms extends React.Component {
             },
             items: [
                 // 如果是对象，自己占据一行
+                {
+                    type: 'tabs', // tab页，页只是做个查询条件，不是真实的tab页切换，只是用了个tab头
+                    name: 'tabsName',
+                    //defaultValue: 'tab2',
+                    options: [
+                        {value: 'tab1', label: 'Tab页1'},
+                        {value: 'tab2', label: 'Tab页2'},
+                        {value: 'tab3', label: 'Tab页3'},
+                        {value: 'tab4', label: 'Tab页4'},
+                    ]
+                },
+                {
+                    type: 'checkboxButton',
+                    name: 'checkboxButtonName',
+                    label: '多选按钮',
+                    eleWidth: 'auto',
+                    defaultValue: '33',
+                    expandable: true,// 是否启用展开收起功能
+                    minCount: 5, // 如果使用展开收起功能，收起时，显示的个数
+                    options: [
+                        {value: '11', label: '中国'},
+                        {value: '22', label: '美国'},
+                        {value: '33', label: '俄罗斯'},
+                        {value: '44', label: '加拿大44'},
+                        {value: '55', label: '加拿大55'},
+                        {value: '66', label: '加拿大66'},
+                        {value: '77', label: '加拿大77'},
+                        {value: '88', label: '加拿大88'},
+                        {value: '99', label: '加拿大99'},
+                        {value: '119', label: '加拿大119'},
+                        {value: '112', label: '加拿大112'},
+                        {value: '113', label: '加拿大113'},
+                        {value: '114', label: '加拿大114'},
+                        {value: '115', label: '加拿大115'},
+                        {value: '116', label: '加拿大116'},
+                        {value: '117', label: '加拿大117'},
+                    ],
+                },
                 {
                     type: 'input',             // 必须，查询条件类型
                     label: '普通输入框',           // 必须，查询条件显示的label
@@ -316,6 +364,7 @@ class QueryTerms extends React.Component {
                             {value: '44', label: '加拿大'},
                         ],
                     },
+
                 ],
                 {
                     type: 'date',
@@ -463,7 +512,7 @@ class QueryTerms extends React.Component {
             const searchDelay = 300;
             eleProps.onChange = (e)=> {
                 const value = e && e.target ? e.target.value : e;
-                if (itemType === 'checkbox') {
+                if (['checkbox', 'checkboxButton'].includes(itemType)) {
                     const checkValue = e.target.checked;
                     const name = e.target.id;
                     this.setState({
@@ -839,7 +888,89 @@ class QueryTerms extends React.Component {
             }
             case 'checkboxButton':
             {
-                break;
+                let handleExpandBtnClick = (e)=> {
+                    let button = e.currentTarget;
+                    let btnClassNames = button.className.split(' ');
+                    if (btnClassNames.includes('expanded')) {
+                        btnClassNames.splice(btnClassNames.indexOf('expanded'), 1);
+                        button.title = "显示更多";
+                        this.setState({
+                            [name + 'expanded']: false,
+                        })
+                    } else {
+                        btnClassNames.push('expanded');
+                        button.title = "收起更多";
+                        this.setState({
+                            [name + 'expanded']: true,
+                        })
+                    }
+                    button.className = btnClassNames.join(' ');
+
+                    console.log(button.className);
+
+                };
+                let commonHandleChange = eleProps.onChange;
+                let handleChange = (value)=> {
+                    console.log(this.state[value]);
+                    const e = {
+                        target:{
+                            checked:!this.state[value],
+                            id:value,
+                        }
+                    }
+                    commonHandleChange && commonHandleChange(e)
+                };
+
+                itemProps.style.marginBottom = '0';
+                let showCount = itemOptions.minCount || 10;
+                let showExpandedBtn = itemOptions.expandable && itemOptions.options.length > showCount;
+                let checkboxButtons = itemOptions.expandable ? itemOptions.options.filter((v, i, a)=> {
+                    if (this.state[name + 'expanded']) {
+                        return true;
+                    }
+                    return i < showCount;
+                }) : itemOptions.options;
+                return (
+                    <Col>
+                        <FormItem  {...itemProps} className="checkbox-btn-item">
+                            {/*这个label位置比较特殊，为了使按钮和label始终同行*/}
+                            {labelJsx}
+
+                            {checkboxButtons.map((v, i)=> {
+                                let className = ['checkbox-btn'];
+                                if (this.state[v.value]) {
+                                    className.push('checkbox-btn-checked');
+                                }
+                                return (
+                                    <label className="query-terms-item-label">
+                                        <label
+                                            className={className.join(' ')}
+                                            onClick={()=>{handleChange(v.value)}}
+                                        >
+                                            {v.label}
+                                        </label>
+                                    </label>
+                                )
+
+                            })}
+                            {
+                                showExpandedBtn ?
+                                    <Button
+                                        type="ghost"
+                                        size="large"
+                                        title="显示更多"
+                                        style={{padding:'0 25px',paddingTop:'1px', fontSize:'19px'}}
+                                        onClick={handleExpandBtnClick}
+                                    >
+                                        <FAIcon type="fa-angle-double-down"/>
+                                    </Button>
+                                    : ''
+                            }
+
+                        </FormItem>
+                    </Col>
+                );
+
             }
             case 'date':
             {
@@ -901,6 +1032,23 @@ class QueryTerms extends React.Component {
             case 'dateTimeArea':
             {
                 return areaElement();
+            }
+            case 'tabs':
+            {
+                return (
+                    <Tabs
+                        onChange={eleProps.onChange}
+                        defaultActiveKey={itemOptions.defaultValue}
+                        type="card"
+                    >
+                        {itemOptions.options.map((v, i)=> {
+                            return (
+                                <TabPane tab={v.label} key={v.value}/>
+                            )
+                        })}
+                    </Tabs>
+                )
+
             }
             default:
             {
