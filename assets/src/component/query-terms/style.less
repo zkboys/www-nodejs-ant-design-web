@@ -15,8 +15,26 @@
       width: 100%;
     }
   }
+  .form-item-radio-button {
+    margin-bottom: 10px;
+  }
+  .ant-btn {
+    border-radius: 3px;
+    i {
+      transition: transform 300ms;
+    }
+    i.fa-angle-double-down {
+      transform: rotate(0);
+    }
+  }
+  .ant-btn.expanded {
+    i.fa-angle-double-down {
+      transform: rotate(180deg);
+    }
+  }
   .ant-radio-button {
     margin-right: 10px;
+    margin-bottom: 10px;
     border: 1px solid #d9d9d9;
     border-radius: 3px;
     &.ant-radio-button-checked {
@@ -33,6 +51,11 @@
     float: left;
     padding-top: 7px;
     text-align: right;
+  }
+  .ant-radio-group {
+    .query-terms-label {
+      padding-top: 0;
+    }
   }
   .query-terms-item {
     display: inline-block;
