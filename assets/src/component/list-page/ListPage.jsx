@@ -14,7 +14,7 @@ class ListPage extends React.Component {
     };
     handleSearch= (queryData)=>{
         console.log(queryData);
-    }
+    };
     render() {
         const queryTermsOptions = {
             showSearchBtn: true,
