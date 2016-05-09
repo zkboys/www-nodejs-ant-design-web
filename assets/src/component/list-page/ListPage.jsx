@@ -2,8 +2,13 @@ import React from 'react';
 import assign from 'object-assign'
 import QueryTerms from '../query-terms/QueryTerms';
 import PaginationComponent from '../pagination/PaginationComponent'
+import Page from '../../framework/page/Page';
 
-import {Table, Icon} from 'antd';
+import {
+    Table,
+    Icon,
+    Button,
+} from 'antd';
 
 class ListPage extends React.Component {
     state = {
@@ -22,7 +27,7 @@ class ListPage extends React.Component {
 
     handleSearch = (queryData)=> {
         const currentPage = queryData.currentPage;
-        const pageSize = 10;
+        const pageSize = queryData.pageSize;
         // 这里可以发请求，获取后端得数据
         let tableData = [];
         for (let i = 0; i < pageSize; i++) {
@@ -135,11 +140,12 @@ class ListPage extends React.Component {
         };
 
         return (
-            <div>
+            <Page header='auto' loading={this.state.loading}>
                 <QueryTerms options={queryTermsOptions}/>
+                <Button type="primary" size="large" style={{marginBottom:'10px'}}>添加人员</Button>
                 <Table columns={columns} dataSource={data} pagination={false}/>
                 <PaginationComponent options={paginationOptions}/>
-            </div>
+            </Page>
         )
     };
 }

@@ -28,7 +28,6 @@ pageRouts.push(
  * 监听地址栏改变，通过左侧菜单状态
  * */
 browserHistory.listen(function (data) {
-    console.log(data);
     let pathNames = data.pathname.split('/');
     let headerMenuCurrent = pathNames&&pathNames.length&&pathNames[1];
     PubSubMsg.publish('current-header-menu', headerMenuCurrent);
