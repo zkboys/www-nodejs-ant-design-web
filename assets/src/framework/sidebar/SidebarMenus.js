@@ -1,7 +1,8 @@
 let menus = {
     'shop': [
-        {text: '列表页封装', icon: 'fa-arrow-right', path: '/shop/list-page'},
-        {text: '查询条件封装', icon: 'fa-arrow-right', path: '/shop/search-condition'},
+        {text: '列表页封装', icon: 'fa-arrow-right', path: '/shop/list-page-new'},
+        {text: '查询条件封装', icon: 'fa-arrow-right', path: '/shop/query-terms'},
+        {text: '分页信息封装', icon: 'fa-arrow-right', path: '/shop/pagination'},
         {text: 'TODO', icon: 'fa-arrow-right', path: '/shop/todo'},
         {text: 'Reddit API', icon: 'fa-arrow-right', path: '/shop/reddit'},
         {text: '表单校验11111', icon: 'fa-arrow-right', path: '/shop/MyForm'},

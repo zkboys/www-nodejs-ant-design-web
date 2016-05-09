@@ -1,6 +1,5 @@
 import React from 'react';
 import {Pagination,Row, Col, Button} from 'antd';
-import assign from 'object-assign'
 
 class BottomToolBar extends React.Component {
     state = {

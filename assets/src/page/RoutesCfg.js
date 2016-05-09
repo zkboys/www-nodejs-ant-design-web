@@ -12,6 +12,25 @@ export default[
             })
         }
     },
+
+    {
+        path: '/shop/query-terms',
+        getComponent: (location, cb) => {
+            require.ensure([], (require) => {
+                cb(null, require('../component/query-terms/Demo.jsx'));
+            })
+        }
+    },
+
+    {
+        path: '/shop/pagination',
+        getComponent: (location, cb) => {
+            require.ensure([], (require) => {
+                cb(null, require('../component/pagination/Demo.jsx'));
+            })
+        }
+    },
+
     {
         path: '/shop/search-condition',
         getComponent: (location, cb) => {
