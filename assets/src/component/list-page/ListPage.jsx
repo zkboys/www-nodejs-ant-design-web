@@ -7,20 +7,46 @@ import {Table, Icon} from 'antd';
 
 class ListPage extends React.Component {
     state = {
-        queryData:{
+        queryData: {
             currentPage: 1,
             pageSize: 10,
+            totalCount: 100,
+        },
+        tableData: []
+
+    };
+
+    componentDidMount() {
+        this.handleSearch(this.state.queryData);
+    };
+
+    handleSearch = (queryData)=> {
+        const currentPage = queryData.currentPage;
+        const pageSize = 10;
+        // 这里可以发请求，获取后端得数据
+        let tableData = [];
+        for (let i = 0; i < pageSize; i++) {
+            tableData.push({
+                key: i,
+                name: `模拟数据${currentPage}--${i}`,
+                age: 32,
+                address: `西湖区湖底公园${i}号`
+            });
         }
+        queryData.totalCount = 77;
+
+        this.setState({
+            queryData,
+            tableData,
+        })
     };
-    handleSearch= (queryData)=>{
-        console.log(queryData);
-    };
+
     render() {
         const queryTermsOptions = {
             showSearchBtn: true,
             resultDateToString: true,
             onSubmit: (data)=> {
-                let queryData = assign({}, this.state.queryData,data,{currentPage:1});
+                let queryData = assign({}, this.state.queryData, data, {currentPage: 1});
                 this.setState({
                     queryData
                 });
@@ -91,35 +117,16 @@ class ListPage extends React.Component {
                     );
                 }
             }];
-        const data = [
-            {
-                key: '1',
-                name: '胡彦斌',
-                age: 32,
-                address: '西湖区湖底公园1号'
-            },
-            {
-                key: '2',
-                name: '胡彦祖',
-                age: 42,
-                address: '西湖区湖底公园1号'
-            },
-            {
-                key: '3',
-                name: '李大嘴',
-                age: 32,
-                address: '西湖区湖底公园1号'
-            }
-        ];
+        const data = this.state.tableData;
         const paginationOptions = {
             showSizeChanger: true, // 默认true
             showQuickJumper: true, // 默认true
             showMessage: true, // 默认 true
             pageSize: this.state.queryData.pageSize,
             currentPage: this.state.queryData.currentPage,
-            totalCount: 100,
+            totalCount: this.state.queryData.totalCount,
             onChange: (currentPage, pageSize)=> {
-                let queryData = assign({}, this.state.queryData,{currentPage, pageSize});
+                let queryData = assign({}, this.state.queryData, {currentPage, pageSize});
                 this.setState({
                     queryData
                 });

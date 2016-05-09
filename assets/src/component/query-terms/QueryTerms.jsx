@@ -554,13 +554,14 @@ class QueryTerms extends React.Component {
 
                     <Col>
                         <FormItem  {...itemProps} >
-                            <RadioGroup
-                                {...fieldPropsOptions}
-                                {...eleProps}
-                            >
-                                {/*这个label位置比较特殊，为了使button和label始终同行*/}
+                            <div className="radio-btn-label">
                                 {labelJsx}
-                                <div style={{marginLeft:labelWidth}}>
+                            </div>
+                            <div style={{marginLeft:labelWidth}}>
+                                <RadioGroup
+                                    {...fieldPropsOptions}
+                                    {...eleProps}
+                                >
                                     {radioButtons.map((v, i)=> {
                                         return <RadioButton key={i} value={v.value}>{v.label}</RadioButton>
                                     })}
@@ -577,10 +578,8 @@ class QueryTerms extends React.Component {
                                             </Button>
                                             : ''
                                     }
-
-                                </div>
-
-                            </RadioGroup>
+                                </RadioGroup>
+                            </div>
                         </FormItem>
                     </Col>
                 );

@@ -4,7 +4,7 @@ import QueryTerms from './QueryTerms'
 class Demo extends React.Component {
     render() {
         let options = {
-            showSearchBtn: false,             // 可选，默认true 是否显示查询按钮
+            showSearchBtn: true,              // 可选，默认true 是否显示查询按钮
             labelWidth: '100px',              // 可选，默认：‘80px’,全局设置label长度，每个条件可以覆盖这个属性。
             eleWidth: '150px',                // 可选，默认：‘150px’,全局元素长度，每个条件可以覆盖这个属性。
             resultDateToString: true,         // 可选，默认 true，查询条件日期相关数据是否转为字符串
@@ -12,7 +12,7 @@ class Demo extends React.Component {
                 console.log('***', data);
             },
             items: [
-                // 如果是对象，自己占据一行
+                // 如果是对象，自己占据一行， 如果是数组，数组中所有的组件共占一行
                 {
                     type: 'tabs', // tab页，页只是做个查询条件，不是真实的tab页切换，只是用了个tab头
                     name: 'tabsName',
@@ -47,148 +47,201 @@ class Demo extends React.Component {
                         {value: '4', label: '宋家庄'}
                     ]
                 },
-                // 如果是数组，数组中所有的组件共占一行
+                {
+                    type: 'inputNumber',
+                    name: 'number',
+                    label: '数字',
+                    min: 0,
+                    max: 100,
+                    defaultValue: 88,
+                    searchOnChange: true
+                },
+                {
+                    type: 'combobox',
+                    name: 'comboboxName',
+                    label: '提示输入框',
+                    separator: '@',
+                    options: [
+                        '163.com',
+                        'qq.com',
+                        '126.com',
+                        'xx.com',
+                    ],
+                },
                 [
                     {
-                        type: 'checkboxButton',
-                        name: 'checkboxButtonName',
-                        label: '多选按钮',
-                        searchOnChange: true,
-                        eleWidth: 'auto', // 启用展开收起功能时，eleWidth建议使用auto
-                        defaultValue: '33',
-                        expandable: true,// 可选，默认false，是否启用展开收起功能
-                        minCount: 10,     // 可选，默认10，如果使用展开收起功能，收起时显示的个数
-                        options: [
-                            {value: '11', label: '中国'},
-                            {value: '22', label: '美国'},
-                            {value: '33', label: '俄罗斯'},
-                            {value: '44', label: '加拿大44'},
-                            {value: '55', label: '加拿大55'},
-                            {value: '66', label: '加拿大66'},
-                            {value: '77', label: '加拿大77'},
-                            {value: '88', label: '加拿大88'},
-                            {value: '99', label: '加拿大99'},
-                            {value: '119', label: '加拿大119'},
-                            {value: '112', label: '加拿大112'},
-                            {value: '113', label: '加拿大113'},
-                            {value: '114', label: '加拿大114'},
-                            {value: '115', label: '加拿大115'},
-                            {value: '116', label: '加拿大116'},
-                            {value: '117', label: '加拿大117'},
-                        ],
-                    },
-
-                    {
-                        type: 'radioButton',
-                        name: 'radioButton',
-                        label: '单选按钮',
-                        eleWidth: '500px',
-                        searchOnChange: true,
-                        defaultValue: 1,
-                        options: [
-                            {value: 1, label: '单选一'},
-                            {value: 2, label: '单选二'},
-                            {value: 3, label: '单选三'},
-                            {value: 4, label: '单选四'},
-                        ]
+                        type: 'date',
+                        name: 'dateName',
+                        label: '日期',
+                        // eleWidth: '300px',
+                        //defaultValue: new Date(), // 这样也可以
+                        defaultValue: '2016-05-08',
                     },
                     {
-                        type: 'radioButton',
-                        name: 'radioButton2',
-                        label: '可收展单选按钮',
-                        eleWidth: 'auto', // 启用展开收起功能时，eleWidth建议使用auto
-                        searchOnChange: true,
-                        defaultValue: 1,
-                        expandable: true,// 可选，默认false，是否启用展开收起功能
-                        minCount: 5,     // 可选，默认10，如果使用展开收起功能，收起时显示的个数
-                        options: [
-                            {value: 1, label: '单选一'},
-                            {value: 2, label: '单选二'},
-                            {value: 3, label: '单选三'},
-                            {value: 4, label: '单选四'},
-                            {value: 5, label: '单选五'},
-                            {value: 6, label: '单选六'},
-                            {value: 7, label: '单选七'},
-                            {value: 8, label: '单选八'},
-                            {value: 9, label: '单选九'},
-                            {value: 10, label: '单选十'},
-                            {value: 11, label: '单选十一'},
-                            {value: 12, label: '单选十二'},
-                            {value: 13, label: '单选十三'},
-                            {value: 14, label: '单选十四'},
-                            {value: 15, label: '单选十五'},
-                            {value: 16, label: '单选十六'},
-                            {value: 17, label: '单选十七'},
-                            {value: 18, label: '单选十八'},
-                            {value: 19, label: '单选十九'},
-                        ]
-                    },
-                    {
-                        type: 'radio',
-                        name: 'radioName',
-                        label: '单选',
-                        eleWidth: 'auto',
-                        searchOnChange: true,
-                        defaultValue: 1,
-                        options: [
-                            {value: 1, label: '单选一'},
-                            {value: 2, label: '单选二'},
-                            {value: 3, label: '单选三'},
-                            {value: 4, label: '单选四'},
-                        ]
-                    },
-                    {
-                        type: 'inputNumber',
-                        name: 'number',
-                        label: '数字',
-                        min: 0,
-                        max: 100,
-                        defaultValue: 88,
-                        searchOnChange: true
+                        type: 'dateArea',
+                        startName: 'dateAreaNameStart',
+                        endName: 'dateAreaNameEnd',
+                        //startDefaultValue: new Date(),
+                        //endDefaultValue: new Date(),
+                        startDefaultValue: '2016-05-08',
+                        endDefaultValue: '2016-05-08',
+                        label: '日期区间',
+                        eleWidth: '300px',
+                        format: 'yyyy-MM-dd',
                     },
                 ],
                 [
                     {
-                        type: 'cascader',
-                        name: 'cascaderName',
-                        label: '级联下拉',
-                        options: [
-                            {
-                                value: 'zhejiang',
-                                label: '浙江',
-                                children: [{
-                                    value: 'hangzhou',
-                                    label: '杭州',
-                                }],
-                            },
-                            {
-                                value: 'beijing',
-                                label: '北京',
-                                children: [
-                                    {
-                                        value: 'xichengqu',
-                                        label: '西城区',
-                                    },
-                                    {
-                                        value: 'xidan',
-                                        label: '西单',
-                                    }
-                                ],
-                            },
-                        ]
+                        type: 'time',
+                        name: 'timeName',
+                        label: '时间',
+                        // eleWidth: '300px',
+                        //defaultValue: new Date(),
+                        defaultValue: '22:22',
                     },
                     {
-                        type: 'combobox',
-                        name: 'comboboxName',
-                        label: '提示输入框',
-                        separator: '@',
-                        options: [
-                            '163.com',
-                            'qq.com',
-                            '126.com',
-                            'xx.com',
-                        ],
+                        type: 'timeArea',
+                        startName: 'timeAreaNameStart',
+                        endName: 'timeAreaNameEnd',
+                        //startDefaultValue: new Date(),
+                        //endDefaultValue: new Date(),
+                        startDefaultValue: '22:22',
+                        endDefaultValue: '22:22',
+                        label: '时间区间',
+                        eleWidth: '300px',
+                        format: 'HH:mm',
                     },
+                ],
+                [
+                    {
+                        type: 'dateTime',
+                        name: 'dateTimeName',
+                        label: '日期+时间',
+                        // eleWidth: '300px',
+                        format: 'yyyy-MM-dd HH:mm:ss',
+                        //defaultValue: new Date(),
+                        defaultValue: '2016-05-08 02:53:58',
+                    },
+
+
+                    {
+                        type: 'dateTimeArea',
+                        startName: 'dateTimeAreaNameStart',
+                        endName: 'dateTimeAreaNameEnd',
+                        //startDefaultValue: new Date(),
+                        //endDefaultValue: new Date(),
+                        startDefaultValue: '2016-05-08 22:22',
+                        endDefaultValue: '2016-05-08 22:22',
+                        label: '日期+时间区间',
+                        eleWidth: '300px',
+                        format: 'yyyy-MM-dd HH:mm',
+                    },
+                ],
+                {
+                    type: 'checkbox',
+                    name: 'checkboxName',
+                    label: '多选框',
+                    searchOnChange: true,
+                    eleWidth: 'auto',
+                    defaultValue: '33',
+                    options: [
+                        {value: '11', label: '中国'},
+                        {value: '22', label: '美国'},
+                        {value: '33', label: '俄罗斯'},
+                        {value: '44', label: '加拿大'},
+                    ],
+                },
+                {
+                    type: 'checkboxButton',
+                    name: 'checkboxButtonName',
+                    label: '多选按钮',
+                    searchOnChange: true,
+                    eleWidth: 'auto', // 启用展开收起功能时，eleWidth建议使用auto
+                    defaultValue: 'all',
+                    expandable: true,// 可选，默认false，是否启用展开收起功能
+                    minCount: 10,     // 可选，默认10，如果使用展开收起功能，收起时显示的个数
+                    options: [
+                        {value: 'all', label: '全部'},
+                        {value: '11', label: '中国'},
+                        {value: '22', label: '美国'},
+                        {value: '33', label: '俄罗斯'},
+                        {value: '44', label: '加拿大44'},
+                        {value: '55', label: '加拿大55'},
+                        {value: '66', label: '加拿大66'},
+                        {value: '77', label: '加拿大77'},
+                        {value: '88', label: '加拿大88'},
+                        {value: '99', label: '加拿大99'},
+                        {value: '119', label: '加拿大119'},
+                        {value: '112', label: '加拿大112'},
+                        {value: '113', label: '加拿大113'},
+                        {value: '114', label: '加拿大114'},
+                        {value: '115', label: '加拿大115'},
+                        {value: '116', label: '加拿大116'},
+                        {value: '117', label: '加拿大117'},
+                    ],
+                },
+                {
+                    type: 'radio',
+                    name: 'radioName',
+                    label: '单选',
+                    eleWidth: 'auto',
+                    searchOnChange: true,
+                    defaultValue: 1,
+                    options: [
+                        {value: 1, label: '单选一'},
+                        {value: 2, label: '单选二'},
+                        {value: 3, label: '单选三'},
+                        {value: 4, label: '单选四'},
+                    ]
+                },
+                {
+                    type: 'radioButton',
+                    name: 'radioButton',
+                    label: '单选按钮',
+                    eleWidth: '500px',
+                    searchOnChange: true,
+                    defaultValue: 'all',
+                    options: [
+                        {value: 'all', label: '全部'},
+                        {value: 1, label: '单选一'},
+                        {value: 2, label: '单选二'},
+                        {value: 3, label: '单选三'},
+                        {value: 4, label: '单选四'},
+                    ]
+                },
+                {
+                    type: 'radioButton',
+                    name: 'radioButton2',
+                    label: '可收展单选按钮',
+                    eleWidth: 'auto', // 启用展开收起功能时，eleWidth建议使用auto
+                    searchOnChange: true,
+                    defaultValue: 'all',
+                    expandable: true,// 可选，默认false，是否启用展开收起功能
+                    minCount: 5,     // 可选，默认10，如果使用展开收起功能，收起时显示的个数
+                    options: [
+                        {value: 'all', label: '全部'},
+                        {value: 1, label: '单选一'},
+                        {value: 2, label: '单选二'},
+                        {value: 3, label: '单选三'},
+                        {value: 4, label: '单选四'},
+                        {value: 5, label: '单选五'},
+                        {value: 6, label: '单选六'},
+                        {value: 7, label: '单选七'},
+                        {value: 8, label: '单选八'},
+                        {value: 9, label: '单选九'},
+                        {value: 10, label: '单选十'},
+                        {value: 11, label: '单选十一'},
+                        {value: 12, label: '单选十二'},
+                        {value: 13, label: '单选十三'},
+                        {value: 14, label: '单选十四'},
+                        {value: 15, label: '单选十五'},
+                        {value: 16, label: '单选十六'},
+                        {value: 17, label: '单选十七'},
+                        {value: 18, label: '单选十八'},
+                        {value: 19, label: '单选十九'},
+                    ]
+                },
+                [
                     {
                         type: 'select',
                         name: 'selectName',
@@ -235,100 +288,37 @@ class Demo extends React.Component {
                         ],
                     },
                     {
-                        type: 'checkbox',
-                        name: 'checkboxName',
-                        label: '多选框',
-                        searchOnChange: true,
-                        eleWidth: 'auto',
-                        defaultValue: '33',
+                        type: 'cascader',
+                        name: 'cascaderName',
+                        label: '级联下拉',
                         options: [
-                            {value: '11', label: '中国'},
-                            {value: '22', label: '美国'},
-                            {value: '33', label: '俄罗斯'},
-                            {value: '44', label: '加拿大'},
-                        ],
+                            {
+                                value: 'zhejiang',
+                                label: '浙江',
+                                children: [{
+                                    value: 'hangzhou',
+                                    label: '杭州',
+                                }],
+                            },
+                            {
+                                value: 'beijing',
+                                label: '北京',
+                                children: [
+                                    {
+                                        value: 'xichengqu',
+                                        label: '西城区',
+                                    },
+                                    {
+                                        value: 'xidan',
+                                        label: '西单',
+                                    }
+                                ],
+                            },
+                        ]
                     },
-                    {
-                        type: 'checkbox',
-                        name: 'checkboxName2',
-                        label: '多选框2',
-                        searchOnChange: true,
-                        eleWidth: 'auto',
-                        defaultValue: '33',
-                        options: [
-                            {value: '11', label: '中国'},
-                            {value: '22', label: '美国'},
-                            {value: '33', label: '俄罗斯'},
-                            {value: '44', label: '加拿大'},
-                        ],
-                    },
-
-
                 ],
-                {
-                    type: 'date',
-                    name: 'dateName',
-                    label: '日期',
-                    eleWidth: '300px',
-                    //defaultValue: new Date(), // 这样也可以
-                    defaultValue: '2016-05-08',
-                },
-                {
-                    type: 'time',
-                    name: 'timeName',
-                    label: '时间',
-                    eleWidth: '300px',
-                    //defaultValue: new Date(),
-                    defaultValue: '22:22',
-                },
-                {
-                    type: 'dateTime',
-                    name: 'dateTimeName',
-                    label: '日期+时间',
-                    eleWidth: '300px',
-                    format: 'yyyy-MM-dd HH:mm:ss',
-                    //defaultValue: new Date(),
-                    defaultValue: '2016-05-08 02:53:58',
-                },
-                {
-                    type: 'dateArea',
-                    startName: 'dateAreaNameStart',
-                    endName: 'dateAreaNameEnd',
-                    //startDefaultValue: new Date(),
-                    //endDefaultValue: new Date(),
-                    startDefaultValue: '2016-05-08',
-                    endDefaultValue: '2016-05-08',
-                    label: '日期区间',
-                    eleWidth: '300px',
-                    format: 'yyyy-MM-dd',
-                },
-                {
-                    type: 'timeArea',
-                    startName: 'timeAreaNameStart',
-                    endName: 'timeAreaNameEnd',
-                    //startDefaultValue: new Date(),
-                    //endDefaultValue: new Date(),
-                    startDefaultValue: '22:22',
-                    endDefaultValue: '22:22',
-                    label: '时间区间',
-                    eleWidth: '300px',
-                    format: 'HH:mm',
-                },
-                {
-                    type: 'dateTimeArea',
-                    startName: 'dateTimeAreaNameStart',
-                    endName: 'dateTimeAreaNameEnd',
-                    //startDefaultValue: new Date(),
-                    //endDefaultValue: new Date(),
-                    startDefaultValue: '2016-05-08 22:22',
-                    endDefaultValue: '2016-05-08 22:22',
-                    label: '日期+时间区间',
-                    eleWidth: '300px',
-                    format: 'yyyy-MM-dd HH:mm',
-                },
-
-            ]
-        }
+            ],
+        };
         return (
             <QueryTerms options={options}/>
         )
