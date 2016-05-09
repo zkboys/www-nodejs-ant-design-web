@@ -38,6 +38,7 @@ class QueryTerms extends React.Component {
             }
         });
     };
+
     static defaultProps = {};
     checkboxValueSeparator = '<@>';
     setDefaultValue = (itemOptions)=> {
@@ -194,7 +195,7 @@ class QueryTerms extends React.Component {
         const endName = itemOptions.endName;
         const props = itemOptions.props;
         const eleWidth = itemOptions.eleWidth;
-        const labelWidth = itemOptions.labelWidth;
+        const labelWidth = itemOptions.labelWidth || options.labelWidth;
         let placeholder = itemOptions.placeholder;
         if (placeholder === undefined) {
             if (['input', 'inputNumber', 'combobox'].includes(itemType)) {
@@ -206,7 +207,7 @@ class QueryTerms extends React.Component {
         const labelProps = {
             className: 'query-terms-label',
             style: {
-                width: labelWidth || options.labelWidth,
+                width: labelWidth,
             }
         };
         let itemProps = {
@@ -546,6 +547,7 @@ class QueryTerms extends React.Component {
                     return i < showCount;
                 }) : itemOptions.options;
                 return (
+
                     <Col>
                         <FormItem  {...itemProps} >
                             <RadioGroup
@@ -554,22 +556,25 @@ class QueryTerms extends React.Component {
                             >
                                 {/*这个label位置比较特殊，为了使button和label始终同行*/}
                                 {labelJsx}
-                                {radioButtons.map((v, i)=> {
-                                    return <RadioButton key={i} value={v.value}>{v.label}</RadioButton>
-                                })}
-                                {
-                                    showExpandedBtn ?
-                                        <Button
-                                            type="ghost"
-                                            size="large"
-                                            title="显示更多"
-                                            style={{padding:'0 25px',paddingTop:'1px', fontSize:'19px'}}
-                                            onClick={handleExpandBtnClick}
-                                        >
-                                            <FAIcon type="fa-angle-double-down"/>
-                                        </Button>
-                                        : ''
-                                }
+                                <div style={{marginLeft:labelWidth}}>
+                                    {radioButtons.map((v, i)=> {
+                                        return <RadioButton key={i} value={v.value}>{v.label}</RadioButton>
+                                    })}
+                                    {
+                                        showExpandedBtn ?
+                                            <Button
+                                                type="ghost"
+                                                size="large"
+                                                title="显示更多"
+                                                style={{padding:'0 25px',paddingTop:'1px', fontSize:'19px'}}
+                                                onClick={handleExpandBtnClick}
+                                            >
+                                                <FAIcon type="fa-angle-double-down"/>
+                                            </Button>
+                                            : ''
+                                    }
+
+                                </div>
 
                             </RadioGroup>
                         </FormItem>
@@ -646,38 +651,38 @@ class QueryTerms extends React.Component {
                         <FormItem  {...itemProps} className="checkbox-btn-item">
                             {/*这个label位置比较特殊，为了使按钮和label始终同行*/}
                             {labelJsx}
-
-                            {checkboxButtons.map((v, i)=> {
-                                let className = ['checkbox-btn'];
-                                if (this.state[v.value]) {
-                                    className.push('checkbox-btn-checked');
-                                }
-                                return (
-                                    <label className="query-terms-item-label">
-                                        <label
-                                            className={className.join(' ')}
-                                            onClick={()=>{handleChange(v.value)}}
-                                        >
-                                            {v.label}
+                            <div style={{marginLeft:labelWidth}}>
+                                {checkboxButtons.map((v, i)=> {
+                                    let className = ['checkbox-btn'];
+                                    if (this.state[v.value]) {
+                                        className.push('checkbox-btn-checked');
+                                    }
+                                    return (
+                                        <label className="query-terms-item-label">
+                                            <label
+                                                className={className.join(' ')}
+                                                onClick={()=>{handleChange(v.value)}}
+                                            >
+                                                {v.label}
+                                            </label>
                                         </label>
-                                    </label>
-                                )
+                                    )
 
-                            })}
-                            {
-                                showExpandedBtn ?
-                                    <Button
-                                        type="ghost"
-                                        size="large"
-                                        title="显示更多"
-                                        style={{padding:'0 25px',paddingTop:'1px', fontSize:'19px'}}
-                                        onClick={handleExpandBtnClick}
-                                    >
-                                        <FAIcon type="fa-angle-double-down"/>
-                                    </Button>
-                                    : ''
-                            }
-
+                                })}
+                                {
+                                    showExpandedBtn ?
+                                        <Button
+                                            type="ghost"
+                                            size="large"
+                                            title="显示更多"
+                                            style={{padding:'0 25px',paddingTop:'1px', fontSize:'19px'}}
+                                            onClick={handleExpandBtnClick}
+                                        >
+                                            <FAIcon type="fa-angle-double-down"/>
+                                        </Button>
+                                        : ''
+                                }
+                            </div>
                         </FormItem>
                     </Col>
                 );

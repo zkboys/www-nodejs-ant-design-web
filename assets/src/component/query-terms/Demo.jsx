@@ -330,7 +330,7 @@ class Demo extends React.Component {
             ]
         }
         return (
-            <QueryTerms options = {options}/>
+            <QueryTerms options={options}/>
         )
     };
 }
