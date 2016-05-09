@@ -187,6 +187,10 @@ class QueryTerms extends React.Component {
     };
 
     getItem = (options, itemOptions)=> {
+        itemOptions = assign({}, {
+            eleWidth: '150px',
+            labelWidth: options.labelWidth || '80px'
+        }, itemOptions);
         const searchOnChange = itemOptions.searchOnChange;
         const itemType = itemOptions.type;
         const label = itemOptions.label;
@@ -195,7 +199,7 @@ class QueryTerms extends React.Component {
         const endName = itemOptions.endName;
         const props = itemOptions.props;
         const eleWidth = itemOptions.eleWidth;
-        const labelWidth = itemOptions.labelWidth || options.labelWidth;
+        const labelWidth = itemOptions.labelWidth;
         let placeholder = itemOptions.placeholder;
         if (placeholder === undefined) {
             if (['input', 'inputNumber', 'combobox'].includes(itemType)) {
@@ -213,7 +217,7 @@ class QueryTerms extends React.Component {
         let itemProps = {
             className: 'query-terms-item',
             style: {
-                width: eleWidth || options.eleWidth,
+                width: eleWidth,
             }
         };
         const eleProps = assign(
