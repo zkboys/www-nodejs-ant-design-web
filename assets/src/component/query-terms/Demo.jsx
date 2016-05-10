@@ -210,9 +210,15 @@ class Demo extends React.Component {
                     type: 'radioButton',
                     name: 'radioButton',
                     label: '单选按钮',
-                    eleWidth: '500px',
+                    eleWidth: 'auto',
                     searchOnChange: true,
                     defaultValue: 'all',
+                    url: '/select.json',
+                    optionsFilter(res){// 对ajax返回的数据进行处理
+                        return res.body.results.map((v)=> {
+                            return {value: v.id, label: v.name}
+                        })
+                    },
                     options: [
                         {value: 'all', label: '全部'},
                         {value: 1, label: '单选一'},

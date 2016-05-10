@@ -54,9 +54,17 @@ class QueryTerms extends React.Component {
         let startDefaultValue = itemOptions.startDefaultValue;
         let endDefaultValue = itemOptions.endDefaultValue;
         let options = itemOptions.options;
-        if (['select', 'selectSearch', 'selectMultiple'].includes(type)) {
+        if ([
+                'select',
+                'selectSearch',
+                'selectMultiple',
+                'radio',
+                'radioButton',
+                'checkbox',
+                'checkboxButton',
+            ].includes(type)) {
             this.setState({
-                [name + 'selectOptions']: options,
+                [name + 'options']: options,
             });
             const url = itemOptions.url;
             if (url) {
@@ -83,7 +91,7 @@ class QueryTerms extends React.Component {
                                 </div>
                             });
                             this.setState({
-                                [name + 'selectOptions']: options
+                                [name + 'options']: options
                             })
                         } else {
                             const newOptions = optionsFilter(res);
@@ -91,7 +99,7 @@ class QueryTerms extends React.Component {
                                 return v.value !== undefined;
                             });
                             this.setState({
-                                [name + 'selectOptions']: options.concat(newOptions)
+                                [name + 'options']: options.concat(newOptions)
                             })
                         }
                     });
@@ -429,6 +437,7 @@ class QueryTerms extends React.Component {
             case 'selectSearch':
             case 'selectMultiple':
             {
+                const options = this.state[name + 'options'] || []
                 if (itemType === 'selectSearch') {
                     eleProps.showSearch = true;
                     eleProps.optionFilterProp = "children";
@@ -444,7 +453,7 @@ class QueryTerms extends React.Component {
                         {labelJsx}
                         <FormItem  {...itemProps}>
                             <Select {...fieldPropsOptions} {...eleProps}>
-                                {this.state[name + 'selectOptions'] && this.state[name + 'selectOptions'].map((v, i)=> {
+                                {options.map((v, i)=> {
                                     return <Option key={i} value={v.value}>{v.label}</Option>
                                 })}
                             </Select>
@@ -470,14 +479,15 @@ class QueryTerms extends React.Component {
             case 'radioButton':
             {
                 itemProps.style.marginBottom = '0';
+                const options = this.state[name + 'options'] || [];
                 let showCount = itemOptions.minCount || 10;
-                let showExpandedBtn = itemOptions.expandable && itemOptions.options.length > showCount;
-                let radioButtons = itemOptions.expandable ? itemOptions.options.filter((v, i, a)=> {
+                let showExpandedBtn = itemOptions.expandable && options.length > showCount;
+                let radioButtons = itemOptions.expandable ? options.filter((v, i, a)=> {
                     if (this.state[name + 'expanded']) {
                         return true;
                     }
                     return i < showCount;
-                }) : itemOptions.options;
+                }) : options;
                 return (
 
                     <Col>
@@ -514,6 +524,7 @@ class QueryTerms extends React.Component {
             }
             case 'radio':
             {
+                const options = this.state[name + 'options'] || [];
                 return (
                     <Col>
                         <FormItem  {...itemProps}>
@@ -523,7 +534,7 @@ class QueryTerms extends React.Component {
                             >
                                 {/*这个label位置比较特殊，为了使单选和label始终同行*/}
                                 {labelJsx}
-                                {itemOptions.options.map((v, i)=> {
+                                {options.map((v, i)=> {
                                     return <Radio key={i} value={v.value}>{v.label}</Radio>
                                 })}
                             </RadioGroup>
@@ -534,11 +545,12 @@ class QueryTerms extends React.Component {
             case 'checkbox':
             {
                 const valuePropName = 'checked';
+                const options = this.state[name + 'options'] || [];
                 return (
                     <Col>
                         {labelJsx}
                         <FormItem  {...itemProps}>
-                            {itemOptions.options.map((v, i)=> {
+                            {options.map((v, i)=> {
                                 return (
                                     <div className="check">
                                         <label className="query-terms-item-label">
@@ -558,6 +570,7 @@ class QueryTerms extends React.Component {
             case 'checkboxButton':
             {
                 let commonHandleChange = eleProps.onChange;
+                const options = this.state[name + 'options'] || [];
                 let handleChange = (value)=> {
                     const e = {
                         target: {
@@ -570,13 +583,13 @@ class QueryTerms extends React.Component {
 
                 itemProps.style.marginBottom = '0';
                 let showCount = itemOptions.minCount || 10;
-                let showExpandedBtn = itemOptions.expandable && itemOptions.options.length > showCount;
-                let checkboxButtons = itemOptions.expandable ? itemOptions.options.filter((v, i, a)=> {
+                let showExpandedBtn = itemOptions.expandable && options.length > showCount;
+                let checkboxButtons = itemOptions.expandable ? options.filter((v, i, a)=> {
                     if (this.state[name + 'expanded']) {
                         return true;
                     }
                     return i < showCount;
-                }) : itemOptions.options;
+                }) : options;
                 return (
                     <Col>
                         <FormItem  {...itemProps} className="checkbox-btn-item">
