@@ -1,7 +1,7 @@
 import React from 'react';
 import {Badge ,Menu, Popconfirm} from 'antd';
 import {Link} from 'react-router'
-import FAIcon from '../../common/faicon/FAIcon';
+import FAIcon from '../../component/faicon/FAIcon';
 import avatar from './86.jpg';
 
 class Header extends React.Component {

@@ -3,7 +3,7 @@ import React from 'react';
 import assign from 'object-assign';
 import moment from 'moment';
 import Request from 'superagent';
-import FAIcon from '../../common/faicon/FAIcon'
+import FAIcon from '../faicon/FAIcon'
 import {
     Select,
     Radio,

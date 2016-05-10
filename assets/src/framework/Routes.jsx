@@ -1,7 +1,7 @@
 import React from 'react';
 import {Router, Link} from 'react-router'
 import {Menu, Tooltip} from 'antd';
-import FAIcon from '../common/faicon/FAIcon';
+import FAIcon from '../component/faicon/FAIcon';
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
 import PubSubMsg from '../common/pubsubmsg';

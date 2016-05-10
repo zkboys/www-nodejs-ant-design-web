@@ -1,5 +1,5 @@
 import React from 'react';
-import FAIcon from '../../common/faicon/FAIcon';
+import FAIcon from '../../component/faicon/FAIcon';
 import {Link} from 'react-router'
 import {Menu, Tooltip} from 'antd';
 import headerMenuData from './HeaderMenus'

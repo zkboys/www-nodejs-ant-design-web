@@ -156,7 +156,7 @@ class Demo extends React.Component {
                     searchOnChange: true,
                     eleWidth: 'auto',
                     defaultValue: '33',
-                    url: '/select.json',
+                    // url: '/select.json',
                     optionsFilter(res){// 对ajax返回的数据进行处理
                         return res.body.results.map((v)=> {
                             return {value: v.id, label: v.name}
@@ -178,7 +178,7 @@ class Demo extends React.Component {
                     defaultValue: 'all',
                     expandable: true,// 可选，默认false，是否启用展开收起功能
                     minCount: 10,     // 可选，默认10，如果使用展开收起功能，收起时显示的个数
-                    url: '/select.json',
+                    // url: '/select.json',
                     optionsFilter(res){// 对ajax返回的数据进行处理
                         return res.body.results.map((v)=> {
                             return {value: v.id, label: v.name}
@@ -211,7 +211,7 @@ class Demo extends React.Component {
                     eleWidth: 'auto',
                     searchOnChange: true,
                     defaultValue: 1,
-                    url: '/select.json',
+                    // url: '/select.json',
                     optionsFilter(res){// 对ajax返回的数据进行处理
                         return res.body.results.map((v)=> {
                             return {value: v.id, label: v.name}
@@ -231,7 +231,7 @@ class Demo extends React.Component {
                     eleWidth: 'auto',
                     searchOnChange: true,
                     defaultValue: 'all',
-                    url: '/select.json',
+                    // url: '/select.json',
                     optionsFilter(res){// 对ajax返回的数据进行处理
                         return res.body.results.map((v)=> {
                             return {value: v.id, label: v.name}
