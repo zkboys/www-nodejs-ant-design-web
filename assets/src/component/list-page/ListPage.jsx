@@ -15,8 +15,8 @@ class ListPage extends React.Component {
         queryData: {
             currentPage: 1,
             pageSize: 10,
-            totalCount: 100,
         },
+        totalCount: 0,
         tableData: []
 
     };
@@ -38,11 +38,12 @@ class ListPage extends React.Component {
                 address: `西湖区湖底公园${i}号`
             });
         }
-        queryData.totalCount = 177;
+        const totalCount = 177;
 
         this.setState({
             queryData,
             tableData,
+            totalCount,
         })
     };
 
@@ -129,7 +130,7 @@ class ListPage extends React.Component {
             showMessage: true, // 默认 true
             pageSize: this.state.queryData.pageSize,
             currentPage: this.state.queryData.currentPage,
-            totalCount: this.state.queryData.totalCount,
+            totalCount: this.state.totalCount,
             onChange: (currentPage, pageSize)=> {
                 let queryData = assign({}, this.state.queryData, {currentPage, pageSize});
                 this.setState({

@@ -270,6 +270,21 @@ class Demo extends React.Component {
                     },
                     {
                         type: 'selectSearch',
+                        name: 'selectUrlName',
+                        label: '异步下拉',
+                        url: '/select.json',
+                        filterOptions(res){// 对ajax返回的数据进行处理
+                            return res.body.results.map((v)=> {
+                                return {value: v.id, label: v.name}
+                            })
+                        },
+                        defaultValue: 'all',
+                        options: [// 如果有url，这个数据会添加到后台请求数据之前。
+                            {value: 'all', label: '全部'},
+                        ],
+                    },
+                    {
+                        type: 'selectSearch',
                         name: 'selectSearchName',
                         label: '搜索下拉',
                         defaultValue: '112',

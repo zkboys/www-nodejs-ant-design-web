@@ -38,6 +38,27 @@ router.get('/list-table.json', function (req, res, next) {
         totalCount: totalCount
     });
 });
+
+
+router.get('/select.json', function (req, res, next) {
+    var start = new Date();
+    var delay = 3000;
+    while ((new Date().getTime() - start.getTime()) < +delay) {//阻塞X秒钟
+
+    }
+    res.send({
+        results: [
+            {id:1,name:'后台'},
+            {id:2,name:'返回'},
+            {id:3,name:'的数据'},
+            {id:4,name:'ajax请求'},
+            {id:5,name:'异步数据'},
+        ]
+    });
+});
+
+
+
 router.get('*', function (req, res, next) {
     res.render('index.html');
 });

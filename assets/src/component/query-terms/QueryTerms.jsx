@@ -1,6 +1,8 @@
 import './style.less';
+import React from 'react';
 import assign from 'object-assign';
 import moment from 'moment';
+import Request from 'superagent';
 import FAIcon from '../../common/faicon/FAIcon'
 import {
     Select,
@@ -16,6 +18,7 @@ import {
     Row,
     Col,
     Tabs,
+    Spin,
 } from 'antd';
 
 const Option = Select.Option;
@@ -50,8 +53,51 @@ class QueryTerms extends React.Component {
         const endName = itemOptions.endName;
         let startDefaultValue = itemOptions.startDefaultValue;
         let endDefaultValue = itemOptions.endDefaultValue;
-        const options = itemOptions.options;
+        let options = itemOptions.options;
+        if (['select', 'selectSearch', 'selectMultiple'].includes(type)) {
+            this.setState({
+                [name + 'selectOptions']: options,
+            });
+            const url = itemOptions.url;
+            if (url) {
+                options.push({
+                    value: undefined,
+                    label: <div style={{width:'100%', textAlign:'center'}}>
+                        <Spin />
+                    </div>
+                })
+                const filterOptions = itemOptions.filterOptions || ((res)=> {
+                        return res.body.results;
+                    });
+                Request
+                    .get(url)
+                    .end((err, res)=> {
+                        if (err) {
+                            options = options.filter((v)=> {
+                                return v.value !== undefined;
+                            });
+                            options.push({
+                                value: undefined,
+                                label: <div style={{width:'100%', textAlign:'center', color:'red'}}>
+                                    获取数据失败
+                                </div>
+                            });
+                            this.setState({
+                                [name + 'selectOptions']: options
+                            })
+                        } else {
+                            const newOptions = filterOptions(res);
+                            options = options.filter((v)=> {
+                                return v.value !== undefined;
+                            });
+                            this.setState({
+                                [name + 'selectOptions']: options.concat(newOptions)
+                            })
+                        }
+                    });
+            }
 
+        }
         // 表单元素初始化默认值
         if (['checkbox', 'checkboxButton'].includes(type)) {
             if (typeof defaultValue === 'string') {
@@ -97,7 +143,7 @@ class QueryTerms extends React.Component {
                     endDefaultValue = moment(endDefaultValue, 'HH:mm:ss').toDate();
                 }
             }
-            if ((type === 'tabs'||type === 'tabsCard') && !defaultValue) {
+            if ((type === 'tabs' || type === 'tabsCard') && !defaultValue) {
                 defaultValue = options[0].value;
             }
             this.setState({
@@ -296,95 +342,6 @@ class QueryTerms extends React.Component {
             }
 
         };
-        let areaElement = ()=> {
-            let type = itemOptions.type;
-            let format = itemOptions.format;
-            let commonHandleChange = eleProps.onChange;
-            let handleChange = (name)=> {
-                return (value)=> {
-                    this.setState({
-                        [name]: value,
-                    });
-                    setFieldsValue({
-                        [name]: value,
-                    });
-                    commonHandleChange && commonHandleChange(value);
-                }
-            };
-            const startEleProps = assign({}, eleProps, {onChange: handleChange(startName)});
-            const endEleProps = assign({}, eleProps, {onChange: handleChange(endName)});
-            let splitWidth = 20;
-            const itemWidth = ((parseInt(eleWidth) - splitWidth) / 2) + 'px';
-            splitWidth = splitWidth + 'px';
-            itemProps.style.width = itemWidth;
-
-            let disabledStartDate = (startValue)=> {
-                if (!startValue || !this.state[endName]) {
-                    return false;
-                }
-                return startValue.getTime() > this.state[endName].getTime();
-            };
-            let disabledEndDate = (endValue)=> {
-                if (!endValue || !this.state[startName]) {
-                    return false;
-                }
-                return endValue.getTime() < this.state[startName].getTime();
-            };
-            let showTimeProps = {};
-            if (type === 'dateTimeArea') {
-                showTimeProps.showTime = true;
-            }
-            return (
-                <Col>
-                    {labelJsx}
-                    <div className="area-item" style={{width:itemWidth}}>
-                        <FormItem  {...itemProps}>
-                            {
-                                type === 'dateArea' || type === 'dateTimeArea' ?
-                                    <DatePicker
-                                        {...showTimeProps}
-                                        disabledDate={disabledStartDate}
-                                        {...startFieldPropsOptions}
-                                        format={format}
-                                        {...startEleProps}
-                                    />
-                                    :
-                                    <TimePicker
-                                        {...startFieldPropsOptions}
-                                        format={format}
-                                        {...startEleProps}
-                                    />
-                            }
-
-                        </FormItem>
-                    </div>
-                    <div className="area-split" style={{width:splitWidth}}>
-                        <p className="ant-form-split">-</p>
-                    </div>
-                    <div className="area-item" style={{width:itemWidth}}>
-                        <FormItem  {...itemProps}>
-                            {
-                                type === 'dateArea' || type === 'dateTimeArea' ?
-                                    <DatePicker
-                                        {...showTimeProps}
-                                        disabledDate={disabledEndDate}
-                                        {...endFieldPropsOptions}
-                                        format={format}
-                                        {...endEleProps}
-                                    />
-                                    :
-                                    <TimePicker
-                                        {...endFieldPropsOptions}
-                                        format={format}
-                                        {...endEleProps}
-                                    />
-                            }
-
-                        </FormItem>
-                    </div>
-                </Col>
-            );
-        };
         let handleExpandBtnClick = (e)=> {
             let button = e.currentTarget;
             let btnClassNames = button.className.split(' ');
@@ -469,54 +426,25 @@ class QueryTerms extends React.Component {
                 );
             }
             case 'select':
+            case 'selectSearch':
+            case 'selectMultiple':
             {
+                if (itemType === 'selectSearch') {
+                    eleProps.showSearch = true;
+                    eleProps.optionFilterProp = "children";
+                    eleProps.notFoundContent = "无法找到";
+                    eleProps.searchPlaceholder = "输入关键词";
+
+                }
+                if (itemType === 'selectMultiple') {
+                    eleProps.multiple = true;
+                }
                 return (
                     <Col>
                         {labelJsx}
                         <FormItem  {...itemProps}>
                             <Select {...fieldPropsOptions} {...eleProps}>
-                                {itemOptions.options.map((v, i)=> {
-                                    return <Option key={i} value={v.value}>{v.label}</Option>
-                                })}
-                            </Select>
-                        </FormItem>
-                    </Col>
-                );
-            }
-            case 'selectSearch':
-            {
-                return (
-                    <Col>
-                        {labelJsx}
-                        <FormItem  {...itemProps}>
-                            <Select
-                                showSearch
-                                {...fieldPropsOptions}
-                                optionFilterProp="children"
-                                notFoundContent="无法找到"
-                                searchPlaceholder="输入关键词"
-                                {...eleProps}
-                            >
-                                {itemOptions.options.map((v, i)=> {
-                                    return <Option key={i} value={v.value}>{v.label}</Option>
-                                })}
-                            </Select>
-                        </FormItem>
-                    </Col>
-                );
-            }
-            case 'selectMultiple':
-            {
-                return (
-                    <Col>
-                        {labelJsx}
-                        <FormItem  {...itemProps}>
-                            <Select
-                                multiple
-                                {...fieldPropsOptions}
-                                {...eleProps}
-                            >
-                                {itemOptions.options.map((v, i)=> {
+                                {this.state[name + 'selectOptions'] && this.state[name + 'selectOptions'].map((v, i)=> {
                                     return <Option key={i} value={v.value}>{v.label}</Option>
                                 })}
                             </Select>
@@ -692,46 +620,22 @@ class QueryTerms extends React.Component {
 
             }
             case 'date':
-            {
-                let format = itemOptions.format;
-                return (
-                    <Col>
-                        {labelJsx}
-                        <FormItem  {...itemProps}>
-                            <DatePicker
-                                {...fieldPropsOptions}
-                                format={format}
-                                {...eleProps}
-                            />
-                        </FormItem>
-                    </Col>
-                );
-            }
+            case 'dateTime':
             case 'time':
             {
                 let format = itemOptions.format;
+                let Element = DatePicker;
+                if (itemType === 'time') {
+                    Element = TimePicker;
+                }
+                if (itemType === 'dateTime') {
+                    eleProps.showTime = true;
+                }
                 return (
                     <Col>
                         {labelJsx}
                         <FormItem  {...itemProps}>
-                            <TimePicker
-                                {...fieldPropsOptions}
-                                format={format}
-                                {...eleProps}
-                            />
-                        </FormItem>
-                    </Col>
-                );
-            }
-            case 'dateTime':
-            {
-                let format = itemOptions.format;
-                return (
-                    <Col>
-                        {labelJsx}
-                        <FormItem  {...itemProps}>
-                            <DatePicker
-                                showTime
+                            <Element
                                 {...fieldPropsOptions}
                                 format={format}
                                 {...eleProps}
@@ -744,7 +648,92 @@ class QueryTerms extends React.Component {
             case 'timeArea':
             case 'dateTimeArea':
             {
-                return areaElement();
+                let format = itemOptions.format;
+                let commonHandleChange = eleProps.onChange;
+                let handleChange = (name)=> {
+                    return (value)=> {
+                        this.setState({
+                            [name]: value,
+                        });
+                        setFieldsValue({
+                            [name]: value,
+                        });
+                        commonHandleChange && commonHandleChange(value);
+                    }
+                };
+                const startEleProps = assign({}, eleProps, {onChange: handleChange(startName)});
+                const endEleProps = assign({}, eleProps, {onChange: handleChange(endName)});
+                let splitWidth = 20;
+                const itemWidth = ((parseInt(eleWidth) - splitWidth) / 2) + 'px';
+                splitWidth = splitWidth + 'px';
+                itemProps.style.width = itemWidth;
+
+                let disabledStartDate = (startValue)=> {
+                    if (!startValue || !this.state[endName]) {
+                        return false;
+                    }
+                    return startValue.getTime() > this.state[endName].getTime();
+                };
+                let disabledEndDate = (endValue)=> {
+                    if (!endValue || !this.state[startName]) {
+                        return false;
+                    }
+                    return endValue.getTime() < this.state[startName].getTime();
+                };
+                let showTimeProps = {};
+                if (itemType === 'dateTimeArea') {
+                    showTimeProps.showTime = true;
+                }
+                return (
+                    <Col>
+                        {labelJsx}
+                        <div className="area-item" style={{width:itemWidth}}>
+                            <FormItem  {...itemProps}>
+                                {
+                                    itemType === 'dateArea' || itemType === 'dateTimeArea' ?
+                                        <DatePicker
+                                            {...showTimeProps}
+                                            disabledDate={disabledStartDate}
+                                            {...startFieldPropsOptions}
+                                            format={format}
+                                            {...startEleProps}
+                                        />
+                                        :
+                                        <TimePicker
+                                            {...startFieldPropsOptions}
+                                            format={format}
+                                            {...startEleProps}
+                                        />
+                                }
+
+                            </FormItem>
+                        </div>
+                        <div className="area-split" style={{width:splitWidth}}>
+                            <p className="ant-form-split">-</p>
+                        </div>
+                        <div className="area-item" style={{width:itemWidth}}>
+                            <FormItem  {...itemProps}>
+                                {
+                                    itemType === 'dateArea' || itemType === 'dateTimeArea' ?
+                                        <DatePicker
+                                            {...showTimeProps}
+                                            disabledDate={disabledEndDate}
+                                            {...endFieldPropsOptions}
+                                            format={format}
+                                            {...endEleProps}
+                                        />
+                                        :
+                                        <TimePicker
+                                            {...endFieldPropsOptions}
+                                            format={format}
+                                            {...endEleProps}
+                                        />
+                                }
+
+                            </FormItem>
+                        </div>
+                    </Col>
+                )
             }
             case 'tabs':
             {
