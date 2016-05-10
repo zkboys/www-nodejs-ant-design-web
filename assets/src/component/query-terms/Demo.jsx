@@ -273,7 +273,7 @@ class Demo extends React.Component {
                         name: 'selectUrlName',
                         label: '异步下拉',
                         url: '/select.json',
-                        filterOptions(res){// 对ajax返回的数据进行处理
+                        optionsFilter(res){// 对ajax返回的数据进行处理
                             return res.body.results.map((v)=> {
                                 return {value: v.id, label: v.name}
                             })

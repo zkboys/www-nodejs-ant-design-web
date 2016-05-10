@@ -66,7 +66,7 @@ class QueryTerms extends React.Component {
                         <Spin />
                     </div>
                 })
-                const filterOptions = itemOptions.filterOptions || ((res)=> {
+                const optionsFilter = itemOptions.optionsFilter || ((res)=> {
                         return res.body.results;
                     });
                 Request
@@ -86,7 +86,7 @@ class QueryTerms extends React.Component {
                                 [name + 'selectOptions']: options
                             })
                         } else {
-                            const newOptions = filterOptions(res);
+                            const newOptions = optionsFilter(res);
                             options = options.filter((v)=> {
                                 return v.value !== undefined;
                             });
