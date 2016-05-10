@@ -70,9 +70,7 @@ class QueryTerms extends React.Component {
             if (url) {
                 options.push({
                     value: undefined,
-                    label: <div style={{width:'100%', textAlign:'center'}}>
-                        <Spin />
-                    </div>
+                    label: <div className="spin-wrap"><Spin /></div>
                 })
                 const optionsFilter = itemOptions.optionsFilter || ((res)=> {
                         return res.body.results;
@@ -82,13 +80,11 @@ class QueryTerms extends React.Component {
                     .end((err, res)=> {
                         if (err) {
                             options = options.filter((v)=> {
-                                return v.value !== undefined;
+                                return v.value !== undefined && v.value !== name + this.checkboxValueSeparator + undefined;
                             });
                             options.push({
                                 value: undefined,
-                                label: <div style={{width:'100%', textAlign:'center', color:'red'}}>
-                                    获取数据失败
-                                </div>
+                                label: <div className="spin-wrap" style={{color:'red'}}>获取数据失败</div>
                             });
                             this.setState({
                                 [name + 'options']: options
@@ -96,13 +92,14 @@ class QueryTerms extends React.Component {
                         } else {
                             const newOptions = optionsFilter(res);
                             options = options.filter((v)=> {
-                                return v.value !== undefined;
+                                return v.value !== undefined && v.value !== name + this.checkboxValueSeparator + undefined;
                             });
                             this.setState({
                                 [name + 'options']: options.concat(newOptions)
                             })
                         }
                     });
+
             }
 
         }
@@ -501,6 +498,9 @@ class QueryTerms extends React.Component {
                                     {...eleProps}
                                 >
                                     {radioButtons.map((v, i)=> {
+                                        if (v.value === undefined) {
+                                            return v.label;
+                                        }
                                         return <RadioButton key={i} value={v.value}>{v.label}</RadioButton>
                                     })}
                                     {
@@ -527,14 +527,18 @@ class QueryTerms extends React.Component {
                 const options = this.state[name + 'options'] || [];
                 return (
                     <Col>
+
+                        {/*这个label位置比较特殊，为了使单选和label始终同行*/}
+                        {labelJsx}
                         <FormItem  {...itemProps}>
                             <RadioGroup
                                 {...fieldPropsOptions}
                                 {...eleProps}
                             >
-                                {/*这个label位置比较特殊，为了使单选和label始终同行*/}
-                                {labelJsx}
                                 {options.map((v, i)=> {
+                                    if (v.value === undefined) {
+                                        return v.label;
+                                    }
                                     return <Radio key={i} value={v.value}>{v.label}</Radio>
                                 })}
                             </RadioGroup>
@@ -551,6 +555,9 @@ class QueryTerms extends React.Component {
                         {labelJsx}
                         <FormItem  {...itemProps}>
                             {options.map((v, i)=> {
+                                if (v.value === name + this.checkboxValueSeparator + undefined) {
+                                    return v.label;
+                                }
                                 return (
                                     <div className="check">
                                         <label className="query-terms-item-label">
@@ -597,6 +604,9 @@ class QueryTerms extends React.Component {
                             {labelJsx}
                             <div style={{marginLeft:labelWidth}}>
                                 {checkboxButtons.map((v, i)=> {
+                                    if (v.value === name + this.checkboxValueSeparator + undefined) {
+                                        return v.label;
+                                    }
                                     let className = ['checkbox-btn'];
                                     if (this.state[v.value]) {
                                         className.push('checkbox-btn-checked');

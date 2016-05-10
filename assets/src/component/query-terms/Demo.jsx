@@ -156,6 +156,12 @@ class Demo extends React.Component {
                     searchOnChange: true,
                     eleWidth: 'auto',
                     defaultValue: '33',
+                    url: '/select.json',
+                    optionsFilter(res){// 对ajax返回的数据进行处理
+                        return res.body.results.map((v)=> {
+                            return {value: v.id, label: v.name}
+                        })
+                    },
                     options: [
                         {value: '11', label: '中国'},
                         {value: '22', label: '美国'},
@@ -172,24 +178,30 @@ class Demo extends React.Component {
                     defaultValue: 'all',
                     expandable: true,// 可选，默认false，是否启用展开收起功能
                     minCount: 10,     // 可选，默认10，如果使用展开收起功能，收起时显示的个数
+                    url: '/select.json',
+                    optionsFilter(res){// 对ajax返回的数据进行处理
+                        return res.body.results.map((v)=> {
+                            return {value: v.id, label: v.name}
+                        })
+                    },
                     options: [
                         {value: 'all', label: '全部'},
                         {value: '11', label: '中国'},
                         {value: '22', label: '美国'},
                         {value: '33', label: '俄罗斯'},
-                        {value: '44', label: '加拿大44'},
-                        {value: '55', label: '加拿大55'},
-                        {value: '66', label: '加拿大66'},
-                        {value: '77', label: '加拿大77'},
-                        {value: '88', label: '加拿大88'},
-                        {value: '99', label: '加拿大99'},
-                        {value: '119', label: '加拿大119'},
-                        {value: '112', label: '加拿大112'},
-                        {value: '113', label: '加拿大113'},
-                        {value: '114', label: '加拿大114'},
-                        {value: '115', label: '加拿大115'},
-                        {value: '116', label: '加拿大116'},
-                        {value: '117', label: '加拿大117'},
+                        // {value: '44', label: '加拿大44'},
+                        // {value: '55', label: '加拿大55'},
+                        // {value: '66', label: '加拿大66'},
+                        // {value: '77', label: '加拿大77'},
+                        // {value: '88', label: '加拿大88'},
+                        // {value: '99', label: '加拿大99'},
+                        // {value: '119', label: '加拿大119'},
+                        // {value: '112', label: '加拿大112'},
+                        // {value: '113', label: '加拿大113'},
+                        // {value: '114', label: '加拿大114'},
+                        // {value: '115', label: '加拿大115'},
+                        // {value: '116', label: '加拿大116'},
+                        // {value: '117', label: '加拿大117'},
                     ],
                 },
                 {
@@ -199,6 +211,12 @@ class Demo extends React.Component {
                     eleWidth: 'auto',
                     searchOnChange: true,
                     defaultValue: 1,
+                    url: '/select.json',
+                    optionsFilter(res){// 对ajax返回的数据进行处理
+                        return res.body.results.map((v)=> {
+                            return {value: v.id, label: v.name}
+                        })
+                    },
                     options: [
                         {value: 1, label: '单选一'},
                         {value: 2, label: '单选二'},
