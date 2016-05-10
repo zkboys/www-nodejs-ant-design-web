@@ -14,6 +14,18 @@ class Demo extends React.Component {
             items: [
                 // 如果是对象，自己占据一行， 如果是数组，数组中所有的组件共占一行
                 {
+                    type: 'tabsCard', // tab页，页只是做个查询条件，不是真实的tab页切换，只是用了个tab头
+                    name: 'tabsCardName',
+                    defaultValue: 'tab2',
+                    searchOnChange: true,
+                    options: [
+                        {value: 'tab1', label: 'Tab页1'},
+                        {value: 'tab2', label: 'Tab页2'},
+                        {value: 'tab3', label: 'Tab页3'},
+                        {value: 'tab4', label: 'Tab页4'},
+                    ]
+                },
+                {
                     type: 'tabs', // tab页，页只是做个查询条件，不是真实的tab页切换，只是用了个tab头
                     name: 'tabsName',
                     defaultValue: 'tab2',

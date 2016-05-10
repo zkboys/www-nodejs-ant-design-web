@@ -97,7 +97,7 @@ class QueryTerms extends React.Component {
                     endDefaultValue = moment(endDefaultValue, 'HH:mm:ss').toDate();
                 }
             }
-            if (type === 'tabs' && !defaultValue) {
+            if ((type === 'tabs'||type === 'tabsCard') && !defaultValue) {
                 defaultValue = options[0].value;
             }
             this.setState({
@@ -747,6 +747,22 @@ class QueryTerms extends React.Component {
                 return areaElement();
             }
             case 'tabs':
+            {
+                return (
+                    <Tabs
+                        onChange={eleProps.onChange}
+                        defaultActiveKey={itemOptions.defaultValue}
+                    >
+                        {itemOptions.options.map((v, i)=> {
+                            return (
+                                <TabPane tab={v.label} key={v.value}/>
+                            )
+                        })}
+                    </Tabs>
+                )
+
+            }
+            case 'tabsCard':
             {
                 return (
                     <Tabs
