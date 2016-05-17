@@ -1,5 +1,10 @@
 # 前端项目架构
 *基于node.js 和 ant.design*
+如果安装比较卡，可以翻墙，或者使用cnpm
+```
+// 安装cnpm
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+```
 ## 需要node.js版本
 ```
 node 4.x

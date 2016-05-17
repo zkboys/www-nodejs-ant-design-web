@@ -2,7 +2,7 @@ import React from 'react';
 import {message, Breadcrumb,Spin} from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import {Link} from 'react-router';
-import {getCurrentHeaderMenu} from '../header/HeaderMenuUtil';
+import {getCurrentHeaderMenuByUrl} from '../header/HeaderMenuUtil';
 import {getCurrentSidebarMenu} from '../sidebar/SidebarMenuUtil'
 import Settings from '../settings/Settings'
 import PubSubMsg from '../../common/pubsubmsg';
@@ -80,7 +80,7 @@ class Page extends React.Component {
 
         }
         if (pageHeaderDate) {
-            let currentHeaderMenu = getCurrentHeaderMenu();
+            let currentHeaderMenu = getCurrentHeaderMenuByUrl();
             let breadcrumbItems = [];
             if (currentHeaderMenu) {
                 breadcrumbItems.push(

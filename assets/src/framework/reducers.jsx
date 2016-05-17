@@ -40,14 +40,14 @@ let defaultState = {
     style: isSidebarCollapsed ? collapsedStyle : expandedStyle,
     headerNav: {
         current: '1',
-        items: headerMenus
+        headMenus: headerMenus
     },
     sidebar: {
         hidden: false,
         openKeys: [],
         selectedKeys: '',
         mode: '',
-        items: []
+        sidebarMenus: []
     }
 };
 
@@ -84,7 +84,7 @@ export default combineReducers({
                 }
                 return assign({}, state, {
                     hidden: false,
-                    items: sidebarMenus[action.currentHeaderMenu]
+                    sidebarMenus: sidebarMenus[action.currentHeaderMenu]
                 });
             case SET_SIDEBAR_MENU_STATUS://设置左侧菜单状态，展开状态以及选中状态
                 return assign({}, state, {

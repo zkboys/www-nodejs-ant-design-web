@@ -1,14 +1,65 @@
 import React from 'react';
 import FAIcon from '../../component/faicon/FAIcon';
 import {Link} from 'react-router'
-import {Menu, Tooltip} from 'antd';
+import {Menu, Tooltip, Icon} from 'antd';
 import Settings from './../settings/Settings'
 const SubMenu = Menu.SubMenu;
 import sidebarMenuData from './SidebarMenus'
+const MenuItemGroup = Menu.ItemGroup;
+
+function getMaxSidebarMenusByParentKey(parentKey) {
+    return [
+        <SubMenu key="sub1" title={<span><Icon type="mail" /><span>导航一</span></span>}>
+            <MenuItemGroup title="分组1">
+                <Menu.Item key="1">选项1</Menu.Item>
+                <Menu.Item key="2">选项2</Menu.Item>
+            </MenuItemGroup>
+            <MenuItemGroup title="分组2">
+                <Menu.Item key="3">选项3</Menu.Item>
+                <Menu.Item key="4">选项4</Menu.Item>
+            </MenuItemGroup>
+        </SubMenu>,
+        <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>导航二</span></span>}>
+            <Menu.Item key="5">选项5</Menu.Item>
+            <Menu.Item key="6">选项6</Menu.Item>
+            <SubMenu key="sub3" title="三级导航">
+                <Menu.Item key="7">选项7</Menu.Item>
+                <Menu.Item key="8">选项8</Menu.Item>
+            </SubMenu>
+        </SubMenu>,
+        <SubMenu key="sub4" title={<span><icon type="setting" /><span>导航三</span></span>}>
+            <Menu.Item key="9">选项9</Menu.Item>
+            <Menu.Item key="10">选项10</Menu.Item>
+            <Menu.Item key="11">选项11</Menu.Item>
+            <Menu.Item key="12">选项12</Menu.Item>
+        </SubMenu>,
+    ]
+}
+function getMinSidebarMenusByParentKey(parentKey) {
+    return [
+        <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>导航二</span></span>}>
+            <Menu.Item key="5">选项5</Menu.Item>
+            <Menu.Item key="6">选项6</Menu.Item>
+            <SubMenu key="sub3" title="三级导航">
+                <Menu.Item key="7">选项7</Menu.Item>
+                <Menu.Item key="8">选项8</Menu.Item>
+            </SubMenu>
+        </SubMenu>,
+        <SubMenu key="sub4" title={<span><icon type="setting" /><span>导航三</span></span>}>
+            <Menu.Item key="9">选项9</Menu.Item>
+            <Menu.Item key="10">选项10</Menu.Item>
+            <Menu.Item key="11">选项11</Menu.Item>
+            <Menu.Item key="12">选项12</Menu.Item>
+        </SubMenu>,
+    ]
+}
+function getCurrentMenuByUrl() {
+
+}
 /*
  * 获取左侧菜单jsx数据,可以用于直接显示.
  * */
-function getSidebarMenus() {
+function getSidebarMenus(sidebarMenus) {
     let [minSidebarMenu, maxSidebarMenu] = getMenusData();
     let min = Settings.collapseSidebar() ? true : false;
     minSidebarMenu = minSidebarMenu || [];
@@ -37,7 +88,7 @@ function getCurrentSidebarMenu() {
                 openKeys = m.parentKeys;
             }
             currentMenu = m;
-            currentMenu.openKeys = openKeys;
+            currentMenu.parentKeys = openKeys;
         }
     }
     if (currentMenu) {//openKeys去重
@@ -147,4 +198,4 @@ function buildSidebarMenu(menuData, min) {
 
     return covertMenuFromData(menuData, min);
 }
-export {getSidebarMenus, getCurrentSidebarMenu, createSidebarMenus}
+export {getSidebarMenus, getCurrentSidebarMenu}

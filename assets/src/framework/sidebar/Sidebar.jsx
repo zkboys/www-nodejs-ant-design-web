@@ -1,8 +1,6 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
-import {createSidebarMenus} from './SidebarMenuUtil'
+import {getSidebarMenus} from './SidebarMenuUtil'
 import assign from 'object-assign'
 class Sidebar extends React.Component {
     constructor(props) {
@@ -23,10 +21,10 @@ class Sidebar extends React.Component {
             hidden,
             openKeys,
             selectedKeys,
-            items
+            sidebarMenus
         } = this.props.sidebar;
         let style = assign({}, sidebarStyle, hidden ? {width: 0} : {});
-        let minMenu = sidebarMode === 'vertical';
+        console.log(sidebarMenus);
         return (
             <div className="admin-sidebar" style={style}>
                 <div className="admin-sidebar-inner" style={sidebarInnerStyle}>
@@ -36,7 +34,7 @@ class Sidebar extends React.Component {
                         onOpen={this.handleToggle}
                         onClose={this.handleToggle}
                         mode={sidebarMode}>
-                        {createSidebarMenus(items, minMenu)}
+                        {getSidebarMenus(sidebarMenus)}
                     </Menu>
                 </div>
             </div>

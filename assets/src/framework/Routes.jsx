@@ -5,7 +5,7 @@ import FAIcon from '../component/faicon/FAIcon';
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 const browserHistory = createBrowserHistory();
 import PubSubMsg from '../common/pubsubmsg';
-import {getSidebarMenus, getCurrentSidebarMenu} from './sidebar/SidebarMenuUtil';
+import {getCurrentSidebarMenu} from './sidebar/SidebarMenuUtil';
 import pageRouts from '../page/RoutesCfg';
 
 /*
@@ -35,7 +35,7 @@ browserHistory.listen(function (data) {
 
     let currentSidebarMenu = getCurrentSidebarMenu();
     let selectedKeys = currentSidebarMenu ? currentSidebarMenu.key : '';
-    let openKeys = currentSidebarMenu ? currentSidebarMenu.openKeys : [];
+    let openKeys = currentSidebarMenu ? currentSidebarMenu.parentKeys : [];
     PubSubMsg.publish('current-sidebar-menu', {
         selectedKeys,
         openKeys

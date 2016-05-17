@@ -12,7 +12,7 @@ class Header extends React.Component {
             } = this.props.style;
         const {
             current,
-            items //TODO item.subMenus如果有子菜单，再处理
+            headMenus //TODO item.subMenus如果有子菜单，再处理
             } = this.props.headerNav;
         return (
             <header className="admin-header">
@@ -21,7 +21,7 @@ class Header extends React.Component {
                 <Menu className="admin-header-sys"
                       selectedKeys={[current]}
                       mode="horizontal">
-                    {items.map((item, index) =>
+                    {headMenus.map((item, index) =>
                         <Menu.Item key={item.key}>
                             <Link to={item.path}>
                                 <FAIcon type={item.icon}/>{item.text}

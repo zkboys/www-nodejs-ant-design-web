@@ -1,6 +1,11 @@
 # www-nodejs-ant-design-web
 *node.js 结合ant.design demo项目*
 ##安装&启动
+如果安装比较卡，可以翻墙，或者使用cnpm
+```
+// 安装cnpm
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+```
 ###安装依赖
 > npm install 
 
