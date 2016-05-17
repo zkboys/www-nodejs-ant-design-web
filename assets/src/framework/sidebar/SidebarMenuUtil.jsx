@@ -81,8 +81,8 @@ function getMenusData() {
         headerMenuCurrent = pathNames[1];
     }
     let menuData = sidebarMenuData[headerMenuCurrent];
-    let [minSidebarMenu] = buildSidebarMenu(menuData, true, location.pathname);
-    let [maxSidebarMenu, simpleMenuData] = buildSidebarMenu(menuData, false, location.pathname);
+    let [minSidebarMenu] = buildSidebarMenu(menuData, true);
+    let [maxSidebarMenu, simpleMenuData] = buildSidebarMenu(menuData, false);
     return [minSidebarMenu, maxSidebarMenu, simpleMenuData]
 }
 /*

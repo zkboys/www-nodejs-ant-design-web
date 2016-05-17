@@ -1,5 +1,7 @@
 import React from 'react';
-import {Menu} from 'antd';
+import { Menu, Icon } from 'antd';
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 import {createSidebarMenus} from './SidebarMenuUtil'
 import assign from 'object-assign'
 class Sidebar extends React.Component {

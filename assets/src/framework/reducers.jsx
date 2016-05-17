@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 import assign from 'object-assign'
 import headerMenus from './header/HeaderMenus'
 import sidebarMenus from './sidebar/SidebarMenus';
@@ -16,16 +16,16 @@ let minLogo = 'super',
     minWidth = 60,
     scrollBarWidth = getScrollBarWidth(),
     isSidebarCollapsed = Settings.collapseSidebar(),
-    collapsedStyle = {
+    collapsedStyle = {//收起的
         headerLogoWidth: minWidth,
         headerLogo: minLogo,
         sidebarStyle: {width: minWidth, overflow: 'visible'},
-        sidebarInnerStyle: {width: minWidth, overflowY: 'hidden'},
+        sidebarInnerStyle: {width: minWidth, overflow: 'visible'},
         sidebarMode: 'vertical',
         centerLeft: minWidth,
         isSidebarCollapsed: true
     },
-    expandedStyle = {
+    expandedStyle = {//展开的
         headerLogoWidth: maxWidth,
         headerLogo: maxLogo,
         sidebarStyle: {width: maxWidth, overflow: 'hidden'},

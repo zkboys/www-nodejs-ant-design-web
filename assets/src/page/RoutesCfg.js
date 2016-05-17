@@ -1,8 +1,4 @@
-/*
- * 这个文件是通过SimpleRoutesCfg.js生成出来的，不要直接编辑这个文件，路由相关配置写到SimpleRoutesCfg.js文件中
- * 由于SimpleRoutesCfg.js不在webpack watch范围内，修改SimpleRoutesCfg.js文件要手动执行一下 npm run generate-routes 来生成路由
- * npm run generate-routes 命令已经写入webpack.config.js，build之前会自动执行。
- */
+
 export default[
     {
         path: '/shop/list-page-new',
