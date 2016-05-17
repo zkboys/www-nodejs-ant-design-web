@@ -45,8 +45,8 @@ function getCurrentSidebarMenu() {
     }
     return currentMenu;
 }
-function createSidebarMenus(menuData) {
-    return buildSidebarMenu(menuData)[0];
+function createSidebarMenus(menuData, minMenu) {
+    return buildSidebarMenu(menuData, minMenu)[0];
 }
 
 /*
@@ -147,4 +147,4 @@ function buildSidebarMenu(menuData, min) {
 
     return covertMenuFromData(menuData, min);
 }
-export {getSidebarMenus,getCurrentSidebarMenu,createSidebarMenus}
+export {getSidebarMenus, getCurrentSidebarMenu, createSidebarMenus}

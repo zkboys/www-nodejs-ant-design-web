@@ -40,7 +40,7 @@ router.get('/list-table.json', function (req, res, next) {
 });
 
 
-router.get('/select.json', function (req, res, next) {
+router.get('/api/m/1/stores.json', function (req, res, next) {
     var start = new Date();
     var delay = 3000;
     while ((new Date().getTime() - start.getTime()) < +delay) {//阻塞X秒钟
@@ -56,6 +56,8 @@ router.get('/select.json', function (req, res, next) {
         ]
     });
 });
+
+
 
 
 

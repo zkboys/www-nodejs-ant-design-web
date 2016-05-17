@@ -1,0 +1,100 @@
+.form-item {
+  .spin-wrap {
+    display: inline-block;
+    &.error {
+      color: red;
+    }
+  }
+  .ant-btn {
+    i {
+      transition: transform 300ms;
+    }
+    i.fa-angle-double-down {
+      transform: rotate(0);
+    }
+  }
+  .ant-btn.expanded {
+    i.fa-angle-double-down {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.form-item-radio {
+  display: inline-block;
+  .ant-radio-group > label.ant-radio > span {
+    margin-right: 5px;
+  }
+  .ant-radio-group > .ant-radio-button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    &.ant-radio-button-checked {
+      background-color: #2db7f5;
+      border-color: #2db7f5;
+      color: #fff;
+    }
+    &:first-child,
+    &:last-child {
+      border-radius: 3px;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.form-item-checkbox {
+  .check-box-group {
+    margin-right: 10px;
+    & > .ant-checkbox {
+      margin-right: 5px;
+    }
+  }
+  .checkbox-btn {
+    height: 32px;
+    line-height: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 3px;
+    background: #fff;
+    padding: 0 16px;
+    color: #666;
+    display: inline-block;
+    transition: all .3s ease;
+    cursor: pointer;
+    font-size: 12px;
+    &:hover {
+      color: #2db7f5;
+      position: relative;
+    }
+    &.checkbox-btn-checked {
+      background-color: #2db7f5;
+      border-color: #2db7f5;
+      color: #fff;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.form-item-datetime-area {
+  overflow: hidden;
+  .area-item,
+  .area-split {
+    float: left;
+    display: inline-block;
+  }
+  .area-split {
+    margin-top: 0;
+    text-align: center;
+  }
+  .ant-time-picker {
+    & > input {
+      width: 100%;
+    }
+  }
+}

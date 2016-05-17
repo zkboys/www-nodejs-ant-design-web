@@ -56,7 +56,13 @@ app.locals.static_url = function (filePath) {
      * */
     var fileMD5 = staticFilesMD5Map[filePath];
     if (!fileMD5) {
-        var data = rf.readFileSync(path.join(siteRootPath, 'public', filePath), "utf-8");
+        var data;
+        try{
+            data = rf.readFileSync(path.join(siteRootPath, 'public', filePath), "utf-8")
+        }catch(e){
+            // console.log(e);
+            data = new Date().getTime()+'';
+        }
         fileMD5 = crypto.createHash('md5').update(data).digest('hex');
         staticFilesMD5Map[filePath] = fileMD5;
     }

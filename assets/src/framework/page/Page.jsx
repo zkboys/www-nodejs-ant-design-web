@@ -1,5 +1,6 @@
 import React from 'react';
-import {message, Breadcrumb,Spin, QueueAnim} from 'antd';
+import {message, Breadcrumb,Spin} from 'antd';
+import QueueAnim from 'rc-queue-anim';
 import {Link} from 'react-router';
 import {getCurrentHeaderMenu} from '../header/HeaderMenuUtil';
 import {getCurrentSidebarMenu} from '../sidebar/SidebarMenuUtil'
@@ -169,7 +170,7 @@ class Page extends React.Component {
 
     render() {
         let pageChildren =
-            <Spin spining={this.props.loading}>
+            <Spin spinning={this.props.loading}>
                 {this.props.children}
             </Spin>;
         if (this.state.showPageAnimate) {

@@ -1,35 +1,16 @@
-import './style.less';
-import React from 'react';
-import assign from 'object-assign';
-import moment from 'moment';
-import Request from 'superagent';
-import FAIcon from '../faicon/FAIcon'
-import {
-    Select,
-    Radio,
-    Checkbox,
-    Button,
-    DatePicker,
-    TimePicker,
-    InputNumber,
-    Input,
-    Form,
-    Cascader,
-    Row,
-    Col,
-    Tabs,
-    Spin,
-} from 'antd';
+import "./style.less";
+import React from "react";
+import assign from "object-assign";
+import moment from "moment";
+import {CheckBoxItem, RadioItem, SelectItem, ComboboxItem, DateTimeAreaItem} from "../form-item/index";
+import {Button, DatePicker, TimePicker, InputNumber, Input, Form, Cascader, Row, Col, Tabs, Spin} from "antd";
 
-const Option = Select.Option;
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
 const createForm = Form.create;
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 
 class QueryTerms extends React.Component {
-    componentDidMount() {
+    componentWillMount() {
         //默认值要写在这里
         this.props.options.items.forEach((v)=> {
             if (v instanceof Array) {
@@ -43,9 +24,7 @@ class QueryTerms extends React.Component {
     };
 
     static defaultProps = {};
-    checkboxValueSeparator = '<@>';
     setDefaultValue = (itemOptions)=> {
-        const {getFieldProps, setFieldsValue, getFieldValue} = this.props.form;
         const type = itemOptions.type;
         let defaultValue = itemOptions.defaultValue;
         const name = itemOptions.name;
@@ -54,114 +33,6 @@ class QueryTerms extends React.Component {
         let startDefaultValue = itemOptions.startDefaultValue;
         let endDefaultValue = itemOptions.endDefaultValue;
         let options = itemOptions.options;
-        if ([
-                'select',
-                'selectSearch',
-                'selectMultiple',
-                'radio',
-                'radioButton',
-                'checkbox',
-                'checkboxButton',
-            ].includes(type)) {
-            this.setState({
-                [name + 'options']: options,
-            });
-            const url = itemOptions.url;
-            if (url) {
-                options.push({
-                    value: undefined,
-                    label: <div className="spin-wrap"><Spin /></div>
-                })
-                const optionsFilter = itemOptions.optionsFilter || ((res)=> {
-                        return res.body.results;
-                    });
-                Request
-                    .get(url)
-                    .end((err, res)=> {
-                        if (err) {
-                            options = options.filter((v)=> {
-                                return v.value !== undefined && v.value !== name + this.checkboxValueSeparator + undefined;
-                            });
-                            options.push({
-                                value: undefined,
-                                label: <div className="spin-wrap" style={{color:'red'}}>获取数据失败</div>
-                            });
-                            this.setState({
-                                [name + 'options']: options
-                            })
-                        } else {
-                            const newOptions = optionsFilter(res);
-                            options = options.filter((v)=> {
-                                return v.value !== undefined && v.value !== name + this.checkboxValueSeparator + undefined;
-                            });
-                            this.setState({
-                                [name + 'options']: options.concat(newOptions)
-                            })
-                        }
-                    });
-
-            }
-
-        }
-        // 表单元素初始化默认值
-        if (['checkbox', 'checkboxButton'].includes(type)) {
-            if (typeof defaultValue === 'string') {
-                defaultValue = [defaultValue];
-            }
-            setFieldsValue({
-                [itemOptions.name]: undefined,
-            });
-            options.forEach((v)=> {
-                const realValue = v.value;
-                // 如果不同组的checkbox有相同的value，就会互相影响
-                v.value = name + this.checkboxValueSeparator + v.value;
-
-                let value = v.value;
-                if (defaultValue.includes(realValue)) {
-                    this.setState({
-                        [value]: true
-                    });
-                    this.props.form.setFieldsValue({
-                        [value]: true
-                    });
-                    let values = getFieldValue(itemOptions.name)
-                    if (!values) {
-                        values = [];
-                    }
-                    values.push(realValue);
-                    setFieldsValue({
-                        [itemOptions.name]: values
-                    });
-                }
-            });
-        } else {
-
-            // 日期相关的默认值，如果时string，转为date，方便处理
-            if (['date', 'dateArea', 'time', 'timeArea', 'dateTime', 'dateTimeArea'].includes(type)) {
-                if (typeof defaultValue === 'string') {
-                    defaultValue = moment(defaultValue, 'HH:mm:ss').toDate();
-                }
-                if (typeof startDefaultValue === 'string') {
-                    startDefaultValue = moment(startDefaultValue, 'HH:mm:ss').toDate();
-                }
-                if (typeof endDefaultValue === 'string') {
-                    endDefaultValue = moment(endDefaultValue, 'HH:mm:ss').toDate();
-                }
-            }
-            if ((type === 'tabs' || type === 'tabsCard') && !defaultValue) {
-                defaultValue = options[0].value;
-            }
-            this.setState({
-                [name]: defaultValue,
-                [startName]: startDefaultValue,
-                [endName]: endDefaultValue,
-            });
-            this.props.form.setFieldsValue({
-                [name]: defaultValue,
-                [startName]: startDefaultValue,
-                [endName]: endDefaultValue,
-            });
-        }
 
         // 时间相关的默认格式
         let format = {
@@ -172,11 +43,29 @@ class QueryTerms extends React.Component {
             dateTime: 'yyyy-MM-dd HH:mm',
             dateTimeArea: 'yyyy-MM-dd HH:mm',
         };
-        for (let t in format) {
-            if (t === type) {
-                itemOptions.format = itemOptions.format || format[t];
+        itemOptions.format = itemOptions.format || format[type];
+
+        // 日期相关的默认值，如果时string，转为date，方便处理
+        if (['date', 'time', 'dateTime'].includes(type)) {
+            if (typeof defaultValue === 'string') {
+                defaultValue = this.stringToDate(defaultValue, format[type]);
+            }
+            if (typeof startDefaultValue === 'string') {
+                startDefaultValue = this.stringToDate(startDefaultValue, format[type]);
+            }
+            if (typeof endDefaultValue === 'string') {
+                endDefaultValue = this.stringToDate(endDefaultValue, format[type]);
             }
         }
+        // tabs相关默认值
+        if ((type === 'tabs' || type === 'tabsCard') && !defaultValue) {
+            defaultValue = options[0].value;
+        }
+        this.props.form.setFieldsValue({
+            [name]: defaultValue,
+            [startName]: startDefaultValue,
+            [endName]: endDefaultValue,
+        });
     };
 
     state = {};
@@ -236,10 +125,15 @@ class QueryTerms extends React.Component {
         format = format.replace('dd', 'DD');
         return moment(date).format(format);
     };
+    stringToDate = (str, format) => {
+        format = format.replace('yyyy', 'YYYY');
+        format = format.replace('dd', 'DD');
+        return moment(str, format).toDate();
+    };
 
     getItem = (options, itemOptions)=> {
         itemOptions = assign({}, {
-            eleWidth: '150px',
+            fieldWidth: '150px',
             labelWidth: options.labelWidth || '80px'
         }, itemOptions);
         const searchOnChange = itemOptions.searchOnChange;
@@ -249,7 +143,7 @@ class QueryTerms extends React.Component {
         const startName = itemOptions.startName;
         const endName = itemOptions.endName;
         const props = itemOptions.props;
-        const eleWidth = itemOptions.eleWidth;
+        const fieldWidth = itemOptions.fieldWidth;
         const labelWidth = itemOptions.labelWidth;
         let placeholder = itemOptions.placeholder;
         if (placeholder === undefined) {
@@ -268,10 +162,10 @@ class QueryTerms extends React.Component {
         let itemProps = {
             className: 'query-terms-item',
             style: {
-                width: eleWidth,
+                width: fieldWidth,
             }
         };
-        const eleProps = assign(
+        let eleProps = assign(
             {},
             {
                 placeholder,
@@ -295,48 +189,17 @@ class QueryTerms extends React.Component {
         if (endName) {
             endFieldPropsOptions = getFieldProps(endName, itemOptions.fieldPropsOptions);
         }
-        const labelJsx = (
+        const labelJsx = label ? (
             <div {...labelProps}>
                 {label}：
             </div>
-        );
+        ) : '';
         const searchDelay = 300;
         eleProps.onChange = (e)=> {
             const value = e && e.target ? e.target.value : e;
-            if (['checkbox', 'checkboxButton'].includes(itemType)) {
-                const checkValue = e.target.checked;
-                const name = e.target.id;
-                const realValue = name.split(this.checkboxValueSeparator)[1];
-
-                this.setState({
-                    [name]: checkValue
-                });
-                let values = getFieldValue(itemOptions.name);
-                if (!values) {
-                    values = [];
-                }
-                if (checkValue) {
-                    values.push(realValue);
-                } else {
-                    let index = values.indexOf(realValue);
-                    if (index !== -1) {
-                        values.splice(index, 1)
-                    }
-                }
-
-                setFieldsValue({
-                    [name]: checkValue,
-                    [itemOptions.name]: values,
-                });
-            } else {
-                this.setState({
-                    [name]: value
-                });
-                setFieldsValue({
-                    [name]: value,
-                });
-            }
-
+            setFieldsValue({
+                [name]: value,
+            });
             if (['input', 'inputNumber', 'combobox'].includes(itemType)) {
                 clearTimeout(this.searchTimeout);
                 this.searchTimeout = setTimeout(()=> {
@@ -346,24 +209,6 @@ class QueryTerms extends React.Component {
                 searchOnChange && this.handleSubmit();
             }
 
-        };
-        let handleExpandBtnClick = (e)=> {
-            let button = e.currentTarget;
-            let btnClassNames = button.className.split(' ');
-            if (btnClassNames.includes('expanded')) {
-                btnClassNames.splice(btnClassNames.indexOf('expanded'), 1);
-                button.title = "显示更多";
-                this.setState({
-                    [name + 'expanded']: false,
-                })
-            } else {
-                btnClassNames.push('expanded');
-                button.title = "收起更多";
-                this.setState({
-                    [name + 'expanded']: true,
-                })
-            }
-            button.className = btnClassNames.join(' ');
         };
         switch (itemType) {
             case 'input':
@@ -397,35 +242,25 @@ class QueryTerms extends React.Component {
             case 'combobox':
             {
                 let separator = itemOptions.separator;
-                let commonHandleChange = eleProps.onChange;
-
-                let handleChange = (value)=> {
-                    let comboboxOptions;
-                    if (!value || value.indexOf(separator) >= 0) {
-                        comboboxOptions = [];
-                    } else {
-                        comboboxOptions = itemOptions.options.map((opt) => {
-                            const label = `${value}${separator}${opt}`;
-                            return <Option key={label}>{label}</Option>;
-                        });
-                    }
-                    this.setState({
-                        [name + 'comboboxOptions']: comboboxOptions
-                    });
-                    commonHandleChange && commonHandleChange(value)
-                };
-                eleProps.onChange = handleChange;
+                const size = itemOptions.size;
+                const opts = itemOptions.options;
+                const optionsFilter = itemOptions.optionsFilter;
+                const url = itemOptions.url;
+                const defaultValue = itemOptions.defaultValue;
                 return (
                     <Col>
                         {labelJsx}
                         <FormItem  {...itemProps}>
-                            <Select combobox
+                            <ComboboxItem
+                                separator={separator}
+                                size={size}
+                                url={url}
+                                defaultValue={defaultValue}
+                                options={opts}
+                                optionsFilter={optionsFilter}
                                 {...fieldPropsOptions}
-                                    filterOption={false}
                                 {...eleProps}
-                            >
-                                {this.state[name + 'comboboxOptions']}
-                            </Select>
+                            />
                         </FormItem>
                     </Col>
                 );
@@ -434,26 +269,34 @@ class QueryTerms extends React.Component {
             case 'selectSearch':
             case 'selectMultiple':
             {
-                const options = this.state[name + 'options'] || []
+                const size = itemOptions.size;
+                const opts = itemOptions.options;
+                const optionsFilter = itemOptions.optionsFilter;
+                const url = itemOptions.url;
+                const defaultValue = itemOptions.defaultValue;
                 if (itemType === 'selectSearch') {
-                    eleProps.showSearch = true;
-                    eleProps.optionFilterProp = "children";
-                    eleProps.notFoundContent = "无法找到";
-                    eleProps.searchPlaceholder = "输入关键词";
-
+                    eleProps = assign({}, {showSearch: true}, eleProps)
                 }
                 if (itemType === 'selectMultiple') {
-                    eleProps.multiple = true;
+                    eleProps = assign({}, {multiple: true}, eleProps)
                 }
                 return (
                     <Col>
                         {labelJsx}
                         <FormItem  {...itemProps}>
-                            <Select {...fieldPropsOptions} {...eleProps}>
-                                {options.map((v, i)=> {
+                            <SelectItem
+                                size={size}
+                                url={url}
+                                defaultValue={defaultValue}
+                                options={opts}
+                                optionsFilter={optionsFilter}
+                                {...fieldPropsOptions}
+                                {...eleProps}
+                            >
+                                {opts.map((v, i)=> {
                                     return <Option key={i} value={v.value}>{v.label}</Option>
                                 })}
-                            </Select>
+                            </SelectItem>
                         </FormItem>
                     </Col>
                 );
@@ -473,174 +316,49 @@ class QueryTerms extends React.Component {
                     </Col>
                 );
             }
+            case 'radio':
             case 'radioButton':
+            case 'checkboxButton':
+            case 'checkbox':
             {
-                itemProps.style.marginBottom = '0';
-                const options = this.state[name + 'options'] || [];
-                let showCount = itemOptions.minCount || 10;
-                let showExpandedBtn = itemOptions.expandable && options.length > showCount;
-                let radioButtons = itemOptions.expandable ? options.filter((v, i, a)=> {
-                    if (this.state[name + 'expanded']) {
-                        return true;
-                    }
-                    return i < showCount;
-                }) : options;
+                itemProps.style.marginBottom = '0px';
+                const type = ['radioButton', 'checkboxButton'].includes(itemType) ? 'button' : 'radio';
+                const size = itemOptions.size;
+                const opts = itemOptions.options;
+                const optionsFilter = itemOptions.optionsFilter;
+                const minCount = itemOptions.minCount;
+                const url = itemOptions.url;
+                const expandable = itemOptions.expandable;
+                const defaultValue = itemOptions.defaultValue;
+                const Element = ['checkbox', 'checkboxButton'].includes(itemType) ? CheckBoxItem : RadioItem;
+                if (type === 'button') {
+                    eleProps.button = true;
+                }
+                if (expandable) {
+                    eleProps.expandable = true;
+                }
                 return (
 
                     <Col>
                         <FormItem  {...itemProps} >
-                            <div className="radio-btn-label">
+                            <div className="text-label">
                                 {labelJsx}
                             </div>
                             <div style={{marginLeft:labelWidth}}>
-                                <RadioGroup
-                                    {...fieldPropsOptions}
+                                <Element
+                                    type={type}
+                                    size={size}
+                                    url={url}
+                                    minCount={minCount}
+                                    defaultValue={defaultValue}
+                                    options={opts}
+                                    optionsFilter={optionsFilter}
                                     {...eleProps}
-                                >
-                                    {radioButtons.map((v, i)=> {
-                                        if (v.value === undefined) {
-                                            return v.label;
-                                        }
-                                        return <RadioButton key={i} value={v.value}>{v.label}</RadioButton>
-                                    })}
-                                    {
-                                        showExpandedBtn ?
-                                            <Button
-                                                type="ghost"
-                                                size="large"
-                                                title="显示更多"
-                                                style={{padding:'0 25px',paddingTop:'1px', fontSize:'19px'}}
-                                                onClick={handleExpandBtnClick}
-                                            >
-                                                <FAIcon type="fa-angle-double-down"/>
-                                            </Button>
-                                            : ''
-                                    }
-                                </RadioGroup>
+                                />
                             </div>
                         </FormItem>
                     </Col>
                 );
-            }
-            case 'radio':
-            {
-                const options = this.state[name + 'options'] || [];
-                return (
-                    <Col>
-
-                        {/*这个label位置比较特殊，为了使单选和label始终同行*/}
-                        {labelJsx}
-                        <FormItem  {...itemProps}>
-                            <RadioGroup
-                                {...fieldPropsOptions}
-                                {...eleProps}
-                            >
-                                {options.map((v, i)=> {
-                                    if (v.value === undefined) {
-                                        return v.label;
-                                    }
-                                    return <Radio key={i} value={v.value}>{v.label}</Radio>
-                                })}
-                            </RadioGroup>
-                        </FormItem>
-                    </Col>
-                );
-            }
-            case 'checkbox':
-            {
-                const valuePropName = 'checked';
-                const options = this.state[name + 'options'] || [];
-                return (
-                    <Col>
-                        {labelJsx}
-                        <FormItem  {...itemProps}>
-                            {options.map((v, i)=> {
-                                if (v.value === name + this.checkboxValueSeparator + undefined) {
-                                    return v.label;
-                                }
-                                return (
-                                    <div className="check">
-                                        <label className="query-terms-item-label">
-                                            <Checkbox
-                                                {...getFieldProps(v.value, {valuePropName})}
-                                                {...eleProps}
-                                            />
-                                            {v.label}
-                                        </label>
-                                    </div>
-                                )
-                            })}
-                        </FormItem>
-                    </Col>
-                );
-            }
-            case 'checkboxButton':
-            {
-                let commonHandleChange = eleProps.onChange;
-                const options = this.state[name + 'options'] || [];
-                let handleChange = (value)=> {
-                    const e = {
-                        target: {
-                            checked: !this.state[value],
-                            id: value,
-                        }
-                    };
-                    commonHandleChange && commonHandleChange(e)
-                };
-
-                itemProps.style.marginBottom = '0';
-                let showCount = itemOptions.minCount || 10;
-                let showExpandedBtn = itemOptions.expandable && options.length > showCount;
-                let checkboxButtons = itemOptions.expandable ? options.filter((v, i, a)=> {
-                    if (this.state[name + 'expanded']) {
-                        return true;
-                    }
-                    return i < showCount;
-                }) : options;
-                return (
-                    <Col>
-                        <FormItem  {...itemProps} className="checkbox-btn-item">
-                            {/*这个label位置比较特殊，为了使按钮和label始终同行*/}
-                            {labelJsx}
-                            <div style={{marginLeft:labelWidth}}>
-                                {checkboxButtons.map((v, i)=> {
-                                    if (v.value === name + this.checkboxValueSeparator + undefined) {
-                                        return v.label;
-                                    }
-                                    let className = ['checkbox-btn'];
-                                    if (this.state[v.value]) {
-                                        className.push('checkbox-btn-checked');
-                                    }
-                                    return (
-                                        <label className="query-terms-item-label">
-                                            <label
-                                                className={className.join(' ')}
-                                                onClick={()=>{handleChange(v.value)}}
-                                            >
-                                                {v.label}
-                                            </label>
-                                        </label>
-                                    )
-
-                                })}
-                                {
-                                    showExpandedBtn ?
-                                        <Button
-                                            type="ghost"
-                                            size="large"
-                                            title="显示更多"
-                                            style={{padding:'0 25px',paddingTop:'1px', fontSize:'19px'}}
-                                            onClick={handleExpandBtnClick}
-                                        >
-                                            <FAIcon type="fa-angle-double-down"/>
-                                        </Button>
-                                        : ''
-                                }
-                            </div>
-                        </FormItem>
-                    </Col>
-                );
-
             }
             case 'date':
             case 'dateTime':
@@ -671,90 +389,24 @@ class QueryTerms extends React.Component {
             case 'timeArea':
             case 'dateTimeArea':
             {
-                let format = itemOptions.format;
-                let commonHandleChange = eleProps.onChange;
-                let handleChange = (name)=> {
-                    return (value)=> {
-                        this.setState({
-                            [name]: value,
-                        });
-                        setFieldsValue({
-                            [name]: value,
-                        });
-                        commonHandleChange && commonHandleChange(value);
-                    }
+                let typeProps = {
+                    [itemType]: true,
                 };
-                const startEleProps = assign({}, eleProps, {onChange: handleChange(startName)});
-                const endEleProps = assign({}, eleProps, {onChange: handleChange(endName)});
-                let splitWidth = 20;
-                const itemWidth = ((parseInt(eleWidth) - splitWidth) / 2) + 'px';
-                splitWidth = splitWidth + 'px';
-                itemProps.style.width = itemWidth;
-
-                let disabledStartDate = (startValue)=> {
-                    if (!startValue || !this.state[endName]) {
-                        return false;
-                    }
-                    return startValue.getTime() > this.state[endName].getTime();
-                };
-                let disabledEndDate = (endValue)=> {
-                    if (!endValue || !this.state[startName]) {
-                        return false;
-                    }
-                    return endValue.getTime() < this.state[startName].getTime();
-                };
-                let showTimeProps = {};
-                if (itemType === 'dateTimeArea') {
-                    showTimeProps.showTime = true;
+                if (options.resultDateToString) {
+                    eleProps.resultDateToString = true;
                 }
                 return (
                     <Col>
                         {labelJsx}
-                        <div className="area-item" style={{width:itemWidth}}>
-                            <FormItem  {...itemProps}>
-                                {
-                                    itemType === 'dateArea' || itemType === 'dateTimeArea' ?
-                                        <DatePicker
-                                            {...showTimeProps}
-                                            disabledDate={disabledStartDate}
-                                            {...startFieldPropsOptions}
-                                            format={format}
-                                            {...startEleProps}
-                                        />
-                                        :
-                                        <TimePicker
-                                            {...startFieldPropsOptions}
-                                            format={format}
-                                            {...startEleProps}
-                                        />
-                                }
-
-                            </FormItem>
-                        </div>
-                        <div className="area-split" style={{width:splitWidth}}>
-                            <p className="ant-form-split">-</p>
-                        </div>
-                        <div className="area-item" style={{width:itemWidth}}>
-                            <FormItem  {...itemProps}>
-                                {
-                                    itemType === 'dateArea' || itemType === 'dateTimeArea' ?
-                                        <DatePicker
-                                            {...showTimeProps}
-                                            disabledDate={disabledEndDate}
-                                            {...endFieldPropsOptions}
-                                            format={format}
-                                            {...endEleProps}
-                                        />
-                                        :
-                                        <TimePicker
-                                            {...endFieldPropsOptions}
-                                            format={format}
-                                            {...endEleProps}
-                                        />
-                                }
-
-                            </FormItem>
-                        </div>
+                        <FormItem  {...itemProps}>
+                            <DateTimeAreaItem
+                                {...typeProps}
+                                width={fieldWidth}
+                                startFieldProps={startFieldPropsOptions}
+                                endFieldProps={endFieldPropsOptions}
+                                {...eleProps}
+                            />
+                        </FormItem>
                     </Col>
                 )
             }
@@ -791,6 +443,22 @@ class QueryTerms extends React.Component {
                 )
 
             }
+            case 'customer':
+            {
+                let Component = itemOptions.component;
+                return (
+                    <Col>
+                        {labelJsx}
+                        <FormItem  {...itemProps}>
+                            <Component
+                                {...fieldPropsOptions}
+                                {...eleProps}
+                            />
+                        </FormItem>
+
+                    </Col>
+                )
+            }
             default:
             {
                 throw Error(`查询条件没有此类型：type:${itemType}`);
@@ -801,30 +469,43 @@ class QueryTerms extends React.Component {
 
     render() {
         const options = this.props.options;
+        const searchBtnText = options.searchBtnText || '查询';
+        const extraButtons = options.extraButtons;
         const items = options.items.map((value, index, array)=> {
             const rowProps = {
                 type: "flex",
                 justify: "start",
                 align: "top"
             };
-            let searchBtn;
-            if (index === array.length - 1 && options.showSearchBtn) {
-                searchBtn = (
-                    <Col>
-                        <FormItem className="query-terms-item" style={{padding: '0 10px'}}>
-                            <Button type="primary" onClick={this.handleSubmit}>查询</Button>
-                        </FormItem>
-                    </Col>
-                );
+            let buttons = [];
+            if (index === array.length - 1) {
+                if (options.showSearchBtn) {
+                    buttons.push(
+                        <Col>
+                            <FormItem className="query-terms-item" style={{paddingLeft: '10px'}}>
+                                <Button type="primary" onClick={this.handleSubmit}>{searchBtnText}</Button>
+                            </FormItem>
+                        </Col>
+                    );
+                }
+                if(extraButtons){
+                    buttons.push(
+                        <Col>
+                            <FormItem className="query-terms-item" style={{paddingLeft: '10px'}}>
+                                {extraButtons}
+                            </FormItem>
+                        </Col>
+                    );
+                }
             }
             if (value instanceof Array) {
                 // 一行多个查询条件
                 return (
-                    <Row  {...rowProps}>
+                    <Row key={index} {...rowProps}>
                         {value.map((v, i, a)=> {
                             return [
                                 this.getItem(options, v),
-                                i === a.length - 1 ? searchBtn : undefined
+                                i === a.length - 1 ? buttons : undefined
                             ];
                         })}
                     </Row>
@@ -832,9 +513,9 @@ class QueryTerms extends React.Component {
             } else {
                 // 一行一个查询条件
                 return (
-                    <Row  {...rowProps}>
+                    <Row key={index} {...rowProps}>
                         {this.getItem(options, value)}
-                        {searchBtn}
+                        {buttons}
                     </Row>
                 )
             }

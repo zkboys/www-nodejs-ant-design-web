@@ -1,5 +1,5 @@
-var join = require("path").join;
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var join = require('path').join;
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 var child_process = require('child_process');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -8,21 +8,29 @@ var rummod = process.env.runmod || 'development';
  * 基于不同模式，区分配置
  * */
 var configs = {
-    "devserver": {
-        "path": '../public',
-        "publicPath": 'http://localhost:8088/s/'
+    development: {
+        path: '../public',
+        publicPath: 'http://localhost:8088/s/',
+        library: [
+            {from: 'node_modules/antd/dist/antd.css', to: 'antd.min.css'},
+            {from: 'node_modules/antd/dist/antd.js', to: 'antd.min.js'},
+            {from: 'node_modules/react/dist/react.js', to: 'react.min.js'},
+            {from: 'node_modules/react-dom/dist/react-dom.js', to: 'react-dom.min.js'}
+        ]
     },
-    "development": {
-        "path": '../public',
-        "publicPath": '/s/'
+    test: {
+        path: '../public',
+        publicPath: '/s/'
     },
-    "test": {
-        "path": '../public',
-        "publicPath": '/s/'
-    },
-    "production": {
-        "path": '../public',
-        "publicPath": '/s/'
+    production: {
+        path: '../public',
+        publicPath: '/s/',
+        library: [
+            {from: 'node_modules/antd/dist/antd.min.css'},
+            {from: 'node_modules/antd/dist/antd.min.js'},
+            {from: 'node_modules/react/dist/react.min.js'},
+            {from: 'node_modules/react-dom/dist/react-dom.min.js'}
+        ]
     }
 };
 
@@ -31,8 +39,10 @@ var configs = {
  * 获取不同的环境配置
  * */
 var cfg = configs[rummod] || configs.development;
-
-
+/*
+ * 第三方js库，分离出来能提高打包速度
+ * */
+var library = cfg.library;
 /*
  * 定义entry
  * 如果项目结构命名有良好的约定，是否考虑使用代码自动生成entry？
@@ -79,7 +89,7 @@ module.exports = {
         pathinfo: false,//去掉生成文件的相关注释
         path: join(__dirname, cfg.path),
         publicPath: cfg.publicPath,
-        filename: "[name].js",// entry　配置的文件
+        filename: "[name].min.js",// entry　配置的文件
         chunkFilename: "[name].[chunkhash:8].min.js",//非entry，但是需要单独打包出来的文件名配置，添加[chunkhash:8]　防止浏览器缓存不更新．
         //libraryTarget: 'umd',
         'libraryTarget': 'var'
@@ -146,7 +156,7 @@ module.exports = {
          * css单独打包成一个css文件
          * 比如entry.js引入了多个less，最终会都打到一个xxx.css中。
          * */
-        new ExtractTextPlugin("[name].css", {
+        new ExtractTextPlugin("[name].min.css", {
             disable: false,
             allChunks: true
         }),
@@ -161,11 +171,6 @@ module.exports = {
         /*
          * 拷贝externals文件到指定静态目录，webpack-dev-server也可以获取到这些文件。
          * */
-        new CopyWebpackPlugin([
-            {from: 'src/static/antd-0.12.12.min.css'},
-            {from: 'src/static/antd-0.12.12.min.js'},
-            {from: 'src/static/react-0.14.6.min.js'},
-            {from: 'src/static/react-dom-0.14.6.min.js'}
-        ])
+        new CopyWebpackPlugin(library)
     ]
 };

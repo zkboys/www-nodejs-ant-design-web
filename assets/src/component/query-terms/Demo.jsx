@@ -1,12 +1,15 @@
-import React from 'react';
-import QueryTerms from './QueryTerms'
-
+import React from "react";
+import QueryTerms from "./QueryTerms";
+import {Input} from "antd";
 class Demo extends React.Component {
+
     render() {
         let options = {
             showSearchBtn: true,              // 可选，默认true 是否显示查询按钮
+            searchBtnText: '查询',            // 可选，默认 查询 ，查询按钮的text
+            extraButtons: '',                     // 可选，默认 undefined，跟在查询按钮之后的按钮，比如<Button>导出</Button>
             labelWidth: '100px',              // 可选，默认：‘80px’,全局设置label长度，每个条件可以覆盖这个属性。
-            eleWidth: '150px',                // 可选，默认：‘150px’,全局元素长度，每个条件可以覆盖这个属性。
+            fieldWidth: '150px',                // 可选，默认：‘150px’,全局元素长度，每个条件可以覆盖这个属性。
             resultDateToString: true,         // 可选，默认 true，查询条件日期相关数据是否转为字符串
             onSubmit: function (data) {       // 必选，点击查询按钮时的回调函数 data为所有的查询条件数据，可以在这个函数中发起请求等操作。
                 console.log('***', data);
@@ -38,15 +41,22 @@ class Demo extends React.Component {
                     ]
                 },
                 {
+                    type: 'customer', // 自定义组件，需要提供一个component
+                    name: 'customerName',
+                    defaultValue: '我是自定义条件',
+                    searchOnChange: true,
+                    component: Input
+                },
+                {
                     type: 'input',             // 必须，查询条件类型
-                    label: '普通输入框',        // 必须，查询条件显示的label
                     name: 'userName',          // 必须，查询条件数据name
+                    label: '普通输入框',        // 可选，查询条件显示的label，缺省将不显示label
                     labelWidth: '100px',       // 可选，默认为 全局labelWidth，如果是Number类型，默认单位为px
-                    eleWidth: '250px',         // 可选，默认为 全局eleWidth，控制输入框等大小，如果是Number类型，默认单位为px, 可以为auto
+                    fieldWidth: '250px',       // 可选，默认为 全局fieldWidth，控制输入框等大小，如果是Number类型，默认单位为px, 可以为auto
                     searchOnChange: true,      // 可选，默认：false， 值改变是否出发onSearch函数
                     //placeholder: '我是提示',  // 可选，默认为请输入[label],如果是select等选择类型，默认为：请选择[label]
                     defaultValue: 'all',       // 可选，默认值，checkbox，checkboxButton这个值为数组。
-                    fieldPropsOptions: {},     // 可选，用来添加校验等，参见http://ant.design/components/form/#this-props-form-getfieldprops-id-options
+                    fieldPropsOptions: {},     // 可选，form 的 getFieldProps方法第二个参数，用来添加校验等，参见http://ant.design/components/form/#this-props-form-getfieldprops-id-options
                     min: undefined,            // 可选，inputNumber 专用
                     max: undefined,            // 可选，inputNumber 专用
                     props: {},                 // 可选，加在表单元素上的props 一般情况下不要用。
@@ -73,6 +83,7 @@ class Demo extends React.Component {
                     name: 'comboboxName',
                     label: '提示输入框',
                     separator: '@',
+                    defaultValue: '111@163.com',
                     options: [
                         '163.com',
                         'qq.com',
@@ -80,12 +91,13 @@ class Demo extends React.Component {
                         'xx.com',
                     ],
                 },
+
                 [
                     {
                         type: 'date',
                         name: 'dateName',
                         label: '日期',
-                        // eleWidth: '300px',
+                        // fieldWidth: '300px',
                         //defaultValue: new Date(), // 这样也可以
                         defaultValue: '2016-05-08',
                     },
@@ -95,10 +107,11 @@ class Demo extends React.Component {
                         endName: 'dateAreaNameEnd',
                         //startDefaultValue: new Date(),
                         //endDefaultValue: new Date(),
-                        startDefaultValue: '2016-05-08',
+                        startDefaultValue: '2016-04-08',
                         endDefaultValue: '2016-05-08',
+                        searchOnChange: true,
                         label: '日期区间',
-                        eleWidth: '300px',
+                        fieldWidth: '300px',
                         format: 'yyyy-MM-dd',
                     },
                 ],
@@ -107,7 +120,7 @@ class Demo extends React.Component {
                         type: 'time',
                         name: 'timeName',
                         label: '时间',
-                        // eleWidth: '300px',
+                        // fieldWidth: '300px',
                         //defaultValue: new Date(),
                         defaultValue: '22:22',
                     },
@@ -120,7 +133,7 @@ class Demo extends React.Component {
                         startDefaultValue: '22:22',
                         endDefaultValue: '22:22',
                         label: '时间区间',
-                        eleWidth: '300px',
+                        fieldWidth: '300px',
                         format: 'HH:mm',
                     },
                 ],
@@ -129,7 +142,7 @@ class Demo extends React.Component {
                         type: 'dateTime',
                         name: 'dateTimeName',
                         label: '日期+时间',
-                        // eleWidth: '300px',
+                        // fieldWidth: '300px',
                         format: 'yyyy-MM-dd HH:mm:ss',
                         //defaultValue: new Date(),
                         defaultValue: '2016-05-08 02:53:58',
@@ -145,7 +158,7 @@ class Demo extends React.Component {
                         startDefaultValue: '2016-05-08 22:22',
                         endDefaultValue: '2016-05-08 22:22',
                         label: '日期+时间区间',
-                        eleWidth: '300px',
+                        fieldWidth: '300px',
                         format: 'yyyy-MM-dd HH:mm',
                     },
                 ],
@@ -154,9 +167,9 @@ class Demo extends React.Component {
                     name: 'checkboxName',
                     label: '多选框',
                     searchOnChange: true,
-                    eleWidth: 'auto',
-                    defaultValue: '33',
-                    // url: '/select.json',
+                    fieldWidth: 'auto',
+                    defaultValue: ['33'],
+                    url: '/api/m/1/stores.json',
                     optionsFilter(res){// 对ajax返回的数据进行处理
                         return res.body.results.map((v)=> {
                             return {value: v.id, label: v.name}
@@ -174,11 +187,11 @@ class Demo extends React.Component {
                     name: 'checkboxButtonName',
                     label: '多选按钮',
                     searchOnChange: true,
-                    eleWidth: 'auto', // 启用展开收起功能时，eleWidth建议使用auto
-                    defaultValue: 'all',
+                    fieldWidth: 'auto', // 启用展开收起功能时，fieldWidth建议使用auto
+                    defaultValue: ['33'],
                     expandable: true,// 可选，默认false，是否启用展开收起功能
                     minCount: 10,     // 可选，默认10，如果使用展开收起功能，收起时显示的个数
-                    // url: '/select.json',
+                    url: '/api/m/1/stores.json',
                     optionsFilter(res){// 对ajax返回的数据进行处理
                         return res.body.results.map((v)=> {
                             return {value: v.id, label: v.name}
@@ -208,10 +221,10 @@ class Demo extends React.Component {
                     type: 'radio',
                     name: 'radioName',
                     label: '单选',
-                    eleWidth: 'auto',
+                    fieldWidth: 'auto',
                     searchOnChange: true,
                     defaultValue: 1,
-                    // url: '/select.json',
+                    url: '/api/m/1/stores.json',
                     optionsFilter(res){// 对ajax返回的数据进行处理
                         return res.body.results.map((v)=> {
                             return {value: v.id, label: v.name}
@@ -228,10 +241,10 @@ class Demo extends React.Component {
                     type: 'radioButton',
                     name: 'radioButton',
                     label: '单选按钮',
-                    eleWidth: 'auto',
+                    fieldWidth: 'auto',
                     searchOnChange: true,
                     defaultValue: 'all',
-                    // url: '/select.json',
+                    url: '/api/m/1/stores.json',
                     optionsFilter(res){// 对ajax返回的数据进行处理
                         return res.body.results.map((v)=> {
                             return {value: v.id, label: v.name}
@@ -249,7 +262,7 @@ class Demo extends React.Component {
                     type: 'radioButton',
                     name: 'radioButton2',
                     label: '可收展单选按钮',
-                    eleWidth: 'auto', // 启用展开收起功能时，eleWidth建议使用auto
+                    fieldWidth: 'auto', // 启用展开收起功能时，fieldWidth建议使用auto
                     searchOnChange: true,
                     defaultValue: 'all',
                     expandable: true,// 可选，默认false，是否启用展开收起功能
@@ -296,7 +309,7 @@ class Demo extends React.Component {
                         type: 'selectSearch',
                         name: 'selectUrlName',
                         label: '异步下拉',
-                        url: '/select.json',
+                        url: '/api/m/1/stores.json',
                         optionsFilter(res){// 对ajax返回的数据进行处理
                             return res.body.results.map((v)=> {
                                 return {value: v.id, label: v.name}
@@ -326,6 +339,7 @@ class Demo extends React.Component {
                         type: 'selectMultiple',
                         name: 'selectMultipleName',
                         label: '多选下拉',
+                        fieldWidth: '200px',
                         //defaultValue: '112', // 这样也可以
                         defaultValue: ['11', '112'],
                         options: [

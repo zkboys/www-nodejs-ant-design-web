@@ -1,4 +1,4 @@
-import './style.less';
+import './../style.less';
 import assign from 'object-assign';
 import React from 'react';
 import { connect } from 'react-redux'
