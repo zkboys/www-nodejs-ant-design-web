@@ -2,9 +2,9 @@
  * 路由映射文件,配置越靠前，优先级越高
  * */
 
-var express = require('express');
-var router = express.Router();
-router.get('/dashboard.json', function (req, res, next) {
+const express = require('express');
+const router = express.Router();
+router.get('/dashboard.json', (req, res, next) => {
     //res.json({name: 'aaa', age: 22});
     var start = new Date();
     while ((new Date().getTime() - start.getTime()) < +req.query.delay) {//阻塞X秒钟
@@ -48,17 +48,14 @@ router.get('/api/m/1/stores.json', function (req, res, next) {
     }
     res.send({
         results: [
-            {id:1,name:'后台'},
-            {id:2,name:'返回'},
-            {id:3,name:'的数据'},
-            {id:4,name:'ajax请求'},
-            {id:5,name:'异步数据'},
+            {id: 1, name: '后台'},
+            {id: 2, name: '返回'},
+            {id: 3, name: '的数据'},
+            {id: 4, name: 'ajax请求'},
+            {id: 5, name: '异步数据'},
         ]
     });
 });
-
-
-
 
 
 router.get('*', function (req, res, next) {
