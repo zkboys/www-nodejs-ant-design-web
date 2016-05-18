@@ -110,5 +110,13 @@ export default [
         text: '校验demo111',
         icon: 'fa-arrow-right',
         path: '/shop/ValidationDemo'
+    },
+    {
+        key: 'shop-007003001',
+        parentKey: 'shop-007003',
+        order: 1,
+        text: '校验demo222',
+        icon: 'fa-arrow-right',
+        path: '/shop/ValidationDemo123'
     }
 ];

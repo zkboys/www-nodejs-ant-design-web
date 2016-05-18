@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import {Menu, Icon} from 'antd';
 import {getSidebarMenus} from './SidebarMenuUtil'
 import assign from 'object-assign'
 class Sidebar extends React.Component {
@@ -21,20 +21,29 @@ class Sidebar extends React.Component {
             hidden,
             openKeys,
             selectedKeys,
-            sidebarMenus
         } = this.props.sidebar;
         let style = assign({}, sidebarStyle, hidden ? {width: 0} : {});
-        console.log(sidebarMenus);
+
         return (
             <div className="admin-sidebar" style={style}>
                 <div className="admin-sidebar-inner" style={sidebarInnerStyle}>
+                    {/*不同模式的菜单要区分开写，否则互相干扰*/}
                     <Menu
+                        style={{display: sidebarMode==='inline'?'block':'none'}}
                         openKeys={openKeys}
                         selectedKeys={[selectedKeys]}
                         onOpen={this.handleToggle}
                         onClose={this.handleToggle}
-                        mode={sidebarMode}>
-                        {getSidebarMenus(sidebarMenus)}
+                        mode={sidebarMode}
+                    >
+                        {getSidebarMenus()}
+                    </Menu>
+                    <Menu
+                        style={{display:sidebarMode ==='vertical'?'block':'none'}}
+                        selectedKeys={[selectedKeys]}
+                        mode={sidebarMode}
+                    >
+                        {getSidebarMenus()}
                     </Menu>
                 </div>
             </div>

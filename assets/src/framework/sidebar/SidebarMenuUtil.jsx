@@ -1,201 +1,140 @@
 import React from 'react';
-import FAIcon from '../../component/faicon/FAIcon';
 import {Link} from 'react-router'
+import assign from 'object-assign';
 import {Menu, Tooltip, Icon} from 'antd';
-import Settings from './../settings/Settings'
+import FAIcon from '../../component/faicon/FAIcon';
+import Settings from './../settings/Settings';
+import menus from '../menus';
+import {getCurrentHeaderMenuByUrl} from '../header/HeaderMenuUtil'
+
 const SubMenu = Menu.SubMenu;
-import sidebarMenuData from './SidebarMenus'
-const MenuItemGroup = Menu.ItemGroup;
 
-function getMaxSidebarMenusByParentKey(parentKey) {
-    return [
-        <SubMenu key="sub1" title={<span><Icon type="mail" /><span>导航一</span></span>}>
-            <MenuItemGroup title="分组1">
-                <Menu.Item key="1">选项1</Menu.Item>
-                <Menu.Item key="2">选项2</Menu.Item>
-            </MenuItemGroup>
-            <MenuItemGroup title="分组2">
-                <Menu.Item key="3">选项3</Menu.Item>
-                <Menu.Item key="4">选项4</Menu.Item>
-            </MenuItemGroup>
-        </SubMenu>,
-        <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>导航二</span></span>}>
-            <Menu.Item key="5">选项5</Menu.Item>
-            <Menu.Item key="6">选项6</Menu.Item>
-            <SubMenu key="sub3" title="三级导航">
-                <Menu.Item key="7">选项7</Menu.Item>
-                <Menu.Item key="8">选项8</Menu.Item>
-            </SubMenu>
-        </SubMenu>,
-        <SubMenu key="sub4" title={<span><icon type="setting" /><span>导航三</span></span>}>
-            <Menu.Item key="9">选项9</Menu.Item>
-            <Menu.Item key="10">选项10</Menu.Item>
-            <Menu.Item key="11">选项11</Menu.Item>
-            <Menu.Item key="12">选项12</Menu.Item>
-        </SubMenu>,
-    ]
-}
-function getMinSidebarMenusByParentKey(parentKey) {
-    return [
-        <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>导航二</span></span>}>
-            <Menu.Item key="5">选项5</Menu.Item>
-            <Menu.Item key="6">选项6</Menu.Item>
-            <SubMenu key="sub3" title="三级导航">
-                <Menu.Item key="7">选项7</Menu.Item>
-                <Menu.Item key="8">选项8</Menu.Item>
-            </SubMenu>
-        </SubMenu>,
-        <SubMenu key="sub4" title={<span><icon type="setting" /><span>导航三</span></span>}>
-            <Menu.Item key="9">选项9</Menu.Item>
-            <Menu.Item key="10">选项10</Menu.Item>
-            <Menu.Item key="11">选项11</Menu.Item>
-            <Menu.Item key="12">选项12</Menu.Item>
-        </SubMenu>,
-    ]
-}
-function getCurrentMenuByUrl() {
-
-}
-/*
- * 获取左侧菜单jsx数据,可以用于直接显示.
- * */
-function getSidebarMenus(sidebarMenus) {
-    let [minSidebarMenu, maxSidebarMenu] = getMenusData();
-    let min = Settings.collapseSidebar() ? true : false;
-    minSidebarMenu = minSidebarMenu || [];
-    maxSidebarMenu = maxSidebarMenu || [];
-    return min ? minSidebarMenu : maxSidebarMenu;
-}
-/*
- * 获取要设为当前状态的菜单数据.
- * */
 function getCurrentSidebarMenu() {
-    let [, , simpleMenuData] = getMenusData();
-    if (!simpleMenuData) {
-        return null;
-    }
-    let openAll = Settings.sidebarMenuAlwaysOpen();
-    let openKeys = [];
-    let currentMenu = null;
-    for (let i = 0; i < simpleMenuData.length; i++) {
-        let menu = simpleMenuData[i];
-        if (openAll && menu.parentKeys) {
-            openKeys.push(...menu.parentKeys);
+    console.log(location.pathname);
+    let currentPath = location.pathname;
+    let headMenu = getCurrentHeaderMenuByUrl();
+    let menusTree = convert(menus, headMenu);
+    while (menusTree && menusTree.length) {
+        // 处理一个，头部弹出一个。
+        let node = menusTree.shift();
+        if (node.path == currentPath) {
+            return node;
         }
-        if (menu.path == location.pathname) {
-            let m = simpleMenuData[i];
-            if (!openAll) {
-                openKeys = m.parentKeys;
-            }
-            currentMenu = m;
-            currentMenu.parentKeys = openKeys;
+        if (node.children) {
+            node.children.forEach((v)=> {
+                menusTree.push(v);
+            })
         }
     }
-    if (currentMenu) {//openKeys去重
-        currentMenu.openKeys = arrayUnique(openKeys);
-    }
-    return currentMenu;
 }
-function createSidebarMenus(menuData, minMenu) {
-    return buildSidebarMenu(menuData, minMenu)[0];
+function getSidebarMenus() {
+    let headMenu = getCurrentHeaderMenuByUrl();
+    let menusTree = convert(menus, headMenu);
+    return menusTree && menusTree.map(getMenuJsx);
 }
 
 /*
- * 对象键值法(该方法性能最优)
- * @method 定义一个空对象和空新数组，遍历当前的数组，判断该对象是否存在数组的某一项，如果不存在
- * 就当当前的某一项存入新数组去，且当前的项置为-1 目的过滤掉重复的项
+ *前台构造树方法。
+ *rows:树所需的基本数据。
+ *parentKey: 可选，根据给定的parentKey获取对应的子菜单。
  */
-function arrayUnique(arrs) {
-    var newArrays = [];
-    var hash = {};
-    if (arrs.length > 0) {
-        for (var i = 0, ilen = arrs.length; i < ilen; i += 1) {
-            if (!hash[arrs[i]]) {
-                hash[arrs[i]] = 1;
-                newArrays.push(arrs[i]);
+function convert(rows, parentNode) {
+    // 这个函数会被多次调用，对rows做深拷贝，否则会产生副作用。
+    rows = rows.map((row)=> {
+        return assign({}, row);
+    });
+    parentNode = assign({}, parentNode);
+
+    let nodes = [];
+    if (parentNode) {
+        nodes.push(parentNode);
+    } else {
+        // 获取所有的顶级节点
+        for (let i = 0; i < rows.length; i++) {
+            let row = rows[i];
+            if (!hasParent(rows, row.parentKey)) {
+                nodes.push(row);
             }
         }
-    }
-    return newArrays;
-}
-/*
- * return:
- *   minSidebarMenu: 收缩时菜单数据 jsx
- *   maxSidebarMenu: 展开时菜单数据 jsx
- *   simpleMenuData: 菜单数据扁平化结构,非树状结构. js
- *
- * */
-function getMenusData() {
-    let pathNames = location.pathname.split('/');
-    let headerMenuCurrent = null;
-    if (pathNames && pathNames.length > 0) {
-        headerMenuCurrent = pathNames[1];
-    }
-    let menuData = sidebarMenuData[headerMenuCurrent];
-    let [minSidebarMenu] = buildSidebarMenu(menuData, true);
-    let [maxSidebarMenu, simpleMenuData] = buildSidebarMenu(menuData, false);
-    return [minSidebarMenu, maxSidebarMenu, simpleMenuData]
-}
-/*
- * 基于树状结构的菜单数据,构造出对应jsx数据一级扁平化数据
- * return:
- *   sidebarMenu: 收缩/展开时菜单数据 jsx
- *   simpleMenuData: 菜单数据扁平化结构,非树状结构. js
- *
- * */
-function buildSidebarMenu(menuData, min) {
-    /*
-     * 菜单是否全部展开
-     * */
-    let simpleMenuData = [];
-    if (!menuData) {
-        return [];
-    }
-    function covertMenuFromData(menuData, min, parent) {
-        parent = parent || {
-                key: '0',
-                parentKeys: [],//地址栏改变时，用于同步左侧菜单状态
-                parentText: [],//当page的header为auto时，用来设置头部的面包屑导航。
-                subMenus: []
-            };
-        for (let i = 0; i < menuData.length; i++) {
-            var menu = menuData[i];
-            simpleMenuData.push(menu);
-            menu.key = parent.key + '-' + i;
-            menu.parentKeys = [...parent.parentKeys, parent.key];
-            menu.parentText = parent.text ? [...parent.parentText, parent.text] : [...parent.parentText];
-            if (menu.children) {
-                menu.subMenus = [];
-                let text = min && parent.key === '0' ? '' : menu.text;
-                parent.subMenus.push(
-                    <SubMenu key={menu.key} title={<span><FAIcon type={menu.icon} />{text}</span>}>
-                        {menu.subMenus}
-                    </SubMenu>
-                );
-                covertMenuFromData(menu.children, min, menu);
-            } else {
-                if (min && parent.key === '0') {
-                    parent.subMenus.push(
-                        <Menu.Item key={menu.key}>
-                            <Tooltip placement="right"
-                                     title={<Link to={menu.path} activeClassName="active" style={{color:'#fff'}}>{menu.text}</Link>}>
-                                <Link to={menu.path} activeClassName="active"><FAIcon type={menu.icon}/>{menu.text[0]}
-                                </Link>
-                            </Tooltip>
-                        </Menu.Item>
-                    );
-                } else {
-                    parent.subMenus.push(
-                        <Menu.Item key={menu.key}>
-                            <Link to={menu.path} activeClassName="active"><FAIcon type={menu.icon}/>{menu.text}</Link>
-                        </Menu.Item>
-                    );
-                }
-            }
-        }
-        return [parent.subMenus, simpleMenuData];
     }
 
-    return covertMenuFromData(menuData, min);
+    // 存放要处理的节点
+    let toDo = nodes.map((v)=>v);
+
+    while (toDo.length) {
+
+        // 处理一个，头部弹出一个。
+        let node = toDo.shift();
+        // 获取子节点。
+        for (let i = 0; i < rows.length; i++) {
+            let row = rows[i];
+            if (row.parentKey == node.key) {
+                let child = row;
+                let parentKeys = [node.key];
+                if (node.parentKeys) {
+                    parentKeys = node.parentKeys.concat(node.key)
+                }
+                child.parentKeys = parentKeys;
+                let parentText = [node.text];
+                if (node.parentText) {
+                    parentText = node.parentText.concat(node.text)
+                }
+                child.parentText = parentText;
+
+                if (node.children) {
+                    node.children.push(child);
+                } else {
+                    node.children = [child];
+                }
+
+                // child加入toDo，继续处理
+                toDo.push(child);
+            }
+        }
+    }
+    function hasParent(rows, parentKey) {
+        for (let i = 0; i < rows.length; i++) {
+            if (rows[i].key == parentKey) return true;
+        }
+        return false;
+    }
+
+    if (parentNode) {
+        return nodes[0].children;
+    }
+    return nodes;
 }
+
+function getMenuJsx(node) {
+    const min = !!Settings.collapseSidebar();
+    const key = node.key;
+    const path = node.path;
+    const icon = node.icon;
+    const text = node.text;
+    if (node.children) {
+        return (
+            <SubMenu key={key} title={<span><FAIcon type={icon} /><span>{text}</span></span>}>
+                {node.children.map(getMenuJsx)}
+            </SubMenu>
+        );
+    } else {
+        let item = <Link to={path} activeClassName="active"><FAIcon type={icon}/><span>{text}</span></Link>;
+        if (min && node.parentKeys.length === 1) { // FIXME 这个判断有些不好。
+            item =
+                <Tooltip placement="right"
+                         title={<Link to={path} activeClassName="active" style={{color:'#fff'}}><span>{text}</span></Link>}
+                >
+                    <Link to={path} activeClassName="active">
+                        <FAIcon type={icon}/><span>{text}</span>
+                    </Link>
+                </Tooltip>;
+        }
+        return (
+            <Menu.Item key={key}>
+                {item}
+            </Menu.Item>
+        );
+    }
+}
+
 export {getSidebarMenus, getCurrentSidebarMenu}

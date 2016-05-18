@@ -213,6 +213,9 @@
         color: lighten(@sideBarMenuActiveColor, 20%) !important;
       }
     }
+    .ant-menu-submenu-active {
+      background-color: lighten(@sideBarMenuActiveBgColor, 2%);
+    }
     .ant-menu-item-selected {
       background-color: @sideBarMenuActiveBgColor;
       border-right: 1px solid @sideBarMenuActiveColor !important;
@@ -224,19 +227,19 @@
     & > .ant-menu-vertical > .ant-menu-submenu-vertical > .ant-menu-submenu-title {
       padding-left: 20px;
       font-size: 18px;
-      & > span > span {
+      & > span > span { //隐藏文字
         display: none;
       }
-      &:after {
+      &:after { //隐藏箭头
         content: ''
       }
     }
-    & > .ant-menu-vertical > .ant-menu-item > a {
+    & > .ant-menu-vertical > .ant-menu-item > a { // Link标签样式
       & > i {
         margin-left: -6px;
         font-size: 15px;
       }
-      & > span {
+      & > span { //隐藏文字
         display: none;
       }
 
@@ -246,12 +249,12 @@
   /*
   修复菜单展开/折叠状态切换bug
   */
-  .ant-menu-vertical {
-    display: block !important;
-    &.ant-menu-hidden {
-      display: none !important;
-    }
-  }
+  //.ant-menu-vertical {
+  //  display: block;
+  //  &.ant-menu-hidden {
+  //    display: none;
+  //  }
+  //}
 }
 
 

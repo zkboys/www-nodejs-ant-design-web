@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux'
-import assign from 'object-assign'
-import headerMenus from './header/HeaderMenus'
-import sidebarMenus from './sidebar/SidebarMenus';
-import Settings from './settings/Settings'
+import {combineReducers} from 'redux';
+import assign from 'object-assign';
+import headerMenus from './header/HeaderMenus';
+import Settings from './settings/Settings';
+import {getScrollBarWidth} from '../common/common';
 import {
     TOGGLE_SIDEBAR,
     SET_HEADER_CURRENT_MENU,
@@ -47,7 +47,6 @@ let defaultState = {
         openKeys: [],
         selectedKeys: '',
         mode: '',
-        sidebarMenus: []
     }
 };
 
@@ -84,7 +83,6 @@ export default combineReducers({
                 }
                 return assign({}, state, {
                     hidden: false,
-                    sidebarMenus: sidebarMenus[action.currentHeaderMenu]
                 });
             case SET_SIDEBAR_MENU_STATUS://设置左侧菜单状态，展开状态以及选中状态
                 return assign({}, state, {
@@ -98,15 +96,3 @@ export default combineReducers({
 });
 
 
-function getScrollBarWidth() {
-    var scrollDiv = document.createElement('div');
-    scrollDiv.style.position = 'absolute';
-    scrollDiv.style.top = '-9999px';
-    scrollDiv.style.width = '50px';
-    scrollDiv.style.height = '50px';
-    scrollDiv.style.overflow = 'scroll';
-    document.body.appendChild(scrollDiv);
-    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-    document.body.removeChild(scrollDiv);
-    return scrollbarWidth
-}

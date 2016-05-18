@@ -1,11 +1,12 @@
 import './../style.less';
 import assign from 'object-assign';
 import React from 'react';
-import { connect } from 'react-redux'
-import { Menu, Icon} from 'antd';
+import {connect} from 'react-redux'
+import {Menu, Icon} from 'antd';
 import HeaderBar from '../header/Header';
 import Sidebar from '../sidebar/Sidebar';
 import PubSubMsg from '../../common/pubsubmsg';
+import Settings from './../settings/Settings';
 import {
     toggleSidebar,
     setHeaderCurrentMenu,
@@ -20,6 +21,7 @@ class Container extends React.Component {
     };
 
     handleToggleMenu = (info)=> {
+        console.log('info', info);
         let selectedKeys = this.props.sidebar.selectedKeys;
         let data = {
             selectedKeys: selectedKeys,
