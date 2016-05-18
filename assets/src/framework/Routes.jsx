@@ -15,13 +15,29 @@ const routes = {
     path: '/',
     component: require('./Index'),
     indexRoute: {
-        getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/home/Home'));})}
+        getComponent: (location, cb) => {
+            require.ensure([], (require) => {
+                cb(null, require('../page/home/Home'));
+            })
+        }
     },
     childRoutes: pageRouts
 };
 pageRouts.push(
-    {path: '/system/settings', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('./settings/SettingsPage'));})}},
-    {path: '*', getComponent: (location, cb) => {require.ensure([], (require) => {cb(null, require('../page/error/Error404'));})}}
+    {
+        path: '/system/settings', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('./settings/SettingsPage'));
+        })
+    }
+    },
+    {
+        path: '*', getComponent: (location, cb) => {
+        require.ensure([], (require) => {
+            cb(null, require('../page/error/Error404'));
+        })
+    }
+    }
 );
 
 /*
@@ -29,7 +45,7 @@ pageRouts.push(
  * */
 browserHistory.listen(function (data) {
     let pathNames = data.pathname.split('/');
-    let headerMenuCurrent = pathNames&&pathNames.length&&pathNames[1];
+    let headerMenuCurrent = pathNames && pathNames.length && pathNames[1];
     PubSubMsg.publish('current-header-menu', headerMenuCurrent);
     PubSubMsg.publish('set-sidebar-menus', headerMenuCurrent);
 

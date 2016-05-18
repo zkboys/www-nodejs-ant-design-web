@@ -55,8 +55,13 @@
       border: none;
       .ant-menu-item {
         height: 47px;
-        a > span {
-          margin-left: 7px;
+        a {
+          font-size: 14px;
+          & > i {
+            float: left;
+            margin-right: 7px;
+            margin-top: 18px;
+          }
         }
       }
     }
@@ -245,16 +250,6 @@
 
     }
   }
-
-  /*
-  修复菜单展开/折叠状态切换bug
-  */
-  //.ant-menu-vertical {
-  //  display: block;
-  //  &.ant-menu-hidden {
-  //    display: none;
-  //  }
-  //}
 }
 
 

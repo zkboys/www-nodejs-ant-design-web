@@ -28,6 +28,9 @@ function getCurrentSidebarMenu() {
 }
 function getSidebarMenus() {
     let headMenu = getCurrentHeaderMenuByUrl();
+    if (!headMenu) {
+        return []
+    }
     let menusTree = convert(menus, headMenu);
     return menusTree && menusTree.map(getMenuJsx);
 }
@@ -120,9 +123,7 @@ function getMenuJsx(node) {
         let item = <Link to={path} activeClassName="active"><FAIcon type={icon}/><span>{text}</span></Link>;
         if (min && node.parentKeys.length === 1) { // FIXME 这个判断有些不好。
             item =
-                <Tooltip placement="right"
-                         title={<Link to={path} activeClassName="active" style={{color:'#fff'}}><span>{text}</span></Link>}
-                >
+                <Tooltip placement="right" title={<Link to={path} activeClassName="active" style={{color:'#fff'}}><span>{text}</span></Link>}>
                     <Link to={path} activeClassName="active">
                         <FAIcon type={icon}/><span>{text}</span>
                     </Link>

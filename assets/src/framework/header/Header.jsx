@@ -1,5 +1,5 @@
 import React from 'react';
-import {Badge ,Menu, Popconfirm} from 'antd';
+import {Badge, Menu, Popconfirm} from 'antd';
 import {Link} from 'react-router'
 import FAIcon from '../../component/faicon/FAIcon';
 import avatar from './86.jpg';
@@ -9,11 +9,25 @@ class Header extends React.Component {
         const {
             headerLogoWidth,
             headerLogo,
-            } = this.props.style;
+        } = this.props.style;
         const {
             current,
             headMenus //TODO item.subMenus如果有子菜单，再处理
-            } = this.props.headerNav;
+        } = this.props.headerNav;
+
+        let headMenusJsx = [];
+        headMenus.forEach((item)=> {
+            if (item.showInHead) {
+                headMenusJsx.push(
+                    <Menu.Item key={item.key}>
+                        <Link to={item.path}>
+                            <FAIcon type={item.icon}/><span>{item.text}</span>
+                        </Link>
+                    </Menu.Item>
+                );
+            }
+        });
+
         return (
             <header className="admin-header">
                 <div className="admin-logo" style={{width:headerLogoWidth}}><Link to="/">{headerLogo}</Link></div>
@@ -21,13 +35,7 @@ class Header extends React.Component {
                 <Menu className="admin-header-sys"
                       selectedKeys={[current]}
                       mode="horizontal">
-                    {headMenus.map((item, index) =>
-                        <Menu.Item key={item.key}>
-                            <Link to={item.path}>
-                                <FAIcon type={item.icon}/>{item.text}
-                            </Link>
-                        </Menu.Item>
-                    )}
+                    {headMenusJsx}
                 </Menu>
 
                 <ul className="admin-header-menu">
@@ -36,7 +44,7 @@ class Header extends React.Component {
                             <Badge dot>
                                 <FAIcon type="fa-envelope-o"/>
                             </Badge>
-                            我的邮件
+                            <span>我的邮件</span>
                         </Link>
                     </li>
                     <li className="admin-header-menu-item">
@@ -44,26 +52,26 @@ class Header extends React.Component {
                             <Badge dot>
                                 <FAIcon type="fa-bell-o"/>
                             </Badge>
-                            系统提醒
+                            <span>系统提醒</span>
                         </Link>
                     </li>
                     <li className="admin-header-menu-item">
                         <Link to="/system/settings">
                             <FAIcon type="fa-cogs"/>
-                            系统设置
+                            <span>系统设置</span>
                         </Link>
                     </li>
                     <li className="admin-header-menu-item">
                         <Link to="/system/profile/message">
                             <img src={avatar} className="admin-user-avatar" alt="王树彬"/>
-                            王树彬
+                            <span>王树彬</span>
                         </Link>
                     </li>
                     <li className="admin-header-menu-item">
                         <Popconfirm title="您确定要退出系统吗？" onConfirm={this.handleExit}>
                             <a href="javascript:;">
                                 <FAIcon type="fa-sign-out"/>
-                                退出系统
+                                <span>退出系统</span>
                             </a>
                         </Popconfirm>
                     </li>

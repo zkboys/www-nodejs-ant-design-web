@@ -8,29 +8,105 @@
 
 export default [
     {
+        key: 'system',
+        parentKey: undefined,
+        order: 1,
+        icon: 'fa-th-list',
+        text: '系统级别菜单',
+        path: undefined,
+    },
+    {
+        showInHead: true,//显示在头部导航
         key: 'shop',//跟url有关
         parentKey: undefined,
         order: 1,
         icon: 'fa-th-list',
         text: '顶级菜单1',
-        path: '/shop/Dashboard',// 如果顶级菜单作为头部导航，这个path是点击之后的跳转。
+        path: undefined,// 如果顶级菜单作为头部导航，这个path是点击之后的跳转。默认获取第一个带有path的子节点，如果获取不到，path='/'
     },
     {
+        showInHead: true,//显示在头部导航
         key: 'service',
         parentKey: undefined,
         order: 1,
         icon: 'fa-th-list',
         text: '顶级菜单2',
-        path: '/service/MyForm',
+        path: undefined,
     },
     {
+        showInHead: true,//显示在头部导航
         key: 'expressage',
         parentKey: undefined,
         order: 1,
         icon: 'fa-th-list',
         text: '顶级菜单3',
-        path: '/expressage/MyTime',
+        path: undefined,
     },
+
+    {
+        key: 'system-001',
+        parentKey: 'system',
+        order: 1,
+        icon: 'fa-arrow-right',
+        text: '我的邮件',
+    },
+    {
+        key: 'system-001001',
+        parentKey: 'system-001',
+        order: 1,
+        icon: 'fa-arrow-right',
+        text: '未读邮件',
+        path: '/system/mail/unread',
+    },
+    {
+        key: 'system-001002',
+        parentKey: 'system-001',
+        order: 1,
+        icon: 'fa-arrow-right',
+        text: '已读邮件',
+        path: '/system/mail/read',
+    },
+
+    {
+        key: 'system-002',
+        parentKey: 'system',
+        order: 1,
+        icon: 'fa-arrow-right',
+        text: '系统设置',
+        path: '/system/settings',
+    },
+    {
+        key: 'system-003',
+        parentKey: 'system',
+        order: 1,
+        icon: 'fa-arrow-right',
+        text: '系统提醒',
+        path: '/system/remind',
+    },
+    {
+        key: 'system-004',
+        parentKey: 'system',
+        order: 1,
+        icon: 'fa-arrow-right',
+        text: '个人设置',
+    },
+    {
+        key: 'system-004001',
+        parentKey: 'system-004',
+        order: 1,
+        icon: 'fa-arrow-right',
+        text: '修改个人信息',
+        path: '/system/profile/message',
+    },
+    {
+        key: 'system-004002',
+        parentKey: 'system-004',
+        order: 1,
+        icon: 'fa-arrow-right',
+        text: '修改密码',
+        path: '/system/profile/password',
+    },
+
     {
         key: 'shop-001',
         parentKey: 'shop',
