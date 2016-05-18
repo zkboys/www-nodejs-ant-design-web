@@ -2,58 +2,13 @@ import './style.css';
 import React from 'react';
 import { Breadcrumb } from 'antd'
 import Page from '../../framework/page/Page';
-import ajax from '../../common/ajax'
-let initRequestMixin = {
+
+const Home = React.createClass({
     getInitialState(){
         console.log('mixin 中的 getInitialState');
         return {
             loading: false
         }
-    },
-    componentWillUnmount: function () {
-        /*
-         * 组件被移除DMO,清除未完成的ajax
-         * */
-        //this.initReq.abort();
-    },
-    componentDidMount() {
-        console.log('mixin 中的 componentDidMount');
-        let _this = this;
-        /*
-         _this.initReq = ajax.get({
-         url: _this.initRequestUrl,
-         before(){
-         _this.setState({
-         loading: true
-         });
-         },
-         success (res) {
-         _this.initRequestSuccess(res);
-         },
-         complete(error, res){
-         _this.setState({
-         loading: false
-         });
-         }
-         });*/
-    }
-
-};
-
-const Home = React.createClass({
-    mixins: [initRequestMixin],
-    initRequestUrl: '/dashboard.json',
-    getInitialState(){
-        console.log('Component 中的 getInitialState  不会覆盖mixin中的 getInitialState');
-        return {
-            loading222: false
-        }
-    },
-    initRequestSuccess(res){
-        console.log(res);
-    },
-    componentDidMount() {
-        console.log('Component 中的 componentDidMount 不会覆盖mixin中的 componentDidMount');
     },
     render() {
         let pageHeader =

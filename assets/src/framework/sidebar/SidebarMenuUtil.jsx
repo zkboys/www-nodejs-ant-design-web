@@ -10,7 +10,6 @@ import {getCurrentHeaderMenuByUrl} from '../header/HeaderMenuUtil'
 const SubMenu = Menu.SubMenu;
 
 function getCurrentSidebarMenu() {
-    console.log(location.pathname);
     let currentPath = location.pathname;
     let headMenu = getCurrentHeaderMenuByUrl();
     let menusTree = convert(menus, headMenu);

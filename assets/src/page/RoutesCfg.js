@@ -60,14 +60,6 @@ export default[
         }
     },
     {
-        path: '/shop/test/require',
-        getComponent: (location, cb) => {
-            require.ensure([], (require) => {
-                cb(null, require('./testrequire/TestRequire.jsx'));
-            })
-        }
-    },
-    {
         path: '/system/mail/unread',
         getComponent: (location, cb) => {
             require.ensure([], (require) => {
