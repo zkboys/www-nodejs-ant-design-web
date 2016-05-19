@@ -5,11 +5,12 @@ class Demo extends React.Component {
 
     render() {
         let options = {
+            onDidMount:(data)=>{},            //可选，查询组件DidMount之后，会触发，data为初始化时，各个元素的值。
             showSearchBtn: true,              // 可选，默认true 是否显示查询按钮
             searchBtnText: '查询',            // 可选，默认 查询 ，查询按钮的text
-            extraButtons: '',                     // 可选，默认 undefined，跟在查询按钮之后的按钮，比如<Button>导出</Button>
+            extraButtons: '',                 // 可选，默认 undefined，跟在查询按钮之后的按钮，比如<Button>导出</Button>
             labelWidth: '100px',              // 可选，默认：‘80px’,全局设置label长度，每个条件可以覆盖这个属性。
-            fieldWidth: '150px',                // 可选，默认：‘150px’,全局元素长度，每个条件可以覆盖这个属性。
+            fieldWidth: '150px',              // 可选，默认：‘150px’,全局元素长度，每个条件可以覆盖这个属性。
             resultDateToString: true,         // 可选，默认 true，查询条件日期相关数据是否转为字符串
             onSubmit: function (data) {       // 必选，点击查询按钮时的回调函数 data为所有的查询条件数据，可以在这个函数中发起请求等操作。
                 console.log('***', data);
@@ -17,10 +18,14 @@ class Demo extends React.Component {
             items: [
                 // 如果是对象，自己占据一行， 如果是数组，数组中所有的组件共占一行
                 {
+                    hidden: true,// 此查询条件是否隐藏，默认false，有些需求需要控制查询条件的显示，隐藏，可以通过这个字段进行切换。
                     type: 'tabsCard', // tab页，页只是做个查询条件，不是真实的tab页切换，只是用了个tab头
                     name: 'tabsCardName',
                     defaultValue: 'tab2',
                     searchOnChange: true,
+                    onChange: function (v) {
+                        alert(v);
+                    },
                     options: [
                         {value: 'tab1', label: 'Tab页1'},
                         {value: 'tab2', label: 'Tab页2'},

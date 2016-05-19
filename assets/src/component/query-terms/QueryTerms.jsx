@@ -23,6 +23,14 @@ class QueryTerms extends React.Component {
         });
     };
 
+    componentDidMount() {
+        let onDidMount = this.props.options.onDidMount;
+        if (onDidMount) {
+            const formData = this.getFormData();
+            onDidMount(formData);
+        }
+    }
+
     static defaultProps = {};
     setDefaultValue = (itemOptions)=> {
         const type = itemOptions.type;
@@ -69,8 +77,8 @@ class QueryTerms extends React.Component {
     };
 
     state = {};
-    handleSubmit = (e)=> {
-        e && e.preventDefault();
+    getFormData = ()=> {
+        let formData = null;
         this.props.form.validateFieldsAndScroll((errors, values) => {
             if (!!errors) {
                 console.log('Errors in form!!!', errors);
@@ -116,8 +124,16 @@ class QueryTerms extends React.Component {
                     }
                 });
             }
-            options.onSubmit(values);
+            formData = values;
         });
+        return formData;
+    }
+    handleSubmit = (e)=> {
+        e && e.preventDefault();
+        const formData = this.getFormData();
+        if (formData) {
+            this.props.options.onSubmit(formData);
+        }
     };
 
     dateToString = (date, format)=> {
@@ -208,7 +224,7 @@ class QueryTerms extends React.Component {
             } else {
                 searchOnChange && this.handleSubmit();
             }
-
+            itemOptions.onChange && itemOptions.onChange(value);
         };
         switch (itemType) {
             case 'input':
@@ -472,6 +488,7 @@ class QueryTerms extends React.Component {
         const searchBtnText = options.searchBtnText || '查询';
         const extraButtons = options.extraButtons;
         const items = options.items.map((value, index, array)=> {
+            if (value.hidden) return '';
             const rowProps = {
                 type: "flex",
                 justify: "start",
@@ -481,16 +498,16 @@ class QueryTerms extends React.Component {
             if (index === array.length - 1) {
                 if (options.showSearchBtn) {
                     buttons.push(
-                        <Col>
+                        <Col key='search-btn'>
                             <FormItem className="query-terms-item" style={{paddingLeft: '10px'}}>
                                 <Button type="primary" onClick={this.handleSubmit}>{searchBtnText}</Button>
                             </FormItem>
                         </Col>
                     );
                 }
-                if(extraButtons){
+                if (extraButtons) {
                     buttons.push(
-                        <Col>
+                        <Col key='extra-btn'>
                             <FormItem className="query-terms-item" style={{paddingLeft: '10px'}}>
                                 {extraButtons}
                             </FormItem>
