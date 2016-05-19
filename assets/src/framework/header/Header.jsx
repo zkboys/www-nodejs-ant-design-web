@@ -17,7 +17,7 @@ class Header extends React.Component {
 
         let headMenusJsx = [];
         headMenus.forEach((item)=> {
-            if (item.showInHead) {
+            if (item.key!=='system') {// 系统的顶级菜单不在头部导航显示
                 headMenusJsx.push(
                     <Menu.Item key={item.key}>
                         <Link to={item.path}>

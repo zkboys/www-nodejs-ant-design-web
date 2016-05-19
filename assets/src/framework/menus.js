@@ -12,11 +12,10 @@ export default [
         parentKey: undefined,
         order: 1,
         icon: 'fa-th-list',
-        text: '系统级别菜单',
+        text: '系统',
         path: undefined,
     },
     {
-        showInHead: true,//显示在头部导航
         key: 'shop',//跟url有关
         parentKey: undefined,
         order: 1,
@@ -25,7 +24,6 @@ export default [
         path: undefined,// 如果顶级菜单作为头部导航，这个path是点击之后的跳转。默认获取第一个带有path的子节点，如果获取不到，path='/'
     },
     {
-        showInHead: true,//显示在头部导航
         key: 'service',
         parentKey: undefined,
         order: 1,
@@ -34,7 +32,6 @@ export default [
         path: undefined,
     },
     {
-        showInHead: true,//显示在头部导航
         key: 'expressage',
         parentKey: undefined,
         order: 1,
