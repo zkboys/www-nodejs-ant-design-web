@@ -11,8 +11,7 @@ const SubMenu = Menu.SubMenu;
 
 function getCurrentSidebarMenu() {
     let currentPath = location.pathname;
-    let headMenu = getCurrentHeaderMenuByUrl();
-    let menusTree = convert(menus, headMenu);
+    let menusTree =getSidebarMenusTreeData();
     while (menusTree && menusTree.length) {
         // 处理一个，头部弹出一个。
         let node = menusTree.shift();
@@ -26,15 +25,19 @@ function getCurrentSidebarMenu() {
         }
     }
 }
+
 function getSidebarMenus() {
+    let menusTree = getSidebarMenusTreeData();
+    return menusTree && menusTree.map(getMenuJsx);
+}
+
+function getSidebarMenusTreeData(){
     let headMenu = getCurrentHeaderMenuByUrl();
     if (!headMenu) {
         return []
     }
-    let menusTree = convert(menus, headMenu);
-    return menusTree && menusTree.map(getMenuJsx);
+    return convert(menus, headMenu);
 }
-
 /*
  *前台构造树方法。
  *rows:树所需的基本数据。
